@@ -13,7 +13,7 @@ and open the template in the editor.
     </head>
     <body>
         <div class="jumbotron text-center">
-            <h1>Music Player</h1>
+            <h1>Musik Player</h1>
             <p>Vous écoutez : <span>Titre</span> - <span>Auteur</span> (<span>Année</span>) - <span>Durée</span> <span class="glyphicon glyphicon-stop"></p>
         </div>
         <div class="container">
@@ -68,7 +68,7 @@ and open the template in the editor.
                         } else if (strlen($seconds) === 1) {
                             $seconds = '0'.$seconds;
                         }
-                        echo '<tr id ="track'.$track->getId().'">';
+                        echo '<tr id="track'.$track->getId().'">';
                         echo '<td>'.$track->getTitle().'</td>';
                         echo '<td>'.$track->getAuthor().'</td>';
                         echo '<td class="text-center">'.$track->getYear().'</td>';
