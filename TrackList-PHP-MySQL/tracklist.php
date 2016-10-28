@@ -18,20 +18,22 @@ and open the template in the editor.
             
             // Chargement de l'objet Track
             require ("track.php");
+            require ("config.php");
             
             // Démarrage de la session
             session_start();
             
             // Connexion à la base de donnée
-            $bdd = new PDO('mysql:host=localhost;dbname=tracklist;charset=utf8', 'root', 'admin');
+            $bdd = new PDO(BDD_DSN, BDD_USERNAME, BDD_PASSWORD);
             if (!$bdd) {
                 die('Connexion impossible : ' . mysql_error());
             }
             // Récupération de toutes les variables POST
-            $title =    filter_input(INPUT_POST, 'title', FILTER_SANITIZE_SPECIAL_CHARS);
-            $author =   filter_input(INPUT_POST, 'author', FILTER_SANITIZE_SPECIAL_CHARS);
-            $year =     filter_input(INPUT_POST, 'year', FILTER_SANITIZE_NUMBER_INT);
-            $length =   filter_input(INPUT_POST, 'length', FILTER_SANITIZE_NUMBER_INT);
+            $id =       filter_input(INPUT_POST, 'id',      FILTER_SANITIZE_NUMBER_INT);
+            $title =    filter_input(INPUT_POST, 'title',   FILTER_SANITIZE_SPECIAL_CHARS);
+            $author =   filter_input(INPUT_POST, 'author',  FILTER_SANITIZE_SPECIAL_CHARS);
+            $year =     filter_input(INPUT_POST, 'year',    FILTER_SANITIZE_NUMBER_INT);
+            $length =   filter_input(INPUT_POST, 'length',  FILTER_SANITIZE_NUMBER_INT);
 
             $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -45,9 +47,8 @@ and open the template in the editor.
             } else if ($username != null && $password != null) {
                 
                 // Récupération de l'utilisateur entré
-                //$query = $bdd->query('SELECT userid FROM tracks WHERE username = \''.$username.'\' AND password = \''.$pwHash.'\';');
+                //$query = $bdd->query('SELECT userid FROM tracks WHERE username = \''.$username.'\';');
                 $query = $bdd->prepare('SELECT userid, password FROM users WHERE username = :username');
-                echo "$pwHash $password";
                 $query->bindValue(":username", $username);
                 $query->execute();
                 if(!$query) {
@@ -74,7 +75,6 @@ and open the template in the editor.
                     //$bdd->exec('INSERT INTO users(\'username\', \'password\') VALUES(\''.$username.'\', \''.$pwHash.'\');');
                     $userid = $bdd->lastInsertId();
                 }
-                
                 // Enregistrement de la session
                 $_SESSION['userid'] = $userid;
                 $_SESSION['username'] = $username;
@@ -89,21 +89,33 @@ and open the template in the editor.
             <a type="button" class="btn btn-success btn-lg btn-block" href="index.php">Ajouter un titre</a>
 
             <?php
-                // Vérification que l'utilisateur à ajouter une musique
-                if ($title != null && $author != null && $year != null && $length != null && $userid != null) {                    
-                    //$bdd->exec('INSERT INTO tracks VALUES(0, \''.$title.'\', \''.$author.'\', '.$year.', '.$length.', '.$userid.');');
-                    
-                    // Insertion de la nouvelle musique
-                    $query = $bdd->prepare('INSERT INTO tracks VALUES(0, :title :author :year :length :userid');
-                    $query->bindValue(":title",     $title);
-                    $query->bindValue(":author",    $author);
-                    $query->bindValue(":year",      $year);
-                    $query->bindValue(":length",    $length);
-                    $query->bindValue(":userid",    $userid);
-                    $query->execute();
-                    
+            // Vérification que l'utilisateur à ajouter une musique
+            if ($title != null && $author != null && $year != null && $length != null && $userid != null) {                 
+                    if ($id == null) {
+                        //$bdd->exec('INSERT INTO tracks VALUES(0, \''.$title.'\', \''.$author.'\', '.$year.', '.$length.', '.$userid.');');
+
+                        // Insertion de la nouvelle musique
+                        $query = $bdd->prepare('INSERT INTO tracks VALUES(0, :title, :author, :year, :length, :userid)');
+                        $query->bindValue(":title",     $title);
+                        $query->bindValue(":author",    $author);
+                        $query->bindValue(":year",      (int)$year);
+                        $query->bindValue(":length",    (int)$length);
+                        $query->bindValue(":userid",    (int)$userid);
+                        $query->execute();
+                    } else {
+                        // Mise à jour d'un musique
+                        $query = $bdd->prepare('UPDATE tracks SET title = :title, author = :author, year = :year, length = :length WHERE userid = :userid AND id = :id');
+                        $query->bindValue(":id",        (int)$id);
+                        $query->bindValue(":title",     $title);
+                        $query->bindValue(":author",    $author);
+                        $query->bindValue(":year",      (int)$year);
+                        $query->bindValue(":length",    (int)$length);
+                        $query->bindValue(":userid",    (int)$userid);
+                        $query->execute();
+                    }
                     // Eviter de reposter un POST
                     header('Location: tracklist.php');
+                    die();
                 }                
                 
                 // Création du tableau de musique
@@ -120,7 +132,7 @@ and open the template in the editor.
                 
                 // Récupération de toutes les musiques de l'utilisateur
                 $query = $bdd->prepare('SELECT * FROM tracks WHERE userid = :userid');
-                $query->bindValue(":userid",     $userid);
+                $query->bindValue(":userid", (int)$userid);
                 $query->execute();
                 if(!$query) {
                     die("Execute query error, because: ". $bdd->errorInfo());
@@ -130,11 +142,15 @@ and open the template in the editor.
                 while ($data = $query->fetch()) {
                     $track = new Track($data);
                     echo '<tr id="track'.$track->getId().'">';
-                    echo '<td>'.$track->getTitle().'</td>';
+                    echo '<td>'.$track->getTitle().'('.$track->getId().')'.'</td>';
                     echo '<td>'.$track->getAuthor().'</td>';
                     echo '<td class="text-center">'.$track->getYear().'</td>';
                     echo '<td class="text-center">'.$track->getDuration().'</td>';
-                    echo '<td class="text-right"><span class="glyphicon glyphicon-play"></span><span class="glyphicon glyphicon-trash"></span></td>';
+                    echo '<td class="text-right">'
+                        . '<a href="#" class="btnStart glyphicon glyphicon-play"></a>'
+                        . '<a href="update.php?id='.$track->getId().'&title='.$track->getTitle().'&author='.$track->getAuthor().'&year='.$track->getYear().'&length='.$track->getLength().'" class="btnStart glyphicon glyphicon-edit"></a>'
+                        . '<a href="delete.php?id='.$track->getId().'" class="btnDel glyphicon glyphicon-trash"></a>'
+                      . '</td>';
                     echo '</tr>';
                 }
                 

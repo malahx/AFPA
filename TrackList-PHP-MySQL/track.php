@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 
+// Objet de chaque chanson
 class Track {
     private $id;
     private $title;
@@ -53,6 +54,7 @@ class Track {
         return $this->length;
     }
     
+    // Calcul du temps d'une musique sous forme mins:secs
     function getDuration() {
         $minutes = floor($this->length/ 60);
         $seconds = $this->length - $minutes * 60;
