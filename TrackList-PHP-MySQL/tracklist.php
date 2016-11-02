@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -16,11 +12,11 @@ and open the template in the editor.
             <h1>Music Player</h1>
             <?php
             
-            // Chargement de l'objet Track
+            // Chargement de l'objet Track (toujours en premier)
             require ("track.php");
             require ("config.php");
             
-            // Démarrage de la session
+            // Démarrage de la session (toujours après les requires)
             session_start();
             
             // Connexion à la base de donnée
@@ -38,6 +34,8 @@ and open the template in the editor.
             $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
             $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
             
+            $delete =   filter_input(INPUT_GET,  'delete',   FILTER_SANITIZE_SPECIAL_CHARS);
+
             
             if (isset($_SESSION['userid']) && isset($_SESSION['username'])) {
                 // Récupération de la session courante
@@ -81,6 +79,21 @@ and open the template in the editor.
             } else {
                 // Personne ne s'est login
                 header('Location: index.php');
+                die();
+            }
+            
+            // Gestion de la suppression d'une musique
+            if ($delete != null) {
+                $bdd = new PDO(BDD_DSN, BDD_USERNAME, BDD_PASSWORD);
+                if (!$bdd) {
+                    die('Connexion impossible : ' . mysql_error());
+                }
+                // Suppression d'un musique
+                $query = $bdd->prepare('DELETE FROM tracks WHERE id = :id');
+                $query->bindValue(":id", $delete);
+                $query->execute();
+                header('Location: tracklist.php');
+                die();
             }
             ?>
             <p>Vous écoutez : <span>Titre</span> - <span>Auteur</span> (<span>Année</span>) - <span>Durée</span> <span class="glyphicon glyphicon-stop"></p>
@@ -148,12 +161,12 @@ and open the template in the editor.
                     echo '<td class="text-center">'.$track->getDuration().'</td>';
                     echo '<td class="text-right">'
                         . '<a href="#" class="btnStart glyphicon glyphicon-play"></a>'
-                        . '<a href="update.php?id='.$track->getId().'&title='.$track->getTitle().'&author='.$track->getAuthor().'&year='.$track->getYear().'&length='.$track->getLength().'" class="btnStart glyphicon glyphicon-edit"></a>'
-                        . '<a href="delete.php?id='.$track->getId().'" class="btnDel glyphicon glyphicon-trash"></a>'
+                        . '<a href="index.php?id='.$track->getId().'&title='.$track->getTitle().'&author='.$track->getAuthor().'&year='.$track->getYear().'&length='.$track->getLength().'" class="btnStart glyphicon glyphicon-edit"></a>'
+                        . '<a href="tracklist.php?delete='.$track->getId().'" class="btnDel glyphicon glyphicon-trash"></a>'
                       . '</td>';
                     echo '</tr>';
                 }
-                
+              
                 // Fermeture du tableau
                 echo '</tbody></table>';
             ?>
