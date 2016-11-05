@@ -27,3 +27,15 @@ and open the template in the editor.
     color: green;
     text-decoration: none;
 }
+.cursor {
+    cursor: pointer;
+}
+.cursorDefault {
+    cursor: default;
+}
+.hover:hover {
+    color: red;
+}
+.bold {
+    font-weight: bold;
+}
