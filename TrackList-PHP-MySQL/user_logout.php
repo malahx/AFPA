@@ -3,6 +3,6 @@
 // Chargement des fonctions divers
 require('common.php');
 
-header('Location: showAllPlaylists.php');
-
-        
+// Destruction de la session
+session_destroy();
+refresh();
