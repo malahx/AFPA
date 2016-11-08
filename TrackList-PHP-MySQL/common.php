@@ -1,5 +1,4 @@
 <?php
-
 // Chargement de la configuration
 require('config.inc.php');
 
@@ -109,26 +108,48 @@ function modalRegister() {
 }
 
 function modalAddTrack() {
-    echo '<div id="trackModal" class="modal fade" role="dialog"><div class="modal-dialog">
-                        <!-- Modal content--><div class="modal-content">
-                            <div class="modal-body"><div class="modal-header" style="padding:35px 50px;">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="text-center"><span class="glyphicon glyphicon-music"></span> Ajouter un titre</h4>
-                                </div><div class="modal-body" style="padding:40px 50px;">
-                                    <form role="form" name="trackAdd" action="addTrack.php" method="post">
-                                        <div class="form-group"><label class="control-label" for="name"><span class="glyphicon glyphicon-music"></span> Titre de la musique :</label>
-                                            <input id="trackTitle" class="form-control" type="text" name="trackTitle" placeholder="Titre de la musique" required pattern=".{1,120}">
-                                        </div><div class="form-group"><label class="control-label" for="desc"><span class="glyphicon glyphicon-user"></span> Auteur de la musique :</label>
-                                            <input id="trackAuthor" class="form-control" type="text" name="trackAuthor" placeholder="Auteur de la musique" required pattern=".{1,120}">
-                                        </div><div class="form-group"><label class="control-label" for="desc"><span class="glyphicon glyphicon-time"></span> Durée de la musique [s]:</label>
-                                            <input id="trackDura" class="form-control" type="text" name="trackDura" placeholder="Durée de la musique en secondes" required pattern="[0-9]{1,120}">
-                                        </div>
-                                        <button type="submit" name="trackAdd" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Ajouter le titre</button>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
-                                </div></div></div></div></div>';
+    ?> <div id="trackModal" class="modal fade" role="dialog"><div class="modal-dialog">
+            <!-- Modal content--><div class="modal-content">
+                <div class="modal-body"><div class="modal-header" style="padding:35px 50px;">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="text-center"><span class="glyphicon glyphicon-music"></span> Ajouter un titre</h4>
+                    </div><div class="modal-body" style="padding:40px 50px;">
+                        <form role="form" name="trackAdd" action="addTrack.php" method="post">
+                            <div class="form-group"><label class="control-label" for="name"><span class="glyphicon glyphicon-music"></span> Titre de la musique :</label>
+                                <input id="trackTitle" class="form-control" type="text" name="trackTitle" placeholder="Titre de la musique" required pattern=".{1,120}">
+                            </div><div class="form-group"><label class="control-label" for="desc"><span class="glyphicon glyphicon-user"></span> Auteur de la musique :</label>
+                                <select id="trackAuthor" class="form-control" name="trackAuthor">
+                                    <?php
+                                    $select = bdd()->prepare('SELECT author_name, id FROM author');
+                                    $select->execute();
+                                    while ($author = $select->fetch()) {
+
+                                        echo '<option value="' . $author['id'] . '">' . $author['author_name'] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+    <!--                                <input id="trackAuthor" class="form-control" type="text" name="trackAuthor" placeholder="Auteur de la musique" required pattern=".{1,120}">-->
+                            </div><div class="form-group"><label class="control-label" for="desc"><span class="glyphicon glyphicon-time"></span> Durée de la musique [s]:</label>
+                                <input id="trackDura" class="form-control" type="text" name="trackDura" placeholder="Durée de la musique en secondes" required pattern="[0-9]{1,120}">
+                            </div><div class="form-group"><label class="control-label" for="trackGenre"><span class="glyphicon glyphicon-flash"></span> Genre musical :</label>
+                                <select id="trackGenre" class="form-control" name="trackGenre">
+                                    <?php
+                                    $select = bdd()->prepare('SELECT genre, id FROM genre');
+                                    $select->execute();
+                                    while ($genre = $select->fetch()) {
+
+                                        echo '<option value="' . $genre['id'] . '">' . $genre['genre'] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+    <!--                                <input id="trackAuthor" class="form-control" type="text" name="trackAuthor" placeholder="Auteur de la musique" required pattern=".{1,120}">-->
+                            </div>
+                            <button type="submit" name="trackAdd" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Ajouter le titre</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+                    </div></div></div></div></div> <?php
 }
 
 function modalAddPlaylist() {
@@ -153,11 +174,37 @@ function modalAddPlaylist() {
                                     <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
                                 </div></div></div></div></div>';
 }
+function modalAddGenre() {
+     ?> <div id="genreModal" class="modal fade" role="dialog"><div class="modal-dialog">
+                        <!-- Modal content--><div class="modal-content">
+                            <div class="modal-body"><div class="modal-header" style="padding:35px 50px;">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="text-center"><span class="glyphicon glyphicon-flash"></span> Ajouter un genre</h4>
+                                </div><div class="modal-body" style="padding:40px 50px;">
+                                    <form role="form" name="genreAdd" action="addGenre.php" method="post" enctype="multipart/form-data">
+                                        <div class="form-group"><label class="control-label" for="genreName"><span class="glyphicon glyphicon-music"></span> Nom du genre :</label>
+                                            <input id="genreName" class="form-control" type="text" name="genreName" placeholder="Ex. Soul, Hard-Rock, Classique..." required pattern=".{1,120}">
+                                        </div><div class="form-group"><label class="control-label" for="desc"><span class="glyphicon glyphicon-edit"></span> Courte description :</label>
+                                            <input id="desc" class="form-control" type="text" name="desc" placeholder="Description" required pattern=".{1,120}">
+                                        </div><div class="form-group"><label class="control-label" for="url"><span class="glyphicon glyphicon-link"></span> URL/Liens :</label>
+                                            <input type="url" name="url">
+                                        </div>
+                                        <button type="submit" name="genreAdd" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Ajouter le genre</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+                                </div></div></div></div></div> 
+                                    
+                                    <?php
+}
+
 
 function showModals() {
     if (isLogin()) {
         modalAddPlaylist();
         modalAddTrack();
+        modalAddGenre();
     } else {
         modalLogin();
         modalRegister();

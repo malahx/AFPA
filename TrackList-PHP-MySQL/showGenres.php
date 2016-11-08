@@ -34,18 +34,17 @@ if (isLogin()) {
         </ul>
     </li>';
     ?>
-<!--Ajout du menu déroulant de la gestion des genres musicaux-->
-<li class="dropdown">
+    <!--Ajout du menu déroulant de la gestion des genres musicaux-->
+    <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            <span class="glyphicon glyphicon-th-list"></span> Genres<span class="caret"></span>
+            <span class="glyphicon glyphicon-flash"></span> Genres<span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
             <li><a href="showGenres.php"><span class="glyphicon glyphicon-list-alt"></span> Genres enregistrés</a></li>
             <li><a data-toggle="modal" href="#genreModal"><span class="glyphicon glyphicon-plus"></span> Ajouter un genre ...</a></li>
         </ul>
-   </li>
+    </li>
     <?php
-
     // Affichage de l'onglet playlist dans le cas où une playlist est ouverte
     if ((isset($playlistId) && isset($playlist))) {
         echo '<li class="dropdown">';
@@ -101,20 +100,13 @@ echo '<table class="table table-hover"><thead><tr>';
 if (isset($playlistId)) {
     echo '<th></th>';
 }
-echo '<th>Titre</th>
-         <th>Auteur</th>
-         <th class="text-center">Durée</th>
-         <th class="text-center">Genre</th>
-         <th class="text-right"></th>';
+echo '<th>Nom du genre</th>
+         <th class="text-center">Courte description</th>
+         <th class="text-center">Liens</th>'
+;
 
 // Tous les titres
-$select = bdd()->prepare('SELECT t.title, t.duration, t.id,  a.author_name, g.genre 
-FROM track t
-INNER JOIN author a 
-ON t.author_id = a.id
-INNER JOIN genre g
-ON t.genre_id = g.id
-');
+$select = bdd()->prepare('SELECT * FROM genre');
 
 echo '</tr></thead><tbody>';
 
@@ -126,18 +118,15 @@ if (!$select) {
 // Création de chaque élement du tableau
 while ($data = $select->fetch()) {
 
-    // Dans le cas de l'affichage de tous les titres ou d'une playlist
-    $track = new Track($data);
+
     echo '<tr class="cursorDefault">';
-    if (isset($playlistId)) {
-        echo '<td><input type="checkbox" name="addTrackToPlaylist[]" value="' . $track->getId() . '"></td>';
-    }
-    echo '<td>' . $track->getTitle() . '(' . $track->getId() . ')</td>
-             <td>' . $track->getAuthor() . '</td>
-             <td class="text-center">' . $track->getStripDuration() . '</td>
-             <td class="text-center">' . $track->getGenre() . '</td>     
-             <td class="text-right"><span title="Modifier" class="glyphicon glyphicon-edit cursor hover" data-toggle="modal" data-target="#trackModal"></span>&nbsp;<span title="Supprimer" class="glyphicon glyphicon-trash cursor hover" onclick="location.href=\'remTrack.php?id=' . $track->getId() . '\'"></span></td>
-        </tr>';
+
+    echo '<td>' . $data['genre'] . ' (' . $data['id'] . ')</td>';
+
+    echo '<td class="text-center">' . $data['descr'] . '</td>';
+    echo '<td class="text-center">' . $data['genre_url'] . '</td>';
+
+    echo '</tr>';
 
     // Dans le cas d'affichage de toutes les playlists
 }
@@ -146,9 +135,7 @@ while ($data = $select->fetch()) {
 echo '</tbody></table>';
 
 // Boutton d'ajout des titres sélectionnés dans la playlist ouverte
-if (isset($playlistId)) {
-    echo '<div class="text-center"><button type="submit" class="btn btn-lg btn-block btn-success"><span class="glyphicon glyphicon-chevron-right"></span> Ajouter les titres sélectionnés à la playlist: <span class="bold">' . $playlist->getName() . '</span></button></div></form>';
-}
+
 
 showModals();
 
