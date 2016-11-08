@@ -2,13 +2,16 @@
 
 // Objet de chaque chanson
 class Track {
+
     private $id;
     private $title;
     private $author;
     private $year;
     private $length;
-    function __construct($data, $title = null, $author = null, $duration = null) {
-        if (is_int($data) && $title != null && $author != null && $duration != null) {
+    private $genre;
+
+    function __construct($data, $title = null, $author = null, $duration = null, $genre = null) {
+        if (is_int($data) && $title != null && $author != null && $duration != null && $genre != null) {
             $this->id = $data;
             $this->title = $title;
             $this->author = $author;
@@ -16,8 +19,9 @@ class Track {
         } else if (is_array($data)) {
             $this->id = $data['id'];
             $this->title = $data['title'];
-            $this->author = $data['author'];
+            $this->author = $data['author_name'];
             $this->duration = $data['duration'];
+            $this->genre = $data['genre'];
         } else {
             $this->id = -1;
             $this->title = 'error';
@@ -25,6 +29,7 @@ class Track {
             $this->duration = -1;
         }
     }
+
     function getId() {
         return $this->id;
     }
@@ -40,17 +45,17 @@ class Track {
     function getDuration() {
         return $this->duration;
     }
-    
+
     // Calcul du temps d'une musique sous forme mins:secs
     function getStripDuration() {
-        $minutes = floor($this->duration/ 60);
+        $minutes = floor($this->duration / 60);
         $seconds = $this->duration - $minutes * 60;
         if (strlen($seconds) === 0) {
             $seconds = '00';
         } else if (strlen($seconds) === 1) {
-            $seconds = '0'.$seconds;
+            $seconds = '0' . $seconds;
         }
-        return $minutes.':'.$seconds;
+        return $minutes . ':' . $seconds;
     }
 
     function setId($id) {
@@ -68,5 +73,13 @@ class Track {
     function setDuration($duration) {
         $this->duration = $duration;
     }
-}
 
+    function getGenre() {
+        return $this->genre;
+    }
+
+    function setGenre($genre) {
+        $this->genre = $genre;
+    }
+
+}

@@ -108,17 +108,18 @@ echo '<th>Playlist</th>
          <th class="text-right">Nombre de titres</th>
          <th class="text-right"></th>';
 
-// Toutes les playlists
-$select = bdd()->prepare('SELECT h.id, h.name, h.desc, h.jaqurl, u.username, GROUP_CONCAT(p.trackid)
+// Toutes les playlists MODIFICATION (Rémi, 20161109, 10:38) Correction de la requête mais l'affichage du nombre de titre n'est pas assuré
+$select = bdd()->prepare('SELECT h.id, h.name, h.desc, h.jaqurl, u.username, 
                             FROM `playlist-header` h
                             INNER JOIN `user` u
-                            ON u.id = h.userid
-                            LEFT JOIN `playlist` p
-                            ON h.id = p.trackid
-                            GROUP BY h.id');
+                            ON u.id = h.userid 
+                           
+                            
+                            ');
 
 
 echo '</tr></thead><tbody>';
+
 
 $select->execute();
 if (!$select) {
