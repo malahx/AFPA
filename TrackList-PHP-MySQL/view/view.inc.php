@@ -129,9 +129,9 @@ class view {
     private static function modalLogin() {
         $inputs = array(
             new Input('text', 'username', 'Utilisateur', 'user'),
-            new Input('password', 'password', 'Mot de passe', 'eye-open'),
+            new Input('password', 'password', 'Mot de passe', 'eye-open')
         );
-        $modal = new Modal('loginModal', 'Login', 'off', 'index.php', $inputs);
+        $modal = new Modal('loginModal', 'Login', 'index.php', 'off', $inputs);
         return $modal;
     }
 
@@ -139,12 +139,51 @@ class view {
         $inputs = array(
             new Input('email', 'email', 'Email', 'envelope'),
             new Input('text', 'username', 'Utilisateur', 'user'),
-            new Input('password', 'password', 'Mot de passe', 'eye-open'),
+            new Input('password', 'password', 'Mot de passe', 'eye-open')
         );
-        $modal = new Modal('registerModal', 'S\'enregistrer', 'off', 'index.php', $inputs);
+        $modal = new Modal('registerModal', 'S\'enregistrer', 'index.php', 'off', $inputs);
         return $modal;
     }
-
+    
+    private static function modalplaylistAdd() {
+        $inputs = array(
+            new Input('text', 'playlistName', 'Nom de la playlist', 'music'),
+            new Input('text', 'desc', 'Description', 'edit'),  
+            new Input('file', 'playlistJaq', 'Jaquette', 'file', 'image/*'),
+        );
+        $modal = new Modal('playlistModal', 'Ajouter une playlist', 'index.php?action=playlistAdd', 'th-list', $inputs);
+        return $modal;
+    }
+    
+    private static function modaltrackAdd() {
+        $inputs = array(
+            new Input('text', 'trackTitle', 'Titre de la musique', 'music'),
+            //select/option new Input('select', 'trackAuthor', 'Auteur de la musique', 'user'),
+            //select/option new Input('select', 'trackGenre', 'Durée de la musique en secondes', 'flash'),
+            new Input('text', 'trackDura', 'Durée de la musique en secondes', 'time'),
+        );
+        $modal = new Modal('trackModal', 'Ajouter un titre', 'index.php?action=trackAdd', 'music', $inputs);
+        return $modal;
+    }
+ 
+    private static function modalgenreAdd() {
+        $inputs = array(
+            new Input('text', 'genreName', 'Nom du genre', 'music'),
+            new Input('text', 'desc', 'Courte description', 'edit'),
+            new Input('url', 'url', 'URL/Liens', 'link')
+        );
+        $modal = new Modal('genreModal', 'Ajouter un genre', 'index.php?action=genreAdd', 'flash', $inputs);
+        return $modal;
+    }
+     
+    private static function modalauthorAdd() {
+        $inputs = array(
+            new Input('text', 'authorName', 'Nom de l\'auteur', 'user'),
+        );
+        $modal = new Modal('authorModal', 'Ajouter un auteur', 'index.php?action=authorAdd', 'user', $inputs);
+        return $modal;
+    }
+    
     private static function modal($modal) {
         require dirname(__FILE__) . '/Modal/ModalTemplate.php';
     }
