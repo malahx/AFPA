@@ -1,0 +1,35 @@
+{# base Twig template #}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{{ title }}</title>
+        {% block stylesheets %}
+            {% include 'TautofBundle:elements:styles.html.twig' %}
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>      
+        {% block header %}
+            {% include 'TautofBundle:elements:header.html.twig' %}
+        {% endblock %}
+        <div class="row myNav">
+            <div class="col-md-6">
+                {% block position %}
+                    {% include 'TautofBundle:elements:pos.html.twig' %}
+                {% endblock %}
+            </div>
+            <div class="col-md-6">
+                {% block user %}
+                    {% include 'TautofBundle:elements:user.html.twig' %}
+                {% endblock %}
+            </div>
+        </div>
+        {% block body %}
+        {% endblock %}
+        {% block footer %}
+        {% endblock %}
+        {% block javascripts %}
+        {% endblock %}
+    </body>
+</html>

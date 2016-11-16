@@ -1,0 +1,11 @@
+{# pos Twig template #}
+<div class="container">
+    <a href="{{ path('home') }}">Accueil</a>
+    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+    <a href="{{ path('adverts') }}">Annonces</a>
+    {% if advert is defined %}
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        {{ advert.title }}
+    {% endif %}
+    <br/><br/>
+</div>
