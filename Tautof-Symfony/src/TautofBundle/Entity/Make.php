@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="make", uniqueConstraints={@ORM\UniqueConstraint(name="nom", columns={"name"})})
  * @ORM\Entity
  */
-class Make
-{
+class Make {
+
     /**
      * @var string
      *
@@ -28,8 +28,6 @@ class Make
      */
     private $id;
 
-
-
     /**
      * Set name
      *
@@ -37,8 +35,7 @@ class Make
      *
      * @return Make
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -49,8 +46,7 @@ class Make
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -59,8 +55,12 @@ class Make
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
+
+    public function __toString() {
+        return $this->getName();
+    }
+
 }

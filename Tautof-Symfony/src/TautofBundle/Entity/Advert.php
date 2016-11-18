@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="advert", indexes={@ORM\Index(name="join_utilisateur", columns={"user_id"}), @ORM\Index(name="id_couleur", columns={"color_id"}), @ORM\Index(name="id_marque", columns={"model_id"}), @ORM\Index(name="model_id", columns={"model_id", "color_id", "user_id"})})
  * @ORM\Entity
  */
-class Advert
-{
+class Advert {
+
     /**
      * @var integer
      *
@@ -107,8 +107,6 @@ class Advert
      */
     private $user;
 
-
-
     /**
      * Set cost
      *
@@ -116,8 +114,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setCost($cost)
-    {
+    public function setCost($cost) {
         $this->cost = $cost;
 
         return $this;
@@ -128,8 +125,7 @@ class Advert
      *
      * @return integer
      */
-    public function getCost()
-    {
+    public function getCost() {
         return $this->cost;
     }
 
@@ -140,8 +136,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setKm($km)
-    {
+    public function setKm($km) {
         $this->km = $km;
 
         return $this;
@@ -152,8 +147,7 @@ class Advert
      *
      * @return integer
      */
-    public function getKm()
-    {
+    public function getKm() {
         return $this->km;
     }
 
@@ -164,8 +158,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setDescr($descr)
-    {
+    public function setDescr($descr) {
         $this->descr = $descr;
 
         return $this;
@@ -176,8 +169,7 @@ class Advert
      *
      * @return string
      */
-    public function getDescr()
-    {
+    public function getDescr() {
         return $this->descr;
     }
 
@@ -188,8 +180,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setPic1($pic1)
-    {
+    public function setPic1($pic1) {
         $this->pic1 = $pic1;
 
         return $this;
@@ -200,8 +191,7 @@ class Advert
      *
      * @return string
      */
-    public function getPic1()
-    {
+    public function getPic1() {
         return $this->pic1;
     }
 
@@ -212,8 +202,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setPic2($pic2)
-    {
+    public function setPic2($pic2) {
         $this->pic2 = $pic2;
 
         return $this;
@@ -224,8 +213,7 @@ class Advert
      *
      * @return string
      */
-    public function getPic2()
-    {
+    public function getPic2() {
         return $this->pic2;
     }
 
@@ -236,8 +224,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setPic3($pic3)
-    {
+    public function setPic3($pic3) {
         $this->pic3 = $pic3;
 
         return $this;
@@ -248,8 +235,7 @@ class Advert
      *
      * @return string
      */
-    public function getPic3()
-    {
+    public function getPic3() {
         return $this->pic3;
     }
 
@@ -260,8 +246,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -272,8 +257,7 @@ class Advert
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -284,8 +268,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setYear($year)
-    {
+    public function setYear($year) {
         $this->year = $year;
 
         return $this;
@@ -296,8 +279,7 @@ class Advert
      *
      * @return integer
      */
-    public function getYear()
-    {
+    public function getYear() {
         return $this->year;
     }
 
@@ -306,8 +288,7 @@ class Advert
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -318,8 +299,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setColor(\TautofBundle\Entity\Color $color = null)
-    {
+    public function setColor(\TautofBundle\Entity\Color $color = null) {
         $this->color = $color;
 
         return $this;
@@ -330,8 +310,7 @@ class Advert
      *
      * @return \TautofBundle\Entity\Color
      */
-    public function getColor()
-    {
+    public function getColor() {
         return $this->color;
     }
 
@@ -342,8 +321,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setModel(\TautofBundle\Entity\Model $model = null)
-    {
+    public function setModel(\TautofBundle\Entity\Model $model = null) {
         $this->model = $model;
 
         return $this;
@@ -354,8 +332,7 @@ class Advert
      *
      * @return \TautofBundle\Entity\Model
      */
-    public function getModel()
-    {
+    public function getModel() {
         return $this->model;
     }
 
@@ -366,8 +343,7 @@ class Advert
      *
      * @return Advert
      */
-    public function setUser(\TautofBundle\Entity\User $user = null)
-    {
+    public function setUser(\TautofBundle\Entity\User $user = null) {
         $this->user = $user;
 
         return $this;
@@ -378,8 +354,12 @@ class Advert
      *
      * @return \TautofBundle\Entity\User
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
+
+    public function __toString() {
+        return $this->getTitle();
+    }
+
 }

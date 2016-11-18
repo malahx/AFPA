@@ -13,18 +13,9 @@
         {% block header %}
             {% include 'TautofBundle:elements:header.html.twig' %}
         {% endblock %}
-        <div class="row myNav">
-            <div class="col-md-6">
-                {% block position %}
-                    {% include 'TautofBundle:elements:pos.html.twig' %}
-                {% endblock %}
-            </div>
-            <div class="col-md-6">
-                {% block user %}
-                    {% include 'TautofBundle:elements:user.html.twig' %}
-                {% endblock %}
-            </div>
-        </div>
+        {% block navbar %}
+            {% include 'TautofBundle:elements:navbar.html.twig' %}
+        {% endblock %}
         {% block body %}
         {% endblock %}
         {% block footer %}

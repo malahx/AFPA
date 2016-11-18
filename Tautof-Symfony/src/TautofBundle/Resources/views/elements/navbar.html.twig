@@ -1,0 +1,38 @@
+{# navbar Twig template #}
+<div class="row myNav">
+    <div class="col-md-3">
+        <div class="container">
+            <a href="{{ path('home') }}">Accueil</a>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            <a href="{{ path('adverts') }}">Annonces</a>
+            {% if advert is defined %}
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                {{ advert.title }}
+            {% endif %}
+        </div>
+    </div>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <div class="col-md-6">
+            <div class="text-center">
+                <div class="btn-group">
+                    <a class="btn btn-info">Filtrer</a>
+                    <a class="btn btn-primary" href="{{ path('advertadd') }}">Ajouter une annonce</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="text-right">
+                <a href=""><span class="glyphicon glyphicon-user"></span>&nbsp;{{  app.user.username }}</a>&nbsp;|&nbsp;<a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Déconnexion</a>
+            </div>
+        {% else %}
+            <div class="col-md-9">
+                <form class="form-inline text-right" action="{{ path("fos_user_security_check") }}" method="post">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <label for="username"><input type="text" class="form-control" id="username" name="_username" placeholder="Utilisateur" required="required"></label>
+                    <label for="password"><input type="password" class="form-control" id="password" name="_password" placeholder="Mot de passe" required="required"></label>
+                    <label for="remember_me"><input type="checkbox" id="remember_me" name="_remember_me" value="on" hidden></label>
+                    <button type="submit" id="_submit" name="_submit" class="btn btn-success"><span class="glyphicon glyphicon-log-in"></span>&nbsp;Login</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>

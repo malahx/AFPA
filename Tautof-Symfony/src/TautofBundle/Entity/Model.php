@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="model", indexes={@ORM\Index(name="join_marque", columns={"make_id"})})
  * @ORM\Entity
  */
-class Model
-{
+class Model {
+
     /**
      * @var string
      *
@@ -38,8 +38,6 @@ class Model
      */
     private $make;
 
-
-
     /**
      * Set name
      *
@@ -47,8 +45,7 @@ class Model
      *
      * @return Model
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -59,8 +56,7 @@ class Model
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -69,8 +65,7 @@ class Model
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -81,8 +76,7 @@ class Model
      *
      * @return Model
      */
-    public function setMake(\TautofBundle\Entity\Make $make = null)
-    {
+    public function setMake(\TautofBundle\Entity\Make $make = null) {
         $this->make = $make;
 
         return $this;
@@ -93,8 +87,12 @@ class Model
      *
      * @return \TautofBundle\Entity\Make
      */
-    public function getMake()
-    {
+    public function getMake() {
         return $this->make;
     }
+
+    public function __toString() {
+        return $this->getName();
+    }
+
 }

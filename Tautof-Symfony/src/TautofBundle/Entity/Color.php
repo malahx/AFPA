@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="color")
  * @ORM\Entity
  */
-class Color
-{
+class Color {
+
     /**
      * @var string
      *
@@ -28,8 +28,6 @@ class Color
      */
     private $id;
 
-
-
     /**
      * Set name
      *
@@ -37,8 +35,7 @@ class Color
      *
      * @return Color
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -49,8 +46,7 @@ class Color
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -59,8 +55,11 @@ class Color
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-}
+
+    public function __toString() {
+        return $this->getName();
+    }
+}    
