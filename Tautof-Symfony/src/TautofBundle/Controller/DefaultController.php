@@ -42,6 +42,7 @@ class DefaultController extends Controller {
      * @Route("/advertadd{make_id}", name="advertadd", defaults={"make_id" = -1})
      */
     public function advertAddAction($make_id, Request $request) {
+        // Solution plus propre de récupérer $make_id avec un get, mais je garde cette solution pour rappel
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('home');
         }
@@ -53,14 +54,33 @@ class DefaultController extends Controller {
         $advertForm->handleRequest($request);
         if ($advertForm->isSubmitted() && $advertForm->isValid()) {
             $advert = $advertForm->getData();
+
             $user = $this->getUser();
             $advert->setUser($user);
+
+            $advert->setPic1(DefaultController::picUpload($advert->getPic1()));
+            $advert->setPic2(DefaultController::picUpload($advert->getPic2()));
+            $advert->setPic3(DefaultController::picUpload($advert->getPic3()));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($advert);
             $em->flush();
             return $this->redirectToRoute('advert', array('id' => $advert->getId()));
         }
         return $this->render('TautofBundle::advertAdd.html.twig', array('title' => 'Tautof Annonces', 'advertadd' => $advertForm->createView(), 'make' => $makeForm->createView()));
+    }
+
+    private function picUpload($file) {
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move(DefaultController::uploadDir(), $fileName);
+        return DefaultController::uploadDir($fileName);
+    }
+
+    private function uploadDir($file = null) {
+        if ($file) {
+            return $this->getParameter('uploads_directory') . $file;
+        }
+        return $this->getParameter('root_directory') . $this->getParameter('uploads_directory');
     }
 
     /**
@@ -77,11 +97,15 @@ class DefaultController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
 
-        $repo = $em->getRepository('TautofBundle:Make');
-        $makes = $repo->findAll();
+        $repo = $em->getRepository('TautofBundle:Advert');
+        $qb = $repo->createQueryBuilder('a')
+                ->join('a.model', 'mo')
+                ->join('mo.make', 'ma')
+                ->select('ma.id,ma.name')
+                ->groupby('ma.id');
+        $makes = $qb->getQuery()->getResult();
 
         if ($make_id > -1) {
-            $repo = $em->getRepository('TautofBundle:Advert');
             $qb = $repo->createQueryBuilder('a')
                     ->join('a.model', 'mo')
                     ->addSelect('mo')

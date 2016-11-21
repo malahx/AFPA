@@ -28,7 +28,9 @@ class AdvertType extends AbstractType {
                         if ($this->make_id == -1) {
                             return $er->createQueryBuilder('m');
                         }
-                        return $er->createQueryBuilder('m')->where('m.make = :make_id')->setParameter (':make_id', $this->make_id);
+                        return $er->createQueryBuilder('m')
+                                ->where('m.make = :make_id')
+                                ->setParameter (':make_id', $this->make_id);
                     },
                     'choice_label' => 'name'))
                 ->add('color', null, array('label' => false, 'disabled' => $this->make_id != -1 ? false : true, 'required' => true, 'placeholder' => 'Couleur'))

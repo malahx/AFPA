@@ -3,6 +3,7 @@
 namespace TautofBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Advert
@@ -37,6 +38,14 @@ class Advert {
      * @var string
      *
      * @ORM\Column(name="pic1", type="string", length=150, nullable=false)
+     * 
+     * @Assert\File(
+     *     maxSize = "2M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
+     *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
+     *     notFoundMessage = "Le fichier n'a pas été trouvé sur le disque",
+     *     uploadErrorMessage = "Erreur dans l'upload du fichier"
+     * )
      */
     private $pic1;
 
@@ -44,6 +53,14 @@ class Advert {
      * @var string
      *
      * @ORM\Column(name="pic2", type="string", length=150, nullable=true)
+     * 
+     * @Assert\File(
+     *     maxSize = "2M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
+     *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
+     *     notFoundMessage = "Le fichier n'a pas été trouvé sur le disque",
+     *     uploadErrorMessage = "Erreur dans l'upload du fichier"
+     * )
      */
     private $pic2;
 
@@ -51,6 +68,14 @@ class Advert {
      * @var string
      *
      * @ORM\Column(name="pic3", type="string", length=150, nullable=true)
+     * 
+     * @Assert\File(
+     *     maxSize = "2M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
+     *     mimeTypesMessage = "Le fichier choisi ne correspond pas à un fichier valide",
+     *     notFoundMessage = "Le fichier n'a pas été trouvé sur le disque",
+     *     uploadErrorMessage = "Erreur dans l'upload du fichier"
+     * )
      */
     private $pic3;
 
