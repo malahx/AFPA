@@ -53,6 +53,8 @@ class DefaultController extends Controller {
         $advertForm->handleRequest($request);
         if ($advertForm->isSubmitted() && $advertForm->isValid()) {
             $advert = $advertForm->getData();
+            $user = $this->getUser();
+            $advert->setUser($user);
             $em = $this->getDoctrine()->getManager();
             $em->persist($advert);
             $em->flush();
