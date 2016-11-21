@@ -1,42 +1,5 @@
 {# home Twig template #}
 {% extends 'TautofBundle:elements:base.html.twig' %}
 {% block body %}
-    <div class="container">
-        <div class="list-group">
-            {% for advert in adverts %}
-                <a href="{{ path('advert', {'id': advert.id}) }}" class="list-group-item row">
-                    <div class="col-md-2 text-center">
-                        {# php bin/console assets:install #}
-                        <img src="{{ asset(advert.pic1) }}" class="img-rounded img-responsive" href="">
-                    </div>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <h2 class="text-center">{{ advert.title | upper }}</h2>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                {{ advert.descr }}
-                            </div>
-                            <br/><br/>
-                            <div class="col-md-12">
-                                <div class="alert alert-info">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <strong>{{ advert.model.make.name }} ({{ advert.model.name }}) {{ advert.year }}</strong>
-                                        </div>
-                                        <div class="col-md-2 text-center">
-                                            {{ advert.km|number_format(2, ',', ' ') }} km
-                                        </div>
-                                        <div class="col-md-5 text-right">
-                                            <span class="badge">{{ advert.cost|number_format(2, ',', ' ') }} €</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            {% endfor %}
-        </div>
-    </div>
+    {% include 'TautofBundle:elements:advertList.html.twig' %}
 {% endblock %}

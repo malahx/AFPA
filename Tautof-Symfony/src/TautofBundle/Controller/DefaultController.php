@@ -56,9 +56,43 @@ class DefaultController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($advert);
             $em->flush();
-             return $this->redirectToRoute('advert', array('id' => $advert->getId()));
+            return $this->redirectToRoute('advert', array('id' => $advert->getId()));
         }
         return $this->render('TautofBundle::advertAdd.html.twig', array('title' => 'Tautof Annonces', 'advertadd' => $advertForm->createView(), 'make' => $makeForm->createView()));
+    }
+
+    /**
+     * @Route("/advertfilter", name="advertfilter")
+     */
+    public function advertFilterAction(Request $request) {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('home');
+        }
+        $make_id = $request->get('make_id');
+        if (!$make_id) {
+            $make_id = -1;
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $repo = $em->getRepository('TautofBundle:Make');
+        $makes = $repo->findAll();
+
+        if ($make_id > -1) {
+            $repo = $em->getRepository('TautofBundle:Advert');
+            $qb = $repo->createQueryBuilder('a')
+                    ->join('a.model', 'mo')
+                    ->addSelect('mo')
+                    ->join('mo.make', 'ma')
+                    ->addSelect('ma')
+                    ->where('ma.id = :make_id')
+                    ->setParameter('make_id', $make_id);
+            $adverts = $qb->getQuery()->getResult();
+        } else {
+            $repo = $em->getRepository('TautofBundle:Advert');
+            $adverts = $repo->findAll();
+        }
+        return $this->render('TautofBundle::advertFilter.html.twig', array('title' => 'Tautof Annonces', 'makes' => $makes, 'adverts' => $adverts, 'make_id' => $make_id));
     }
 
 }
