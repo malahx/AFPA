@@ -2,12 +2,20 @@
 {% extends 'TautofBundle:elements:base.html.twig' %}
 {% block body %}
     <div class="container">
-        <select id="makeFilter" class="form-control" name="makeFilter" placeholder="Marques">';
-            {% if make_id == -1 %}
+        <select id="makeFilter" class="form-control" name="makeFilter" placeholder="Marques">
+            {% if make_id == -1 and currentModel == null %}
                 <option value="" disabled selected>Marque</option>
             {% endif %}
             {% for make in makes %}
                 <option value="{{ make.id }}" {% if make_id == make.id %}selected{% endif %}>{{ make.name }}</option>  
+            {% endfor %}
+        </select>
+        <select id="modelFilter" class="form-control" name="modelFilter" placeholder="Modèle">
+            {% if currentModel == null %}
+                <option value="" disabled selected>Modèle</option>
+            {% endif %}
+            {% for model in models %}
+                <option value="{{ model.id }}" {% if currentModel != null and currentModel.id == model.id %}selected{% endif %}>{{ model.name }}</option>  
             {% endfor %}
         </select>
     </div>
@@ -17,9 +25,12 @@
 {% block javascripts %}
     <script>
         var make = document.getElementById('makeFilter');
-        make.onchange = function() {
-            //location.href="/advertfilter?make_id=" + this.value;
-            location.href="{{ path('advertfilter') }}?make_id=" + this.value;
+        var model = document.getElementById('modelFilter');
+        make.onchange = function () {
+            location.href = "{{ path('advertfilter') }}?make_id=" + this.value;
+        };
+        model.onchange = function () {
+            location.href = "{{ path('advertfilter') }}?model_id=" + this.value;
         };
     </script>
 {% endblock %}

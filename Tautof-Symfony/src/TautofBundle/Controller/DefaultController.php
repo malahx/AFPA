@@ -3,6 +3,7 @@
 namespace TautofBundle\Controller;
 
 use TautofBundle\Entity\Advert;
+use TautofBundle\Entity\Model;
 use TautofBundle\Form\AdvertType;
 use TautofBundle\Form\MakeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,7 +36,7 @@ class DefaultController extends Controller {
     public function advertAction($id) {
         $repo = $this->getDoctrine()->getRepository('TautofBundle:Advert');
         $advert = $repo->findOneBy(array('id' => $id));
-        return $this->render('TautofBundle::advert.html.twig', array('title' => 'Tautof Annonces', 'advert' => $advert));
+        return $this->render('TautofBundle::advert.html.twig', array('title' => 'Tautof Annonces - ' + $advert . title, 'advert' => $advert));
     }
 
     /**
@@ -67,7 +68,7 @@ class DefaultController extends Controller {
             $em->flush();
             return $this->redirectToRoute('advert', array('id' => $advert->getId()));
         }
-        return $this->render('TautofBundle::advertAdd.html.twig', array('title' => 'Tautof Annonces', 'advertadd' => $advertForm->createView(), 'make' => $makeForm->createView()));
+        return $this->render('TautofBundle::advertAdd.html.twig', array('title' => 'Tautof Annonces - Ajouter', 'advertadd' => $advertForm->createView(), 'make' => $makeForm->createView()));
     }
 
     private function picUpload($file) {
@@ -87,17 +88,32 @@ class DefaultController extends Controller {
      * @Route("/advertfilter", name="advertfilter")
      */
     public function advertFilterAction(Request $request) {
+
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('home');
         }
+
         $make_id = $request->get('make_id');
+        $model_id = $request->get('model_id');
+
+        //$currentModel = null;
+        $em = $this->getDoctrine()->getManager();
+
         if (!$make_id) {
             $make_id = -1;
         }
-
-        $em = $this->getDoctrine()->getManager();
+        if (!$model_id) {
+            $model_id = -1;
+            $currentModel = null;
+        } else {
+            $repoModel = $em->getRepository('TautofBundle:Model');
+            $currentModel = $repoModel->findOneBy(array('id' => $model_id));
+            $make_id = $currentModel->getMake()->getid();
+        }
 
         $repo = $em->getRepository('TautofBundle:Advert');
+
+        // Liste des marques
         $qb = $repo->createQueryBuilder('a')
                 ->join('a.model', 'mo')
                 ->join('mo.make', 'ma')
@@ -105,20 +121,49 @@ class DefaultController extends Controller {
                 ->groupby('ma.id');
         $makes = $qb->getQuery()->getResult();
 
+        // Liste des modèles
+        $qb = $repo->createQueryBuilder('a')
+                ->join('a.model', 'mo')
+                ->join('mo.make', 'ma')
+                ->select('mo.id,mo.name,ma.id make_id')
+                ->groupby('mo.id');
         if ($make_id > -1) {
+            $qb->where('ma.id = :make_id')
+                    ->setParameter('make_id', $make_id);
+        }
+        $models = $qb->getQuery()->getResult();
+        
+        if ($model_id > -1) {
+            // Si un modèle est sélectionné
             $qb = $repo->createQueryBuilder('a')
                     ->join('a.model', 'mo')
                     ->addSelect('mo')
                     ->join('mo.make', 'ma')
                     ->addSelect('ma')
+                    ->where('mo.id = :model_id')
+                    ->setParameter('model_id', $model_id);
+            $adverts = $qb->getQuery()->getResult();
+        } else if ($make_id > -1) {
+            // Si une marque est sélectionné
+            $qb = $repo->createQueryBuilder('a')
+                    ->join('a.model', 'mo')
+                    ->join('mo.make', 'ma')
                     ->where('ma.id = :make_id')
                     ->setParameter('make_id', $make_id);
             $adverts = $qb->getQuery()->getResult();
         } else {
+            // Si rien n'est sélectionné
             $repo = $em->getRepository('TautofBundle:Advert');
             $adverts = $repo->findAll();
         }
-        return $this->render('TautofBundle::advertFilter.html.twig', array('title' => 'Tautof Annonces', 'makes' => $makes, 'adverts' => $adverts, 'make_id' => $make_id));
+        return $this->render('TautofBundle::advertFilter.html.twig', array(
+                    'title' => 'Tautof Annonces - Filtre',
+                    'makes' => $makes,
+                    'models' => $models,
+                    'adverts' => $adverts,
+                    'make_id' => $make_id,
+                    'model_id' => $model_id,
+                    'currentModel' => $currentModel));
     }
 
 }
