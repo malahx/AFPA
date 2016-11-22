@@ -4,7 +4,6 @@ namespace TautofBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -12,12 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AdvertType extends AbstractType {
 
-    private $make_id;
-
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $this->make_id = $options['make_id'];
         $builder->add('model', EntityType::class, array(
-                    'label' => false, 
+                    'label' => false,
                     'required' => true,
                     'placeholder' => 'Modèle',
                     'class' => 'TautofBundle:Model'))
@@ -31,12 +27,6 @@ class AdvertType extends AbstractType {
                 ->add('pic2', FileType::class, array('label' => 'Photo 2 :', 'required' => false, 'attr' => array('placeholder' => 'Photo 2')))
                 ->add('pic3', FileType::class, array('label' => 'Photo 3 :', 'required' => false, 'attr' => array('placeholder' => 'Photo 3')))
                 ->add('advertadd', SubmitType::class);
-    }
-
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults(array(
-            'make_id' => -1,
-        ));
     }
 
 }
