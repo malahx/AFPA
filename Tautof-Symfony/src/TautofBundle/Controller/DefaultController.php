@@ -49,9 +49,9 @@ class DefaultController extends Controller {
           } */
         $repo = $this->getDoctrine()->getRepository('TautofBundle:Make');
         $make = $repo->findOneBy(array('id' => $make_id));
-        $makeForm = $this->createForm(MakeType::class, $make, array('make' => $make));
+        $makeForm = $this->createForm(MakeType::class, $make);
         $advert = new Advert();
-        $advertForm = $this->createForm(AdvertType::class, $advert, array('make_id' => $make_id));
+        $advertForm = $this->createForm(AdvertType::class, $advert);
         $advertForm->handleRequest($request);
         if ($advertForm->isSubmitted() && $advertForm->isValid()) {
             $advert = $advertForm->getData();

@@ -8,18 +8,18 @@ class AdvertRepository extends EntityRepository {
 
     public function findAllMakes() {
         $qb = $this->createQueryBuilder('a')
+                ->select('ma.id, ma.name')
                 ->join('a.model', 'mo')
                 ->join('mo.make', 'ma')
-                ->select('ma.id,ma.name')
                 ->groupby('ma.id');
         return $qb->getQuery()->getResult();
     }
 
     public function findAllModels($make_id = -1) {
         $qb = $this->createQueryBuilder('a')
+                ->select('mo.id, mo.name, ma.id make_id')
                 ->join('a.model', 'mo')
                 ->join('mo.make', 'ma')
-                ->select('mo.id,mo.name,ma.id make_id')
                 ->groupby('mo.id');
         if ($make_id > -1) {
             $qb->where('ma.id = :make_id')

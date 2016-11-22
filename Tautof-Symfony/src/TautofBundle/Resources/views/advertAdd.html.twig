@@ -10,9 +10,56 @@
 {% endblock %}
 {% block javascripts %}
     <script>
-        var make = document.getElementById('make_name');
-        make.onchange = function() {
-            location.href="{{ path('advertadd') }}" + this.value;
+        var url = '{{ path('advertadd') }}';
+        var makeEl = document.getElementById('make_name');
+        var modelEl = document.getElementById('advert_model');
+        makeEl.onchange = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "{{ path('models') }}?make_id=" + this.value, true);
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var models = JSON.parse(xhr.responseText);
+                        modelEl.innerHTML = '<option value="-1" selected>Modèle</option>';
+                        for (var model of models) {
+                            var opt = document.createElement('option');
+                            opt.value = model['id'];
+                            opt.innerHTML = model['name'];
+                            modelEl.appendChild(opt);
+                        }
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            };
+            xhr.onerror = function (e) {
+                console.error(xhr.statusText);
+            };
+            xhr.send(null);
         };
+
+        modelEl.onchange = function () {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "{{ path('modelMake') }}?model_id=" + this.value, true);
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var make_id = xhr.responseText;
+                        makeEl.selectedIndex = make_id;
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            };
+            xhr.onerror = function (e) {
+                console.error(xhr.statusText);
+            };
+            xhr.send(null);
+        }
+        /*
+         var make = document.getElementById('make_name');
+         make.onchange = function() {
+         location.href=url + this.value;
+         };*/
     </script>
 {% endblock %}
