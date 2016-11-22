@@ -44,9 +44,10 @@ class DefaultController extends Controller {
      */
     public function advertAddAction($make_id, Request $request) {
         // Solution plus propre de récupérer $make_id avec un get, mais je garde cette solution pour rappel
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        /* Login géré dans app/config/security.yml
+         * if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('home');
-        }
+        }*/
         $repo = $this->getDoctrine()->getRepository('TautofBundle:Make');
         $make = $repo->findOneBy(array('id' => $make_id));
         $makeForm = $this->createForm(MakeType::class, $make, array('make' => $make));
@@ -88,11 +89,6 @@ class DefaultController extends Controller {
      * @Route("/advertfilter", name="advertfilter")
      */
     public function advertFilterAction(Request $request) {
-
-        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('home');
-        }
-
         $make_id = $request->get('make_id');
         $model_id = $request->get('model_id');
 
