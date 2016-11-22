@@ -3,6 +3,7 @@
 namespace TautofBundle\Controller;
 
 use TautofBundle\Entity\Advert;
+use TautofBundle\Entity\Make;
 use TautofBundle\Form\AdvertType;
 use TautofBundle\Form\MakeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,16 +40,10 @@ class DefaultController extends Controller {
     }
 
     /**
-     * @Route("/advertadd{make_id}", name="advertadd", defaults={"make_id" = -1})
+     * @Route("/advertadd", name="advertadd")
      */
-    public function advertAddAction($make_id, Request $request) {
-        // Solution plus propre de récupérer $make_id avec un get, mais je garde cette solution pour rappel
-        /* Login géré dans app/config/security.yml
-         * if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-          return $this->redirectToRoute('home');
-          } */
-        $repo = $this->getDoctrine()->getRepository('TautofBundle:Make');
-        $make = $repo->findOneBy(array('id' => $make_id));
+    public function advertAddAction(Request $request) {
+        $make = new Make();
         $makeForm = $this->createForm(MakeType::class, $make);
         $advert = new Advert();
         $advertForm = $this->createForm(AdvertType::class, $advert);
