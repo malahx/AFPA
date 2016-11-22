@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Advert
  *
  * @ORM\Table(name="advert", indexes={@ORM\Index(name="join_utilisateur", columns={"user_id"}), @ORM\Index(name="id_couleur", columns={"color_id"}), @ORM\Index(name="id_marque", columns={"model_id"}), @ORM\Index(name="model_id", columns={"model_id", "color_id", "user_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TautofBundle\Repository\AdvertRepository")
  */
 class Advert {
 

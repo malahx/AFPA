@@ -3,7 +3,6 @@
 namespace TautofBundle\Controller;
 
 use TautofBundle\Entity\Advert;
-use TautofBundle\Entity\Model;
 use TautofBundle\Form\AdvertType;
 use TautofBundle\Form\MakeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -46,8 +45,8 @@ class DefaultController extends Controller {
         // Solution plus propre de récupérer $make_id avec un get, mais je garde cette solution pour rappel
         /* Login géré dans app/config/security.yml
          * if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('home');
-        }*/
+          return $this->redirectToRoute('home');
+          } */
         $repo = $this->getDoctrine()->getRepository('TautofBundle:Make');
         $make = $repo->findOneBy(array('id' => $make_id));
         $makeForm = $this->createForm(MakeType::class, $make, array('make' => $make));
@@ -102,54 +101,25 @@ class DefaultController extends Controller {
             $model_id = -1;
             $currentModel = null;
         } else {
-            $repoModel = $em->getRepository('TautofBundle:Model');
-            $currentModel = $repoModel->findOneBy(array('id' => $model_id));
+            $repo = $em->getRepository('TautofBundle:Model');
+            $currentModel = $repo->findOneBy(array('id' => $model_id));
             $make_id = $currentModel->getMake()->getid();
         }
 
         $repo = $em->getRepository('TautofBundle:Advert');
 
         // Liste des marques
-        $qb = $repo->createQueryBuilder('a')
-                ->join('a.model', 'mo')
-                ->join('mo.make', 'ma')
-                ->select('ma.id,ma.name')
-                ->groupby('ma.id');
-        $makes = $qb->getQuery()->getResult();
+        $makes = $repo->findAllMakes();
 
         // Liste des modèles
-        $qb = $repo->createQueryBuilder('a')
-                ->join('a.model', 'mo')
-                ->join('mo.make', 'ma')
-                ->select('mo.id,mo.name,ma.id make_id')
-                ->groupby('mo.id');
-        if ($make_id > -1) {
-            $qb->where('ma.id = :make_id')
-                    ->setParameter('make_id', $make_id);
-        }
-        $models = $qb->getQuery()->getResult();
-        
+        $models = $repo->findAllModels($make_id);
+
+        // Liste des annonces filtrées
         if ($model_id > -1) {
-            // Si un modèle est sélectionné
-            $qb = $repo->createQueryBuilder('a')
-                    ->join('a.model', 'mo')
-                    ->addSelect('mo')
-                    ->join('mo.make', 'ma')
-                    ->addSelect('ma')
-                    ->where('mo.id = :model_id')
-                    ->setParameter('model_id', $model_id);
-            $adverts = $qb->getQuery()->getResult();
+            $adverts = $repo->filterByModel($model_id);
         } else if ($make_id > -1) {
-            // Si une marque est sélectionné
-            $qb = $repo->createQueryBuilder('a')
-                    ->join('a.model', 'mo')
-                    ->join('mo.make', 'ma')
-                    ->where('ma.id = :make_id')
-                    ->setParameter('make_id', $make_id);
-            $adverts = $qb->getQuery()->getResult();
+            $adverts = $repo->filterByMake($make_id);
         } else {
-            // Si rien n'est sélectionné
-            $repo = $em->getRepository('TautofBundle:Advert');
             $adverts = $repo->findAll();
         }
         return $this->render('TautofBundle::advertFilter.html.twig', array(
@@ -158,7 +128,6 @@ class DefaultController extends Controller {
                     'models' => $models,
                     'adverts' => $adverts,
                     'make_id' => $make_id,
-                    'model_id' => $model_id,
                     'currentModel' => $currentModel));
     }
 
