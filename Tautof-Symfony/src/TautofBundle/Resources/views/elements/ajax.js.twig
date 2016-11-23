@@ -1,0 +1,94 @@
+{# ajax.js Twig template #}
+<script>
+    var makeEl = document.getElementById('make_name');
+    var modelEl = document.getElementById('advert_model');
+    var advertsEl = document.getElementById('advertsFilter');
+
+    makeEl.onchange = function () {
+        var make_id = this.value;
+        var xhr = new XMLHttpRequest();
+
+
+        var url = '{{ path('apiModels') }}?make_id=' + make_id;
+        xhr.open("GET", url, true);
+        xhr.onload = function (e) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var models = JSON.parse(xhr.responseText);
+                    modelEl.innerHTML = '<option value="-1" selected>Modèle</option>';
+                    for (var model of models) {
+                        var opt = document.createElement('option');
+                        opt.value = model['id'];
+                        opt.innerHTML = model['name'];
+                        modelEl.appendChild(opt);
+                    }
+                } else {
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+        xhr.onerror = function (e) {
+            console.error(xhr.statusText);
+        };
+        xhr.send(null);
+        refresh(make_id, -1);
+    };
+
+    modelEl.onchange = function () {
+        var model_id = this.value;
+        var url = '{{ path('apiModel') }}?model_id=' + model_id;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onload = function (e) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var model = JSON.parse(xhr.responseText);
+                    if (!model) {
+                        console.error(xhr.statusText);
+                    }
+                    var make_id = model['make_id'];
+                    makes = makeEl.options;
+                    for (make of makes) {
+                        if (parseInt(make.value) === make_id) {
+                            make.selected = true;
+                            break;
+                        }
+                    }
+                } else {
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+        xhr.onerror = function (e) {
+            console.error(xhr.statusText);
+        };
+        xhr.send(null);
+        refresh(makeEl.value, model_id);
+    };
+
+    function ajaxVar(url, name, value) {
+        return url.replace(name, value);
+    }
+
+    function refresh(make_id, model_id) {
+        if (!advertsEl) {
+            return;
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "{{ path('apiAdverts') }}?model_id=" + model_id + "&make_id=" + make_id, true);
+        xhr.onload = function (e) {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    var html = xhr.responseText;
+                    advertsEl.innerHTML = html;
+                } else {
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+        xhr.onerror = function (e) {
+            console.error(xhr.statusText);
+        };
+        xhr.send(null);
+    }
+</script>

@@ -9,8 +9,51 @@ use TautofBundle\Form\MakeType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class DefaultController extends Controller {
+    /* STATIC FUNCTIONS */
+
+    static function serializeJSON($obj, $ignore = false) {
+        $encoders = array(new JsonEncoder());
+
+        $normalizer = new ObjectNormalizer();
+
+        if ($ignore) {
+            $normalizer->setIgnoredAttributes($ignore);
+        }
+
+        $normalizers = array($normalizer);
+
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $json = $serializer->serialize($obj, 'json');
+
+        $response = new Response($json);
+        $response->setStatusCode(Response::HTTP_OK);
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /* OTHERS FUNCTIONS */
+
+    private function picUpload($file) {
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move(DefaultController::uploadDir(), $fileName);
+        return DefaultController::uploadDir($fileName);
+    }
+
+    private function uploadDir($file = null) {
+        if ($file) {
+            return $this->getParameter('uploads_directory') . $file;
+        }
+        return $this->getParameter('root_directory') . $this->getParameter('uploads_directory');
+    }
+
+    /* ROUTE FUNCTIONS */
 
     /**
      * @Route("/", name="home")
@@ -66,19 +109,6 @@ class DefaultController extends Controller {
         return $this->render('TautofBundle::advertAdd.html.twig', array('title' => 'Tautof Annonces - Ajouter', 'advertadd' => $advertForm->createView(), 'make' => $makeForm->createView()));
     }
 
-    private function picUpload($file) {
-        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-        $file->move(DefaultController::uploadDir(), $fileName);
-        return DefaultController::uploadDir($fileName);
-    }
-
-    private function uploadDir($file = null) {
-        if ($file) {
-            return $this->getParameter('uploads_directory') . $file;
-        }
-        return $this->getParameter('root_directory') . $this->getParameter('uploads_directory');
-    }
-
     /**
      * @Route("/advertfilter", name="advertfilter")
      */
@@ -86,21 +116,9 @@ class DefaultController extends Controller {
         $make_id = $request->get('make_id');
         $model_id = $request->get('model_id');
 
-        //$currentModel = null;
+        $currentModel = null;
+
         $em = $this->getDoctrine()->getManager();
-
-        if (!$make_id) {
-            $make_id = -1;
-        }
-        if (!$model_id) {
-            $model_id = -1;
-            $currentModel = null;
-        } else {
-            $repo = $em->getRepository('TautofBundle:Model');
-            $currentModel = $repo->findOneBy(array('id' => $model_id));
-            $make_id = $currentModel->getMake()->getid();
-        }
-
         $repo = $em->getRepository('TautofBundle:Advert');
 
         // Liste des marques
@@ -110,9 +128,12 @@ class DefaultController extends Controller {
         $models = $repo->findAllModels($make_id);
 
         // Liste des annonces filtrées
-        if ($model_id > -1) {
+        if ($model_id) {
+            $repoModel = $em->getRepository('TautofBundle:Model');
+            $currentModel = $repoModel->findOneBy(array('id' => $model_id));
+            $make_id = $currentModel->getMake()->getid();
             $adverts = $repo->filterByModel($model_id);
-        } else if ($make_id > -1) {
+        } else if ($make_id) {
             $adverts = $repo->filterByMake($make_id);
         } else {
             $adverts = $repo->findAll();

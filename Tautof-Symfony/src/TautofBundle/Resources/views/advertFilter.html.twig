@@ -2,35 +2,28 @@
 {% extends 'TautofBundle:elements:base.html.twig' %}
 {% block body %}
     <div class="container">
-        <select id="makeFilter" class="form-control" name="makeFilter" placeholder="Marques">
-            {% if make_id == -1 and currentModel == null %}
-                <option value="" disabled selected>Marque</option>
-            {% endif %}
+        <select id="make_name" class="form-control" name="makeFilter" placeholder="Marques">
+
+            <option value="-1" {% if make_id == -1 and currentModel == null %}selected{% endif %}>Marque</option>
+
             {% for make in makes %}
                 <option value="{{ make.id }}" {% if make_id == make.id %}selected{% endif %}>{{ make.name }}</option>  
             {% endfor %}
         </select>
-        <select id="modelFilter" class="form-control" name="modelFilter" placeholder="Modèle">
-            {% if currentModel == null %}
-                <option value="" disabled selected>Modèle</option>
-            {% endif %}
+        <select id="advert_model" class="form-control" name="modelFilter" placeholder="Modèle">
+
+            <option value="-1" {% if currentModel == null %}selected{% endif %}>Modèle</option>
+
             {% for model in models %}
                 <option value="{{ model.id }}" {% if currentModel != null and currentModel.id == model.id %}selected{% endif %}>{{ model.name }}</option>  
             {% endfor %}
         </select>
     </div>
     <br><br>
-    {% include 'TautofBundle:elements:advertList.html.twig' %}
+    <div id="advertsFilter">
+        {% include 'TautofBundle:elements:advertList.html.twig' %}
+    </div>
 {% endblock %}
 {% block javascripts %}
-    <script>
-        var make = document.getElementById('makeFilter');
-        var model = document.getElementById('modelFilter');
-        make.onchange = function () {
-            location.href = "{{ path('advertfilter') }}?make_id=" + this.value;
-        };
-        model.onchange = function () {
-            location.href = "{{ path('advertfilter') }}?model_id=" + this.value;
-        };
-    </script>
+    {% include 'TautofBundle:elements:ajax.js.twig' %}
 {% endblock %}

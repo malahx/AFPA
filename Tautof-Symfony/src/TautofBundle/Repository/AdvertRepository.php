@@ -15,13 +15,13 @@ class AdvertRepository extends EntityRepository {
         return $qb->getQuery()->getResult();
     }
 
-    public function findAllModels($make_id = -1) {
+    public function findAllModels($make_id = false) {
         $qb = $this->createQueryBuilder('a')
                 ->select('mo.id, mo.name, ma.id make_id')
                 ->join('a.model', 'mo')
                 ->join('mo.make', 'ma')
                 ->groupby('mo.id');
-        if ($make_id > -1) {
+        if ($make_id) {
             $qb->where('ma.id = :make_id')
                     ->setParameter('make_id', $make_id);
         }
