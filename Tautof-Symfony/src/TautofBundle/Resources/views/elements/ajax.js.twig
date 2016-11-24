@@ -8,8 +8,10 @@
     var orderbyEl = document.getElementById('orderby');
 
     makeEl.onchange = function () {
+        refresh();
+
         var xhr = new XMLHttpRequest();
-        var url = '{{ path('apiModels') }}' + ajaxVar();
+        var url = '{{ path('apiModelsAdverts') }}?make_id=' + this.value;
         xhr.open("GET", url, true);
         xhr.onload = function (e) {
             if (xhr.readyState === 4) {
@@ -31,11 +33,14 @@
             console.error(xhr.statusText);
         };
         xhr.send(null);
-        refresh();
     };
 
     modelEl.onchange = function () {
-        var url = '{{ path('apiModel') }}' + ajaxVar();
+        refresh();
+        if (this.value === "-1") {
+            return;
+        }
+        var url = '{{ path('apiModel') }}?model_id=' + this.value;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
         xhr.onload = function (e) {
@@ -43,9 +48,10 @@
                 if (xhr.status === 200) {
                     var model = JSON.parse(xhr.responseText);
                     if (!model) {
-                        console.error(xhr.statusText);
+                        console.error('Not a model');
+                        return;
                     }
-                    var make_id = model['make_id'];
+                    var make_id = model['make']['id'];
                     makes = makeEl.options;
                     for (make of makes) {
                         if (parseInt(make.value) === make_id) {
@@ -62,7 +68,6 @@
             console.error(xhr.statusText);
         };
         xhr.send(null);
-        refresh();
     };
     if (sortbyEl) {
         sortbyEl.onchange = function () {
@@ -91,16 +96,16 @@
     function ajaxVar() {
         var rtn = "?";
         if (makeEl.value > -1) {
-            rtn += "make_id=" + makeEl.value;
+            rtn += "make_id=" + makeEl.value + "&";
         }
         if (modelEl.value > -1) {
-            rtn = "&model_id=" + modelEl.value;
+            rtn += "model_id=" + modelEl.value + "&";
         }
         if (sortbyEl && sortbyEl.value > -1) {
-            rtn += "&sortby=" + sortbyEl.value;
+            rtn += "sortby=" + sortbyEl.value + "&";
         }
         if (orderbyEl && orderbyEl.value !== "") {
-            rtn += "&orderby=" + orderbyEl.value;
+            rtn += "orderby=" + orderbyEl.value + "&";
         }
         return rtn;
     }

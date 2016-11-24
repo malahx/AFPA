@@ -38,5 +38,18 @@ class ModelController extends Controller {
 
         return DefaultController::serializeJSON($model);
     }
+    
+    /**
+     * @Route("/api/models/adverts", name="apiModelsAdverts")
+     */
+    public function modelsAdvertsAction(Request $request) {
+        
+        $make_id = $request->query->get('make_id');
 
+        $repo = $this->getDoctrine()->getRepository('TautofBundle:Model');
+
+        $model = $repo->findFromAdverts($make_id);
+
+        return DefaultController::serializeJSON($model);
+    }
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Model
  *
  * @ORM\Table(name="model", indexes={@ORM\Index(name="join_marque", columns={"make_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="TautofBundle\Repository\ModelRepository")
  */
 class Model {
 
