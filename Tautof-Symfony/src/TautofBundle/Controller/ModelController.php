@@ -26,12 +26,10 @@ class ModelController extends Controller {
     }
 
     /**
-     * @Route("/api/model", name="apiModel")
+     * @Route("/api/model/{model_id}", name="apiModel")
      */
-    public function modelAction(Request $request) {
+    public function modelAction($model_id) {
         
-        $model_id = $request->query->get('model_id');
-
         $repo = $this->getDoctrine()->getRepository('TautofBundle:Model');
 
         $model = $repo->findOneBy(array('id' => $model_id));
