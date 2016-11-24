@@ -1,15 +1,15 @@
 {# ajax.js Twig template #}
 <script>
+
     var makeEl = document.getElementById('make_name');
     var modelEl = document.getElementById('advert_model');
     var advertsEl = document.getElementById('advertsFilter');
+    var sortbyEl = document.getElementById('sortby');
+    var orderbyEl = document.getElementById('orderby');
 
     makeEl.onchange = function () {
-        var make_id = this.value;
         var xhr = new XMLHttpRequest();
-
-
-        var url = '{{ path('apiModels') }}?make_id=' + make_id;
+        var url = '{{ path('apiModels') }}' + ajaxVar();
         xhr.open("GET", url, true);
         xhr.onload = function (e) {
             if (xhr.readyState === 4) {
@@ -31,12 +31,11 @@
             console.error(xhr.statusText);
         };
         xhr.send(null);
-        refresh(make_id, -1);
+        refresh();
     };
 
     modelEl.onchange = function () {
-        var model_id = this.value;
-        var url = '{{ path('apiModel') }}?model_id=' + model_id;
+        var url = '{{ path('apiModel') }}' + ajaxVar();
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
         xhr.onload = function (e) {
@@ -63,19 +62,55 @@
             console.error(xhr.statusText);
         };
         xhr.send(null);
-        refresh(makeEl.value, model_id);
+        refresh();
     };
-
-    function ajaxVar(url, name, value) {
-        return url.replace(name, value);
+    if (sortbyEl) {
+        sortbyEl.onchange = function () {
+            if (this.value !== "-1") {
+                orderbyEl.disabled = false;
+                if (orderbyEl.selectedIndex === 0) {
+                    orderbyEl.selectedIndex = 1;
+                }
+            } else {
+                orderbyEl.disabled = true;
+                orderbyEl.selectedIndex = 0;
+            }
+            refresh();
+        };
     }
 
-    function refresh(make_id, model_id) {
+    if (orderbyEl) {
+        orderbyEl.onchange = function () {
+            refresh();
+        };
+    }
+    /*function ajaxVar(url, name, value) {
+     return url.replace(name, value);
+     }*/
+
+    function ajaxVar() {
+        var rtn = "?";
+        if (makeEl.value > -1) {
+            rtn += "make_id=" + makeEl.value;
+        }
+        if (modelEl.value > -1) {
+            rtn = "&model_id=" + modelEl.value;
+        }
+        if (sortbyEl && sortbyEl.value > -1) {
+            rtn += "&sortby=" + sortbyEl.value;
+        }
+        if (orderbyEl && orderbyEl.value !== "") {
+            rtn += "&orderby=" + orderbyEl.value;
+        }
+        return rtn;
+    }
+
+    function refresh() {
         if (!advertsEl) {
             return;
         }
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", "{{ path('apiAdverts') }}?model_id=" + model_id + "&make_id=" + make_id, true);
+        xhr.open("GET", "{{ path('apiAdverts') }}" + ajaxVar(), true);
         xhr.onload = function (e) {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {

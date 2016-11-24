@@ -15,15 +15,17 @@ class AdvertController extends Controller {
 
         $model_id = $request->query->get('model_id');
         $make_id = $request->query->get('make_id');
+        $sortby = $request->query->get('sortby');
+        $orderby = $request->query->get('orderby');
 
         $repo = $this->getDoctrine()->getRepository('TautofBundle:Advert');
 
         if ($model_id && $model_id > -1) {
-            $adverts = $repo->filterByModel($model_id);
+            $adverts = $repo->filterByModel($model_id, $sortby, $orderby);
         } else if ($make_id && $make_id > -1) {
-            $adverts = $repo->filterByMake($make_id);
+            $adverts = $repo->filterByMake($make_id, $sortby, $orderby);
         } else {
-            $adverts = $repo->findAll();
+            $adverts = $repo->SortAllBy($sortby, $orderby);
         }
         return $this->render('TautofBundle:elements:advertList.html.twig', array('adverts' => $adverts));
     }

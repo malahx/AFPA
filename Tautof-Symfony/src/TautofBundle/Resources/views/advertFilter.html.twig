@@ -18,6 +18,26 @@
                 <option value="{{ model.id }}" {% if currentModel != null and currentModel.id == model.id %}selected{% endif %}>{{ model.name }}</option>  
             {% endfor %}
         </select>
+        <br><br>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-10">
+                <select id="sortby" class="form-control" name="sortby" placeholder="Trier">
+
+                    <option value="-1" selected>Trier</option>
+                    <option value="0">Prix</option>  
+                    <option value="1">Kilométrage</option>  
+                    <option value="2">Année</option>  
+
+                </select>
+                <select id="orderby" class="form-control" name="orderby" placeholder="Trier" disabled>
+
+                    <option value="" selected>Ordre</option>
+                    <option value="ASC">ASC</option>  
+                    <option value="DESC">DESC</option>  
+
+                </select>
+            </div>
+        </div>
     </div>
     <br><br>
     <div id="advertsFilter">
