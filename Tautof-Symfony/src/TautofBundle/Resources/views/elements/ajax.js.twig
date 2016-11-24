@@ -1,134 +1,183 @@
 {# ajax.js Twig template #}
 <script>
 
+    // Variables Globales de DOM
     var makeEl = document.getElementById('make_name');
     var modelEl = document.getElementById('advert_model');
     var advertsEl = document.getElementById('advertsFilter');
     var sortbyEl = document.getElementById('sortby');
     var orderbyEl = document.getElementById('orderby');
 
+    // Evenements sur les séletions
     makeEl.onchange = function () {
-        refresh();
-
-        var xhr = new XMLHttpRequest();
-        var url = '{{ path('apiModelsAdverts') }}?make_id=' + this.value;
-        xhr.open("GET", url, true);
-        xhr.onload = function (e) {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    var models = JSON.parse(xhr.responseText);
-                    modelEl.innerHTML = '<option value="-1" selected>Modèle</option>';
-                    for (var model of models) {
-                        var opt = document.createElement('option');
-                        opt.value = model['id'];
-                        opt.innerHTML = model['name'];
-                        modelEl.appendChild(opt);
-                    }
-                } else {
-                    console.error(xhr.statusText);
-                }
-            }
-        };
-        xhr.onerror = function (e) {
-            console.error(xhr.statusText);
-        };
-        xhr.send(null);
+        
+        refresh.adverts();
+        refresh.models(this.value);
+        
     };
 
     modelEl.onchange = function () {
-        refresh();
-        if (this.value === "-1") {
-            return;
-        }
-        var url = '{{ path('apiModel') }}?model_id=' + this.value;
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-        xhr.onload = function (e) {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    var model = JSON.parse(xhr.responseText);
-                    if (!model) {
-                        console.error('Not a model');
-                        return;
-                    }
-                    var make_id = model['make']['id'];
-                    makes = makeEl.options;
-                    for (make of makes) {
-                        if (parseInt(make.value) === make_id) {
-                            make.selected = true;
-                            break;
-                        }
-                    }
-                } else {
-                    console.error(xhr.statusText);
-                }
-            }
-        };
-        xhr.onerror = function (e) {
-            console.error(xhr.statusText);
-        };
-        xhr.send(null);
+        
+        refresh.adverts();
+        refresh.selectedMake(this.value);
+        
     };
+
     if (sortbyEl) {
         sortbyEl.onchange = function () {
+
             if (this.value !== "-1") {
+                
                 orderbyEl.disabled = false;
+                
                 if (orderbyEl.selectedIndex === 0) {
                     orderbyEl.selectedIndex = 1;
                 }
+                
             } else {
+                
                 orderbyEl.disabled = true;
                 orderbyEl.selectedIndex = 0;
+                
             }
-            refresh();
+
+            refresh.adverts();
+            
         };
     }
 
     if (orderbyEl) {
         orderbyEl.onchange = function () {
-            refresh();
+
+            refresh.adverts();
+
         };
     }
     /*function ajaxVar(url, name, value) {
      return url.replace(name, value);
      }*/
 
-    function ajaxVar() {
-        var rtn = "?";
-        if (makeEl.value > -1) {
-            rtn += "make_id=" + makeEl.value + "&";
-        }
-        if (modelEl.value > -1) {
-            rtn += "model_id=" + modelEl.value + "&";
-        }
-        if (sortbyEl && sortbyEl.value > -1) {
-            rtn += "sortby=" + sortbyEl.value + "&";
-        }
-        if (orderbyEl && orderbyEl.value !== "") {
-            rtn += "orderby=" + orderbyEl.value + "&";
-        }
-        return rtn;
-    }
+    // Fonctions de mise à jour des élements
+    var refresh = {
 
-    function refresh() {
-        if (!advertsEl) {
-            return;
-        }
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "{{ path('apiAdverts') }}" + ajaxVar(), true);
-        xhr.onload = function (e) {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    var html = xhr.responseText;
-                    advertsEl.innerHTML = html;
-                } else {
-                    console.error(xhr.statusText);
-                }
+        // Ajout de toutes les variables nécessiares
+        varsAdd: function (url) {
+            
+            url += "?";
+            
+            if (makeEl.value > -1) {
+                url += "make_id=" + makeEl.value + "&";
             }
-        };
-        xhr.onerror = function (e) {
-            console.error(xhr.statusText);
-        };
-        xhr.send(null);
-    }
+            
+            if (modelEl.value > -1) {
+                url += "model_id=" + modelEl.value + "&";
+            }
+            
+            if (sortbyEl && sortbyEl.value > -1) {
+                url += "sortby=" + sortbyEl.value + "&";
+            }
+            
+            if (orderbyEl && orderbyEl.value !== "") {
+                url += "orderby=" + orderbyEl.value + "&";
+            }
+            
+            return url;
+            
+        },
+
+        // Mise à jour des annonces
+        adverts: function () {
+
+            var url = refresh.varsAdd("{{ path('apiAdverts') }}");
+            var callback = function (xhr) {
+                var html = xhr.responseText;
+                advertsEl.innerHTML = html;
+            };
+
+            refresh.connect(url, callback);
+
+        },
+
+        // Mise à jour de la marque sélectionnée
+        selectedMake: function (model_id) {
+
+            var url = '{{ path('apiModel') }}?model_id=' + model_id;
+            var callback = function (xhr) {
+                
+                var model = JSON.parse(xhr.responseText);
+                
+                if (!model) {
+                    console.error('Not a model');
+                    return;
+                }
+                
+                var make_id = model['make']['id'];
+                makes = makeEl.options;
+                
+                for (make of makes) {
+                    if (parseInt(make.value) === make_id) {
+                        make.selected = true;
+                        break;
+                    }
+                }
+                
+            };
+
+            refresh.connect(url, callback);
+
+        },
+
+        // Mise à jour des modèles en fonctions des marques (et des annonces)
+        models: function (make_id) {
+            
+            {% if app.request.get('_route') == 'advertfilter' %}
+                var url = '{{ path('apiModelsAdverts') }}';
+            {% else %}
+                var url = '{{ path('apiModels') }}';
+            {% endif %}
+                
+            if (make_id && make_id > -1) {
+                url += '?make_id=' + make_id;
+            }
+
+            var callback = function (xhr) {
+                var models = JSON.parse(xhr.responseText);
+                modelEl.innerHTML = '<option value="-1" selected>Modèle</option>';
+                for (var model of models) {
+                    var opt = document.createElement('option');
+                    opt.value = model['id'];
+                    opt.innerHTML = model['name'];
+                    modelEl.appendChild(opt);
+                }
+            };
+
+            refresh.connect(url, callback);
+            
+        },
+
+        // Connection à l'API par des requète AJAX
+        connect: function (url, callback) {
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        (callback)(xhr);
+                    } else {
+                        console.error(xhr.statusText);
+                    }
+                }
+            };
+            
+            xhr.onerror = function (e) {
+                console.error(xhr.statusText);
+            };
+            
+            xhr.send(null);
+            
+        }
+
+    };
 </script>
