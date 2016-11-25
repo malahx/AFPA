@@ -1,6 +1,7 @@
 <?php
 
 require_once 'config.inc.php';
+require_once 'dao/playlist.php';
 
 // Démarrage de la session utilisateur
 session_start();
@@ -27,7 +28,7 @@ if (isLogin()) {
         $playlist = playlistDAO::getById($playlistId);
         if (empty($playlist) || $playlist === -1) {
             unset($_SESSION['last_Playlist']);
-            refresh();
+            header('Location: index.php');
         }
     }
 }

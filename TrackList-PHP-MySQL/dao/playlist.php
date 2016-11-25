@@ -9,7 +9,7 @@ class playlistDAO {
     static function getAll() {
         $bdd = dao::connect();
         $select = $bdd->prepare('SELECT h.id, h.name, h.desc, h.jaqurl, h.userid, u.username 
-                                    FROM `playlist-header` h
+                                    FROM `playlist_header` h
                                     INNER JOIN `user` u
                                     ON u.id = h.userid');
         $select->execute();
@@ -20,7 +20,7 @@ class playlistDAO {
         $bdd = dao::connect();
         // requete manque l'user a revoir concat
         $select = $bdd->prepare('SELECT h.id, h.name, h.desc, h.jaqurl, h.userid, u.username
-                                    FROM `playlist-header` h 
+                                    FROM `playlist_header` h 
                                     INNER JOIN `user` u
                                     ON u.id = h.userid
                                     WHERE h.userid = :userid');
@@ -45,7 +45,7 @@ class playlistDAO {
 
     static function getById($playlistId) {
         $bdd = dao::connect();
-        $select = $bdd->prepare('SELECT * FROM `playlist-header` h WHERE h.id = :id');
+        $select = $bdd->prepare('SELECT * FROM `playlist_header` h WHERE h.id = :id');
         $select->bindValue(":id", (int) $playlistId);
         $select->execute();
         if (!$select) {
@@ -67,7 +67,7 @@ class playlistDAO {
     static function insert($playlist) {
         $bdd = dao::connect();
         // Création de la playlist
-        $insert = $bdd->prepare('INSERT INTO `playlist-header` VALUES(0, :name, :desc, :jaq, :userid)');
+        $insert = $bdd->prepare('INSERT INTO `playlist_header` VALUES(0, :name, :desc, :jaq, :userid)');
         $insert->bindValue(":name", $playlist->getName());
         $insert->bindValue(":desc", $playlist->getDesc());
         $insert->bindValue(":userid", (int) $playlist->getUserId());
@@ -93,7 +93,7 @@ class playlistDAO {
 
     static function delete($playlistId) {
         $bdd = dao::connect();
-        $delete = $bdd->prepare('DELETE FROM `playlist-header` WHERE id = :playlistid');
+        $delete = $bdd->prepare('DELETE FROM `playlist_header` WHERE id = :playlistid');
         $delete->bindValue(":playlistid", (int) $playlistId);
         $delete->execute();
     }

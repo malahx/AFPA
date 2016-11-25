@@ -105,8 +105,8 @@ class view {
         global $username, $userid;
         echo '  <ul class="nav navbar-nav navbar-right">';
         if (isLogin()) {
-            echo '  <li><a data-toggle="modal" href="userSettings.php"><span class="glyphicon glyphicon-user"></span> ' . $username . ' (' . $userid . ')' . '</a></li>';
-            echo '  <li><a href="userLogout.php"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
+            echo '  <li><a data-toggle="modal" href="index.php?action=userSettings"><span class="glyphicon glyphicon-user"></span> ' . $username . ' (' . $userid . ')' . '</a></li>';
+            echo '  <li><a href="index.php?action=userLogout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>';
         } else {
             echo '  <li><a data-toggle="modal" href="#registerModal"><span class="glyphicon glyphicon-user"></span> S\'enregistrer</a></li>';
             echo '  <li><a data-toggle="modal" href="#loginModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>';
@@ -131,7 +131,7 @@ class view {
             new Input('text', 'username', 'Utilisateur', 'user'),
             new Input('password', 'password', 'Mot de passe', 'eye-open')
         );
-        $modal = new Modal('loginModal', 'Login', 'index.php', 'off', $inputs);
+        $modal = new Modal('login', 'Login', 'index.php', 'off', $inputs);
         return $modal;
     }
 
@@ -141,17 +141,17 @@ class view {
             new Input('text', 'username', 'Utilisateur', 'user'),
             new Input('password', 'password', 'Mot de passe', 'eye-open')
         );
-        $modal = new Modal('registerModal', 'S\'enregistrer', 'index.php', 'off', $inputs);
+        $modal = new Modal('register', 'S\'enregistrer', 'index.php', 'off', $inputs);
         return $modal;
     }
     
     private static function modalplaylistAdd() {
         $inputs = array(
             new Input('text', 'playlistName', 'Nom de la playlist', 'music'),
-            new Input('text', 'desc', 'Description', 'edit'),  
+            new Input('text', 'playlistDesc', 'Description', 'edit'),  
             new Input('file', 'playlistJaq', 'Jaquette', 'file', 'image/*'),
         );
-        $modal = new Modal('playlistModal', 'Ajouter une playlist', 'index.php?action=playlistAdd', 'th-list', $inputs);
+        $modal = new Modal('playlist', 'Ajouter une playlist', 'index.php', 'th-list', $inputs);
         return $modal;
     }
     
@@ -162,7 +162,7 @@ class view {
             //select/option new Input('select', 'trackGenre', 'Durée de la musique en secondes', 'flash'),
             new Input('text', 'trackDura', 'Durée de la musique en secondes', 'time'),
         );
-        $modal = new Modal('trackModal', 'Ajouter un titre', 'index.php?action=trackAdd', 'music', $inputs);
+        $modal = new Modal('track', 'Ajouter un titre', 'index.php?action=trackAdd', 'music', $inputs);
         return $modal;
     }
  
@@ -172,7 +172,7 @@ class view {
             new Input('text', 'desc', 'Courte description', 'edit'),
             new Input('url', 'url', 'URL/Liens', 'link')
         );
-        $modal = new Modal('genreModal', 'Ajouter un genre', 'index.php?action=genreAdd', 'flash', $inputs);
+        $modal = new Modal('genre', 'Ajouter un genre', 'index.php?action=genreAdd', 'flash', $inputs);
         return $modal;
     }
      
@@ -180,7 +180,7 @@ class view {
         $inputs = array(
             new Input('text', 'authorName', 'Nom de l\'auteur', 'user'),
         );
-        $modal = new Modal('authorModal', 'Ajouter un auteur', 'index.php?action=authorAdd', 'user', $inputs);
+        $modal = new Modal('author', 'Ajouter un auteur', 'index.php?action=authorAdd', 'user', $inputs);
         return $modal;
     }
     

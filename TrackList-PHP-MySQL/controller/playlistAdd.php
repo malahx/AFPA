@@ -29,7 +29,6 @@ if (!empty($playlistJaq)) {
         $uploadFile = null;
     }
 }
-echo $userid;
 $playlist = new Playlist(0, $username, $userid, $playlistName, $playlistDesc, $uploadFile);
 $playlistId = playlistDAO::insert($playlist);
 header('Location: index.php?action=thisPlaylist&playlistId=' . $playlistId);
