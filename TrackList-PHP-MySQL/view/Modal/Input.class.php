@@ -28,7 +28,7 @@ class Input {
             case 'file':
                 $render = ' <div class="form-group">
                                 <label class="control-label" for="' . $this->id . '"><span class="glyphicon glyphicon-' . $this->glyphicon . '"></span> ' . $this->text . ' :</label>
-                                <input type="' . $this->type . '" name="' . $this->iId . '" accept="' . $this->data . '">
+                                <input type="' . $this->type . '" name="' . $this->id . '" accept="' . $this->data . '">
                             </div>';
                 break;
             default:
