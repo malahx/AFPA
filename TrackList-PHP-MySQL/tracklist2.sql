@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Lun 28 Novembre 2016 à 11:43
+-- Généré le :  Lun 28 Novembre 2016 à 11:47
 -- Version du serveur :  5.7.16-0ubuntu0.16.04.1
 -- Version de PHP :  7.0.8-0ubuntu0.16.04.3
 
@@ -159,7 +159,6 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`) VALUES
-(7, 'Valannos', 'vladxill@gmail.com', '$2y$10$phK/jVHBD04yAQTIey8pUeMFeXblvNVxSILIpaJEbBHEOwR6.IeXW'),
 (8, 'root', 'sdd@sqd', '$2y$10$UoT8fDwx6KoEl6CoUnI0fewMsCz1jeh1O/NpPfbgIUSV.J/aJ.wFS'),
 (9, 'rootsd', 'sqd@sdd', '$2y$10$7rNiUfD9Dxhr07ro404bQeDuxICqJE1.J.tNTv89v2IvtGXkjqqqq'),
 (10, 'rootdsfdsf', 'sd@sd', '$2y$10$KsOEqemu6j657OKoxZEgZOrYJiv1sDoKAPw1sa4/uEOx9GzGFYk1K'),
