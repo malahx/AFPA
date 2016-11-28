@@ -34,7 +34,7 @@ foreach ($tracks as $track) {
              <td>' . $track->getAuthor() . '</td>
              <td class="text-center">' . $track->getStripDuration() . '</td>
              <td class="text-center">' . $track->getGenre() . '</td>     
-             <td class="text-right"><span title="Modifier" class="glyphicon glyphicon-edit cursor hover" data-toggle="modal" data-target="#trackModal"></span>&nbsp;<span title="Supprimer" class="glyphicon glyphicon-trash cursor hover" onclick="location.href=\'remTrack.php?id=' . $track->getId() . '\'"></span></td>
+             <td class="text-right"><span title="Modifier" class="glyphicon glyphicon-edit cursor hover" data-toggle="modal" data-target="#trackModal"></span>&nbsp;<span title="Supprimer" class="glyphicon glyphicon-trash cursor hover" onclick="location.href=\'index.php?action=trackDelete&id=' . $track->getId() . '\'"></span></td>
         </tr>';
 }
 
