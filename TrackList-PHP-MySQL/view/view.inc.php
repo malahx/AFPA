@@ -49,7 +49,7 @@ class view {
                             <span class="glyphicon glyphicon-th-list"></span> ' . ($active ? ($current == 'playlists' ? 'Toutes les playlists' : 'Mes playlists') : 'Playlists') . '<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="index.php?action=myplaylists"><span class="glyphicon glyphicon-list-alt"></span> Mes playlists</a></li>
+                            <li><a href="index.php?action=myPlaylists"><span class="glyphicon glyphicon-list-alt"></span> Mes playlists</a></li>
                             <li><a href="index.php?action=playlists"><span class="glyphicon glyphicon-th-list"></span> Toutes les playlists</a></li>
                             <li><a data-toggle="modal" href="#playlistModal"><span class="glyphicon glyphicon-plus"></span> Créer une playlist ...</a></li>
                         </ul>
@@ -75,10 +75,10 @@ class view {
         if (isLogin()) {
             echo '  <li class="dropdown ' . ($active ? 'active' : '') . '">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <span class="glyphicon glyphicon-users"></span> Auteurs<span class="caret"></span>
+                            <span class="glyphicon glyphicon-user"></span> Auteurs<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="index.php?action=autheurs"><span class="glyphicon glyphicon-users"></span> Auteurs enregistrés</a></li>
+                            <li><a href="index.php?action=authors"><span class="glyphicon glyphicon-user"></span> Auteurs enregistrés</a></li>
                             <li><a data-toggle="modal" href="#genreModal"><span class="glyphicon glyphicon-plus"></span> Ajouter un auteur ...</a></li>
                         </ul>
                     </li>';
