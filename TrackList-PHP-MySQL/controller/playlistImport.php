@@ -2,7 +2,7 @@
 
 // Redirection pour un utilisateur non login
 if (!isLogin()) {
-    refresh();
+    header('Location: index.php');
 }
 
 require_once dirname(__FILE__).'/../dao/playlist.php';
@@ -13,7 +13,7 @@ $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 $playlist = playlistDAO::getById($id);
 
 if (empty($data) || $data == -1) {
-    refresh();
+    header('Location: index.php');
 }
 $playlist->setUserName($username);
 $playlist->setUserId($userid);

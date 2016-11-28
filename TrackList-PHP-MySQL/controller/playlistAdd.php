@@ -2,7 +2,7 @@
 
 // Redirection pour un utilisateur non login
 if (!isLogin()) {
-    refresh();
+    header('Location: index.php');
 }
 
 require_once dirname(__FILE__).'/../dao/playlist.php';
@@ -21,7 +21,7 @@ if (!empty($playlistJaq)) {
 
     // Vérification si le fichier existe
     if (file_exists($uploadFile)) {
-        refresh();
+        header('Location: index.php');
     }
 
     // Déplacement du fichier dans le bon dossier

@@ -2,11 +2,11 @@
 
 // Redirection pour un utilisateur non login
 if (!isLogin()) {
-    refresh();
+    header('Location: index.php');
 }
 
 if (!isset($playlistId)) {
-    refresh();
+    header('Location: index.php');
 }
 
 require_once dirname(__FILE__).'/../dao/playlist.php';
