@@ -15,5 +15,6 @@ $trackDura = filter_input(INPUT_POST, 'trackDura', FILTER_SANITIZE_NUMBER_INT);
 $trackGenre = filter_input(INPUT_POST, 'trackGenre', FILTER_SANITIZE_NUMBER_INT);
 
 $track = new Track(!empty($trackId) ? $trackId : 0, $trackTitle, $trackAuthor, $trackDura, $trackGenre);
+var_dump($track);
 trackDAO::insert($track);
 header('Location: index.php?action=tracks');

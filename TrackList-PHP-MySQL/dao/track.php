@@ -47,7 +47,7 @@ class trackDAO {
 
     static function insert($track) {
         $bdd = dao::connect();
-        $insert = bdd()->prepare('INSERT INTO `track` VALUES(0, :title, :duration, :author_id, :genre_id)');
+        $insert = $bdd->prepare('INSERT INTO `track` VALUES(0, :title, :duration, :author_id, :genre_id)');
         $insert->bindValue(":title", $track->getTitle());
         $insert->bindValue(":author_id", (int) $track->getAuthor());
         $insert->bindValue(":duration", (int) $track->getDuration());

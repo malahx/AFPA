@@ -45,7 +45,7 @@ echo '      </tbody>
 // Boutton d'ajout des titres sélectionnés dans la playlist ouverte
 if (isset($playlistId)) {
     echo '  <div class="text-center">
-                <button type="submit" class="btn btn-lg btn-block btn-success">
+                <button type="submit" name="playlistAddTrack" class="btn btn-lg btn-block btn-success">
                     <span class="glyphicon glyphicon-chevron-right"></span> Ajouter les titres sélectionnés à la playlist: 
                     <span class="bold">' . $playlist->getName() . '</span>
                 </button>

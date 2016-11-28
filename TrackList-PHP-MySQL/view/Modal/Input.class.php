@@ -18,9 +18,8 @@ class Input {
                 $render = ' <div class="form-group">
                                 <label class="control-label" for="' . $this->id . '"><span class="glyphicon glyphicon-' . $this->glyphicon . '"></span>' . $this->text . ' :</label>
                                 <select id="' . $this->id . '" class="form-control" name="' . $this->id . '">';
-                while ($this->data) {
-                        $render .= '<option value="' . $this->data['id'] . '">' . $this->data['text'] . '</option>';
-
+                foreach ($this->data as $data) {
+                        $render .= '<option value="' . $data->getId() . '">' . $data->getName() . '</option>';
                 }
                 $render .= '    </select>
                             </div>';

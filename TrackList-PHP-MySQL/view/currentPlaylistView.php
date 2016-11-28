@@ -44,7 +44,7 @@ foreach ($tracks as $track) {
     echo '<td>' . $track->getTitle() . '(' . $track->getId() . ')</td>
              <td>' . $track->getAuthor() . '</td>
              <td class="text-center">' . $track->getStripDuration() . '</td>
-             <td class="text-right"><span title="Modifier" class="glyphicon glyphicon-edit cursor hover" data-toggle="modal" data-target="#trackModal"></span>&nbsp;<span title="Supprimer" class="glyphicon glyphicon-trash cursor hover" onclick="location.href=\'remTrackFromPlaylist.php?id=' . $track->getId() . '\'"></span></td>
+             <td class="text-right"><span title="Modifier" class="glyphicon glyphicon-edit cursor hover" data-toggle="modal" data-target="#trackModal"></span>&nbsp;<span title="Supprimer" class="glyphicon glyphicon-trash cursor hover" onclick="location.href=\'index.php?action=playlistDeleteTrack&id=' . $track->getId() . '\'"></span></td>
         </tr>';
 }
 
@@ -52,8 +52,8 @@ foreach ($tracks as $track) {
 echo '      </tbody>
         </table>
         <div class="text-center">
-            <button type="submit" name="playlistAddTrack" class="btn btn-lg btn-block btn-danger">
-                <span class="glyphicon glyphicon-chevron-left"></span> supprimé les titres sélectionnés de la playlist
+            <button type="submit" name="playlistDeleteTrack" class="btn btn-lg btn-block btn-danger">
+                <span class="glyphicon glyphicon-chevron-left"></span> Supprimer les titres sélectionnés de la playlist
             </button>
         </div>
     </form>';

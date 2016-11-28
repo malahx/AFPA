@@ -24,4 +24,4 @@ $trackId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 if (!empty($trackId)) {
     playlistDAO::deleteTracks($playlistId, $trackId);
 }
-header('Location: index.php?action=myPlaylists');
+header('Location: index.php?action=thisPlaylist');

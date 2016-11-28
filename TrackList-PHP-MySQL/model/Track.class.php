@@ -5,8 +5,7 @@ class Track {
     private $id;
     private $title;
     private $author;
-    private $year;
-    private $length;
+    private $duration;
     private $genre;
 
     function __construct($data, $title = null, $author = null, $duration = null, $genre = null) {
@@ -14,6 +13,7 @@ class Track {
             $this->id = $data;
             $this->title = $title;
             $this->author = $author;
+            $this->genre = $genre;
             $this->duration = $duration;
         } else if (is_array($data)) {
             $this->id = $data['id'];
@@ -24,7 +24,8 @@ class Track {
         } else {
             $this->id = -1;
             $this->title = 'error';
-            $this->author = 'error';
+            $this->author = -1;
+            $this->genre = -1;
             $this->duration = -1;
         }
     }

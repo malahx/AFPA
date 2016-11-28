@@ -12,22 +12,19 @@ $playlistDeleteTrack = filter_input(INPUT_POST, 'playlistDeleteTrack');
 $trackAdd = filter_input(INPUT_POST, 'trackAdd');
 
 if (isset($login)) {
-    include 'controller/userLogin.php';
+    $action = "userLogin";
 } else if (isset($register)) {
-    include 'controller/userRegister.php';
-}
-
-if (!isLogin()) {
+    $action = "userRegister";
+} else if (!isLogin()) {
     $action = ($action != 'tracks' ? 'playlists' : 'tracks');
 } else if (isset($playlistAdd)) {
-    include 'controller/playlistAdd.php';
-    return;
+    $action = "playlistAdd";
 } else if (isset($playlistAddTrack)) {
-    include 'controller/playlistAddTrack.php';
-    return;
+    $action = "playlistAddTrack";
+} else if (isset($playlistDeleteTrack)) {
+    $action = "playlistDeleteTrack";
 } else if (isset($trackAdd)) {
-    include 'controller/trackAdd.php';
-    return;
+    $action = "trackAdd";
 }
 
 if (!isset($action)) {

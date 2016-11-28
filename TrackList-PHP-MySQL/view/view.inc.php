@@ -1,6 +1,8 @@
 <?php
 
 require_once dirname(__FILE__) . '/Modal/Modal.class.php';
+require_once dirname(__FILE__) . '/../dao/genre.php';
+require_once dirname(__FILE__) . '/../dao/author.php';
 
 class view {
 
@@ -96,7 +98,7 @@ class view {
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="index.php?action=authors"><span class="glyphicon glyphicon-user"></span> Auteurs enregistrés</a></li>
-                            <li><a data-toggle="modal" href="#genreModal"><span class="glyphicon glyphicon-plus"></span> Ajouter un auteur ...</a></li>
+                            <li><a data-toggle="modal" href="#authorModal"><span class="glyphicon glyphicon-plus"></span> Ajouter un auteur ...</a></li>
                         </ul>
                     </li>';
         }
@@ -173,10 +175,12 @@ class view {
     }
 
     private static function modaltrackAdd() {
+        $genres = genreDAO::getAll();
+        $authors = authorDAO::getAll();
         $inputs = array(
             new Input('text', 'trackTitle', 'Titre de la musique', 'music'),
-            //select/option new Input('select', 'trackAuthor', 'Auteur de la musique', 'user'),
-            //select/option new Input('select', 'trackGenre', 'Durée de la musique en secondes', 'flash'),
+            new Input('select', 'trackAuthor', 'Auteur de la musique', 'user', $authors),
+            new Input('select', 'trackGenre', 'Genre', 'flash', $genres),
             new Input('text', 'trackDura', 'Durée de la musique en secondes', 'time'),
         );
         $modal = new Modal('track', 'Ajouter un titre', 'index.php?action=trackAdd', 'music', $inputs);

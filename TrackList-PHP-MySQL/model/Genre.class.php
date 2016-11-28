@@ -1,10 +1,12 @@
 <?php
 
 class Genre {
+
     private $id;
     private $name;
     private $desc;
     private $url;
+
     function __construct($data, $name = null, $desc = null, $url = null) {
         if (is_int($data) && $name != null && $desc != null && $url != null) {
             $this->id = $data;
@@ -17,12 +19,13 @@ class Genre {
             $this->desc = $data['descr'];
             $this->url = $data['genre_url'];
         } else {
-            $this->id =  -1;
+            $this->id = -1;
             $this->name = '';
             $this->desc = '';
             $this->url = '';
         }
     }
+
     function getId() {
         return $this->id;
     }
@@ -54,4 +57,5 @@ class Genre {
     function setUrl($url) {
         $this->url = $url;
     }
+
 }
