@@ -28,6 +28,7 @@ class view {
                                     <ul class = "nav navbar-nav">';
 
         self::Playlists($current == 'playlists' || $current == 'myPlaylists', $current);
+        self::thisPlaylist($current == 'thisPlaylist');
         self::Authors($current == 'authors');
         self::Genres($current == 'genres');
         self::Tracks($current == 'tracks');
@@ -52,6 +53,22 @@ class view {
                             <li><a href="index.php?action=myPlaylists"><span class="glyphicon glyphicon-list-alt"></span> Mes playlists</a></li>
                             <li><a href="index.php?action=playlists"><span class="glyphicon glyphicon-th-list"></span> Toutes les playlists</a></li>
                             <li><a data-toggle="modal" href="#playlistModal"><span class="glyphicon glyphicon-plus"></span> Créer une playlist ...</a></li>
+                        </ul>
+                    </li>';
+        }
+    }
+
+    private static function thisPlaylist($active) {
+        global $playlist, $playlistId;
+        if (isLogin() && isset($playlistId)) {
+            echo '<li class="dropdown ' . ($active ? 'active' : '') . '">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="glyphicon glyphicon-folder-open"></span> ' . $playlist->getName() . '<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.php?action=thisPlaylist&playlistId=' . $playlistId . '"><span class="glyphicon glyphicon-list-alt"></span> Afficher la playlist</a></li>
+                            <li><a data-toggle="modal" href="#playlistModal"><span class="glyphicon glyphicon-edit"></span> Modifier la playlist ...</a></li>
+                            <li><a href="index.php?action=tracks&playlistId=' . $playlistId . '"><span class="glyphicon glyphicon-plus"></span> Ajouter un titre à la playlist ...</a></li>
                         </ul>
                     </li>';
         }
@@ -144,17 +161,17 @@ class view {
         $modal = new Modal('register', 'S\'enregistrer', 'index.php', 'off', $inputs);
         return $modal;
     }
-    
+
     private static function modalplaylistAdd() {
         $inputs = array(
             new Input('text', 'playlistName', 'Nom de la playlist', 'music'),
-            new Input('text', 'playlistDesc', 'Description', 'edit'),  
+            new Input('text', 'playlistDesc', 'Description', 'edit'),
             new Input('file', 'playlistJaq', 'Jaquette', 'file', 'image/*'),
         );
         $modal = new Modal('playlist', 'Ajouter une playlist', 'index.php', 'th-list', $inputs);
         return $modal;
     }
-    
+
     private static function modaltrackAdd() {
         $inputs = array(
             new Input('text', 'trackTitle', 'Titre de la musique', 'music'),
@@ -165,7 +182,7 @@ class view {
         $modal = new Modal('track', 'Ajouter un titre', 'index.php?action=trackAdd', 'music', $inputs);
         return $modal;
     }
- 
+
     private static function modalgenreAdd() {
         $inputs = array(
             new Input('text', 'genreName', 'Nom du genre', 'music'),
@@ -175,7 +192,7 @@ class view {
         $modal = new Modal('genre', 'Ajouter un genre', 'index.php?action=genreAdd', 'flash', $inputs);
         return $modal;
     }
-     
+
     private static function modalauthorAdd() {
         $inputs = array(
             new Input('text', 'authorName', 'Nom de l\'auteur', 'user'),
@@ -183,7 +200,7 @@ class view {
         $modal = new Modal('author', 'Ajouter un auteur', 'index.php?action=authorAdd', 'user', $inputs);
         return $modal;
     }
-    
+
     private static function modal($modal) {
         require dirname(__FILE__) . '/Modal/ModalTemplate.php';
     }
