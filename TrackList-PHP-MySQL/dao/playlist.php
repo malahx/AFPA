@@ -16,15 +16,14 @@ class playlistDAO {
         return self::toArray($select);
     }
 
-    static function getAllByUserId($playlistId) {
+    static function getAllByUserId($userId) {
         $bdd = dao::connect();
-        // requete manque l'user a revoir concat
-        $select = $bdd->prepare('SELECT h.id, h.name, h.desc, h.jaqurl, h.userid, u.username
+        $select = $bdd->prepare('SELECT h.id, h.name, h.desc, h.jaqurl, h.user_id, u.username
                                     FROM `playlist_header` h 
                                     INNER JOIN `user` u
-                                    ON u.id = h.userid
-                                    WHERE h.userid = :userid');
-        $select->bindValue(":userid", $playlistId);
+                                    ON u.id = h.user_id
+                                    WHERE h.user_id = :user_id');
+        $select->bindValue(":user_id", $userId);
         $select->execute();
         return self::toArray($select);
     }
