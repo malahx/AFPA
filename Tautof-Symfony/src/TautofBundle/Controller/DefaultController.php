@@ -79,7 +79,7 @@ class DefaultController extends Controller {
     public function advertAction($id) {
         $repo = $this->getDoctrine()->getRepository('TautofBundle:Advert');
         $advert = $repo->findOneBy(array('id' => $id));
-        return $this->render('TautofBundle::advert.html.twig', array('title' => 'Tautof Annonces - ' + $advert . title, 'advert' => $advert));
+        return $this->render('TautofBundle::advert.html.twig', array('title' => 'Tautof Annonces - ' . $advert->getTitle(), 'advert' => $advert));
     }
 
     /**
