@@ -8,10 +8,10 @@ class playlistDAO {
 
     static function getAll() {
         $bdd = dao::connect();
-        $select = $bdd->prepare('SELECT h.id, h.name, h.desc, h.jaqurl, h.userid, u.username 
+        $select = $bdd->prepare('SELECT h.id, h.name, h.desc, h.jaqurl, h.user_id, u.username 
                                     FROM `playlist_header` h
                                     INNER JOIN `user` u
-                                    ON u.id = h.userid');
+                                    ON u.id = h.user_id');
         $select->execute();
         return self::toArray($select);
     }
