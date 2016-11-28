@@ -37,7 +37,7 @@ foreach ($playlists as $playlist) {
              <td '.$onclick.' class="text-center">' . $playlist->getTracksName() . '</td>
              <td '.$onclick.' class="text-right">' . $playlist->getTracksCount() . '</td>
              <td '.$onclick.' class="text-right"></td>
-             <td class="text-right"><span title="Modifier" class="glyphicon glyphicon-edit cursor hover" data-toggle="modal" data-target="#playlistModal"></span>&nbsp;<span title="Supprimer" class="glyphicon glyphicon-trash cursor hover" onclick="location.href=\'remPlaylist.php?id=' . $playlist->getId() . '\'"></span></td>
+             <td class="text-right"><span title="Modifier" class="glyphicon glyphicon-edit cursor hover" data-toggle="modal" data-target="#playlistModal"></span>&nbsp;<span title="Supprimer" class="glyphicon glyphicon-trash cursor hover" onclick="location.href=\'index.php?action=playlistDelete&id=' . $playlist->getId() . '\'"></span></td>
           </tr>';
 }
 
