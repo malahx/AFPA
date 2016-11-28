@@ -22,7 +22,7 @@ class Playlist {
         } else if (is_array($data)) {
             $this->id = $data['id'];
             $this->userName = (isset($data['username']) ? $data['username'] : '');
-            $this->userId = (isset($data['userid']) ? $data['userid'] : '');
+            $this->userId = (isset($data['user_id']) ? $data['user_id'] : '');
             $this->name = $data['name'];
             $this->desc = $data['desc'];
             $this->jaq = $data['jaqurl'];
