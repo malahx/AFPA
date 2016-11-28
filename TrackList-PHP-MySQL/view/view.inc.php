@@ -94,7 +94,7 @@ class view {
                             <span class="glyphicon glyphicon-music"></span> ' . ($active ? 'Tous les titres' : 'Titres') . '<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="showAllTracks.php"><span class="glyphicon glyphicon-th-list"></span> Tous les titres</a></li>
+                            <li><a href="index.php?action=tracks"><span class="glyphicon glyphicon-th-list"></span> Tous les titres</a></li>
                             <li><a data-toggle="modal" href="#trackModal"><span class="glyphicon glyphicon-plus"></span> Ajouter un titre ...</a></li>
                         </ul>
                     </li>';
