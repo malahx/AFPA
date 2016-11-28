@@ -12,7 +12,7 @@ view::navbar($action);
 
 echo '  <table class="table table-hover">
             <thead>
-                <tr>' . (isset($playlistId) ? '<th></th>' : '') . '
+                <tr>
                     <th>Nom du genre</th>
                     <th class="text-center">Courte description</th>
                     <th class="text-center">Liens</th>
