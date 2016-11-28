@@ -7,7 +7,7 @@ view::navbar($action);
 
 // Active les check d'ajout d'un titre pour un POST
 if (isset($playlistId)) {
-    echo '<form action="addTrackToPlaylist.php" method="POST">';
+    echo '<form action="index.php" method="POST">';
 }
 
 // Création du tableau
