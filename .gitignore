@@ -18,3 +18,4 @@ Tautof-Symfony/nbproject/private/
 /vendor/
 /web/bundles/
 *~
+*/Resources/public/uploads/*
