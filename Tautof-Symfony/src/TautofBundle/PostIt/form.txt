@@ -9,3 +9,14 @@ $formBuilder
 
 $loginForm = $formBuilder->getForm();
 //'login' => $loginForm->createView() dans le render
+
+Editer un fichier :
+        $builder->get('pic1')->addModelTransformer(
+                new CallbackTransformer(
+                function ($picsAsImg) {
+            return new File('/home/gwenole/Documents/www/Tautof-Symfony/web/' . $picsAsImg);
+        }, function ($picsAsString) {
+            return (string) $picsAsString;
+        }
+                )
+        );

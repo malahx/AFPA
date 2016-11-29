@@ -41,16 +41,13 @@ class DefaultController extends Controller {
     /* OTHERS FUNCTIONS */
 
     private function picUpload($file) {
-        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-        $file->move(DefaultController::uploadDir(), $fileName);
-        return DefaultController::uploadDir($fileName);
-    }
-
-    private function uploadDir($file = null) {
-        if ($file) {
-            return $this->getParameter('uploads_directory') . $file;
+        if (!$file) {
+            return;
         }
-        return $this->getParameter('root_directory') . $this->getParameter('uploads_directory');
+            
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        $file->move($this->getParameter('root_directory') . $this->getParameter('uploads_directory'), $fileName);
+        return $this->getParameter('uploads_directory') . $fileName;
     }
 
     /* ROUTE FUNCTIONS */
@@ -97,12 +94,62 @@ class DefaultController extends Controller {
             $user = $this->getUser();
             $advert->setUser($user);
 
-            $advert->setPic1(DefaultController::picUpload($advert->getPic1()));
-            $advert->setPic2(DefaultController::picUpload($advert->getPic2()));
-            $advert->setPic3(DefaultController::picUpload($advert->getPic3()));
+            $advert->setPic1($this->picUpload($advert->getPic1()));
+            $advert->setPic2($this->picUpload($advert->getPic2()));
+            $advert->setPic3($this->picUpload($advert->getPic3()));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($advert);
+            $em->flush();
+            return $this->redirectToRoute('advert', array('id' => $advert->getId()));
+        }
+        return $this->render('TautofBundle::advertAdd.html.twig', array('title' => 'Tautof Annonces - Ajouter', 'advertadd' => $advertForm->createView(), 'make' => $makeForm->createView()));
+    }
+
+    /**
+     * @Route("/advertedit/{id}", name="advertedit")
+     */
+    public function advertEditAction($id, Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('TautofBundle:Advert');
+        $advert = $repo->findOneBy(array('id' => $id));
+
+        $advertEmptyPic = clone $advert;
+        $advertEmptyPic->setPic1(null);
+        $advertEmptyPic->setPic2(null);
+        $advertEmptyPic->setPic3(null);
+
+        $make = $advert->getModel()->getMake();
+        $makeForm = $this->createForm(MakeType::class, $make);
+        $advertForm = $this->createForm(AdvertType::class, $advertEmptyPic);
+        $advertForm->handleRequest($request);
+        
+        if ($advertForm->isSubmitted() && $advertForm->isValid()) {
+
+            $newAdvert = $advertForm->getData();
+
+            if ($newAdvert->getPic1() == null) {
+                $newAdvert->setPic1($advert->getPic1());
+            } else {
+                $newAdvert->setPic1($this->picUpload($newAdvert->getPic1()));
+            }
+
+            if ($newAdvert->getPic2() == null) {
+                $newAdvert->setPic2($advert->getPic2());
+            } else {
+                $newAdvert->setPic2($this->picUpload($newAdvert->getPic2()));
+            }
+
+            if ($newAdvert->getPic3() == null) {
+                $newAdvert->setPic3($advert->getPic3());
+            } else {
+                $newAdvert->setPic3($this->picUpload($newAdvert->getPic3()));
+            }
+
+            $newAdvert->setUser($advert->getUser());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->merge($newAdvert);
             $em->flush();
             return $this->redirectToRoute('advert', array('id' => $advert->getId()));
         }

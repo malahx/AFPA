@@ -8,9 +8,12 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\HttpFoundation\File\File;
 
 class AdvertType extends AbstractType {
 
+    
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder->add('model', EntityType::class, array(
                     'label' => false,
@@ -23,21 +26,10 @@ class AdvertType extends AbstractType {
                 ->add('descr', TextType::class, array('label' => false, 'required' => true, 'attr' => array('placeholder' => 'Description')))
                 ->add('cost', TextType::class, array('label' => false, 'required' => true, 'attr' => array('placeholder' => 'Prix de vente')))
                 ->add('km', TextType::class, array('label' => false, 'required' => true, 'attr' => array('placeholder' => 'Kilométrage')))
-                ->add('pic1', FileType::class, array('label' => 'Photo 1 :', 'required' => true, 'attr' => array('placeholder' => 'Photo 1')))
+                ->add('pic1', FileType::class, array('label' => 'Photo 1 :', 'required' => false, 'attr' => array('placeholder' => 'Photo 1')))
                 ->add('pic2', FileType::class, array('label' => 'Photo 2 :', 'required' => false, 'attr' => array('placeholder' => 'Photo 2')))
                 ->add('pic3', FileType::class, array('label' => 'Photo 3 :', 'required' => false, 'attr' => array('placeholder' => 'Photo 3')))
                 ->add('advertadd', SubmitType::class);
     }
 
 }
-
-/*se Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Doctrine\ORM\EntityRepository;
- * 
- * , EntityType::class, array(
-                    'required' => true,
-                    'class' => 'TautofBundle:Model',
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('m')->where('m.make = '.$this->makeid);
-                    },
-                    'choice_label' => 'name')*/
