@@ -44,7 +44,7 @@ class DefaultController extends Controller {
         if (!$file) {
             return;
         }
-            
+
         $fileName = md5(uniqid()) . '.' . $file->guessExtension();
         $file->move($this->getParameter('root_directory') . $this->getParameter('uploads_directory'), $fileName);
         return $this->getParameter('uploads_directory') . $fileName;
@@ -77,6 +77,18 @@ class DefaultController extends Controller {
         $repo = $this->getDoctrine()->getRepository('TautofBundle:Advert');
         $advert = $repo->findOneBy(array('id' => $id));
         return $this->render('TautofBundle::advert.html.twig', array('title' => 'Tautof Annonces - ' . $advert->getTitle(), 'advert' => $advert));
+    }
+
+    /**
+     * @Route("/advertdel/{id}", name="advertdel")
+     */
+    public function advertdelAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('TautofBundle:Advert');
+        $advert = $repo->findOneBy(array('id' => $id));
+        $em->remove($advert);
+        $em->flush();
+        return $this->redirectToRoute('adverts');
     }
 
     /**
@@ -123,7 +135,7 @@ class DefaultController extends Controller {
         $makeForm = $this->createForm(MakeType::class, $make);
         $advertForm = $this->createForm(AdvertType::class, $advertEmptyPic);
         $advertForm->handleRequest($request);
-        
+
         if ($advertForm->isSubmitted() && $advertForm->isValid()) {
 
             $newAdvert = $advertForm->getData();
