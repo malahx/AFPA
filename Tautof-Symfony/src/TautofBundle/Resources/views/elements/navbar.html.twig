@@ -18,7 +18,8 @@
                     <a class="btn btn-primary {% if app.request.get('_route') == 'advertfilter' %}active{% endif %}" href="{{ path('advertfilter') }}">Filtrer</a>
                     <a class="btn btn-primary {% if app.request.get('_route') == 'advertadd' %}active{% endif %}" href="{{ path('advertadd') }}">Ajouter une annonce</a>
                     {% if app.request.get('_route') == 'advert' %}
-                        <a class="btn btn-primary" href="{{ path('advertedit', {'id': advert.id}) }}">Editer l'annonce</a>
+                        <a class="btn btn-warning" href="{{ path('advertedit', {'id': advert.id}) }}">Editer l'annonce</a>
+                        <a class='btn btn-danger' href='{{ path('advertdel', {'id': advert.id})}}'>Supprimer</a>
                     {% endif %}
                 </div>
             </div>
