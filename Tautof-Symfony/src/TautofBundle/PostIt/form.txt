@@ -11,6 +11,8 @@ $loginForm = $formBuilder->getForm();
 //'login' => $loginForm->createView() dans le render
 
 Editer un fichier :
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\HttpFoundation\File\File;
         $builder->get('pic1')->addModelTransformer(
                 new CallbackTransformer(
                 function ($picsAsImg) {

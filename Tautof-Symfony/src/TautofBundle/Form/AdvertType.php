@@ -8,8 +8,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\HttpFoundation\File\File;
 
 class AdvertType extends AbstractType {
 

@@ -153,7 +153,7 @@ class DefaultController extends Controller {
             $em->flush();
             return $this->redirectToRoute('advert', array('id' => $advert->getId()));
         }
-        return $this->render('TautofBundle::advertAdd.html.twig', array('title' => 'Tautof Annonces - Ajouter', 'advertadd' => $advertForm->createView(), 'make' => $makeForm->createView()));
+        return $this->render('TautofBundle::advertAdd.html.twig', array('title' => 'Tautof Annonces - Edit', 'advertadd' => $advertForm->createView(), 'make' => $makeForm->createView()));
     }
 
     /**
