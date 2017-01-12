@@ -31,6 +31,7 @@ public class MasterCLIMind {
                 int wrong = 0;
                 System.out.println("------------------------------------------------");
                 System.out.println("------ Entrez 'exit' pour quitter");
+                System.out.println("------ Possibilité de 1 à 8");
                 System.out.println("Nombre de chiffre attendue : " + soluce.length());
                 System.out.println(Color.GREEN + "* les bonnes positions" + Color.RESET);
                 System.out.println(Color.RED + "* les mauvaises positions" + Color.RESET);
