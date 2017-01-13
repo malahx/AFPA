@@ -5,6 +5,8 @@
  */
 package masterclimind;
 
+import java.util.Arrays;
+import java.nio.CharBuffer;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -26,7 +28,7 @@ public class MasterCLIMind {
         while (true) { // Partie à l'infinie
 
             String soluce = rand(4, 1, 8); // Création de la solution
-
+            
             int i = 10; // Nombre d'essai possible
             while (i > 0) {
 
@@ -50,28 +52,29 @@ public class MasterCLIMind {
                 int good = 0; // Nombre caractère trouvé à la bonne position
                 int wrong = 0; // Nombre de caractère  trouvé à la mauvaise position
 
-                for (int j = 0; j < 4; j++) { // Essai de chaque caractère
-                    
+                for (int j = 0; j < 4; j++) { // Essai de vérification de chaque bon caractères
                     char car = str.charAt(j);
-                    
-                    if (count(treated, car) >= count(soluce, car)) { // Vérification si tous les caractères ont déjà été traités
-                        continue;
-                    }
-                    
                     if (soluce.charAt(j) == car) { // Vérification des caractères se trouvant à la bonne place
                         good++;
                         treated += soluce.charAt(j);
+                    }
+                }
+
+                for (int j = 0; j < 4; j++) { // Essai de vérification de chaque mauvais caractères
+
+                    char car = str.charAt(j);
+                    if (soluce.charAt(j) == car || count(treated, car) >= count(soluce, car)) { // Vérification si tous les caractères ont déjà été traités
                         continue;
                     }
-                    
-                    if (contains(soluce, car)) { // Vérification des caractères se trouvant à la mauvase place
+
+                    if (soluce.contains(CharBuffer.wrap(new char[]{car}))) { // Vérification des caractères se trouvant à la mauvase place
                         wrong++;
                         treated += car;
                     }
                 }
 
                 // Modifier le nombre de bonnes/mauvaises positions en chaine de caractère de *
-                String goodStr = conv(good); 
+                String goodStr = conv(good);
                 String wrongStr = conv(wrong);
 
                 System.out.println(Color.GREEN + goodStr + Color.RED + wrongStr + Color.RESET);
@@ -86,21 +89,10 @@ public class MasterCLIMind {
             System.out.println(Color.YELLOW + "La solution était : " + soluce);
         }
     }
-    
+
     // Convertir un nombre en liste de *
     private static String conv(int i) {
         return new String(new char[i]).replace("\0", "*");
-    }
-
-    // Vérification si un caractère se trouve dans une chaine de caractère
-    private static boolean contains(String str, char car) {
-        char[] cars = str.toCharArray();
-        for (char c : cars) {
-            if (car == c) {
-                return true;
-            }
-        }
-        return false;
     }
 
     // Compteur d'un caractère dans une chaine de caractère
