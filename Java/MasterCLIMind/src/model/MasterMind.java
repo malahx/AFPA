@@ -6,6 +6,8 @@
 package model;
 
 import java.nio.CharBuffer;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import masterclimind.Color;
 
@@ -39,7 +41,7 @@ public class MasterMind {
 
     // Afficher la réponse et peupler les variables lastGood et lastWrong.
     public String display(String str) {
-        return conv(soluceCount(str));
+        return conv(count(str));
     }
 
     // Convertir un tableau de deux nombres en liste de caractère de : *
@@ -51,44 +53,64 @@ public class MasterMind {
 
     // Compter le nombre de caractère à la bonne place et le nombre de caractère à la mauvaise place
     // return int[] {good, wrong}
-    private int[] soluceCount(String test) {
-        String treated = ""; // Caractère déjà traité
+    private int[] count(String test) {
 
-        lastGood = 0; // Nombre de caractère trouvé à la baonne position
+        lastGood = 0; // Nombre de caractère trouvé à la bonne position
         lastWrong = 0; // Nombre de caractère trouvé à la mauvaise position
 
+        // Nombre de caractère unique
+        Map<Character, Integer> soluceCount = new HashMap<>();
+        Map<Character, Integer> treatedCount = new HashMap<>();
+
         for (int i = soluce.length() - 1; i >= 0; i--) { // Essai de vérification de chaque caractère à la bonne place
-            char car = test.charAt(i);
+            char car = soluce.charAt(i);
+
+            // Prétraitement des doubles
+            soluceCount = addTo(soluceCount, car);
+
+            car = test.charAt(i);
+
             if (soluce.charAt(i) == car) { // Vérification des caractères se trouvant à la bonne place
                 lastGood++;
-                treated += soluce.charAt(i);
+
+                // Prétraitement des doubles
+                treatedCount = addTo(treatedCount, car);
             }
         }
 
         for (int i = soluce.length() - 1; i >= 0; i--) { // Essai de vérification de chaque caractère à la mauvaise
 
             char car = test.charAt(i);
-            if (soluce.charAt(i) == car || count(treated, car) >= count(soluce, car)) { // Vérification si tous les caractères ont déjà été traités
+            if (soluce.charAt(i) == car || isTreated(soluceCount, treatedCount, car)) { // Vérification si tous les caractères ont déjà été traités
                 continue;
             }
 
             if (soluce.contains(CharBuffer.wrap(new char[]{car}))) { // Vérification des caractères se trouvant à la mauvaise place
                 lastWrong++;
-                treated += car;
+                
+                // Traitement des doubles
+                treatedCount = addTo(treatedCount, car);
             }
         }
         return new int[]{lastGood, lastWrong};
     }
-
-    // Compteur d'un caractère dans une chaine de caractère
-    private int count(String str, char car) {
-        int j = 0;
-        for (int i = str.length() - 1; i >= 0; i--) {
-            if (str.charAt(i) == car) {
-                j++;
-            }
+    
+    // Vérifier si le caractère à déjà été traité
+    private boolean isTreated(Map<Character, Integer> soluce, Map<Character, Integer> treated, char car) {
+        if (!soluce.containsKey(car) || !treated.containsKey(car)) {
+            return false;
         }
-        return j;
+        return treated.get(car) >= soluce.get(car);
+    }
+
+    // Incrémenter le nombre de caractère
+    private Map<Character, Integer> addTo(Map<Character, Integer> hMap, char car) {
+        if (!hMap.containsKey(car)) {
+            hMap.put(car, 1);
+        } else {
+            hMap.put(car, hMap.get(car) + 1);
+        }
+        return hMap;
     }
 
     public String getSoluce() {
