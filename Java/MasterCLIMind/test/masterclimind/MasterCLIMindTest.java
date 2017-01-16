@@ -5,6 +5,7 @@
  */
 package masterclimind;
 
+import java.util.regex.Pattern;
 import model.MasterMind;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -19,8 +20,6 @@ import static org.junit.Assert.*;
  */
 public class MasterCLIMindTest {
 
-    MasterMind masterMind;
-
     public MasterCLIMindTest() {
     }
 
@@ -34,7 +33,6 @@ public class MasterCLIMindTest {
 
     @Before
     public void setUp() {
-        masterMind = new MasterMind("1234");
     }
 
     @After
@@ -46,12 +44,21 @@ public class MasterCLIMindTest {
      */
     @Test
     public void testMasterMind() {
-        assertEquals(this.masterMind.display("1234"), Color.GREEN + "****" + Color.RED);
-        assertEquals(this.masterMind.display("1111"), Color.GREEN + "*" + Color.RED);
-        assertEquals(this.masterMind.display("4321"), Color.GREEN + Color.RED + "****");
-        assertEquals(this.masterMind.getSoluce(), "1234");
-        assertEquals(this.masterMind.getLastGood(), 0);
-        assertEquals(this.masterMind.getLastWrong(), 4);
+        MasterMind masterMind = new MasterMind("1234");
+        assertEquals(masterMind.display("1234"), Color.GREEN + "****" + Color.RED);
+        assertEquals(masterMind.display("1111"), Color.GREEN + "*" + Color.RED);
+        assertEquals(masterMind.display("4321"), Color.GREEN + Color.RED + "****");
+        assertEquals(masterMind.getSoluce(), "1234");
+        assertEquals(masterMind.getLastGood(), 0);
+        assertEquals(masterMind.getLastWrong(), 4);
     }
 
+    /**
+     * Test of the MasterMind random generator.
+     */
+    @Test
+    public void testRand() {
+        MasterMind masterMind = new MasterMind();
+        assertTrue(Pattern.matches("^[1-8]{4}$", masterMind.getSoluce()));
+    }
 }
