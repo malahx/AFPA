@@ -34,12 +34,12 @@ public class EcfDAO extends DAO<ECF> {
             }
             String query = "SELECT * FROM ecf e "
                     + "INNER JOIN formation f ON e.formation_id = f.id "
-                    + "WHERE f.nom like ?";
+                    + "WHERE f.id = ?";
             PreparedStatement prepare = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            prepare.setString(1, ((Formation) o).getNom());
+            prepare.setInt(1, ((Formation) o).getId());
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
-                ecf.add(new ECF((Formation) o, result.getString("e.nom")));
+                ecf.add(new ECF(result.getInt("e.id"), (Formation) o, result.getString("e.nom")));
             }
             result.close();
             prepare.close();

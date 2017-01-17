@@ -8,7 +8,6 @@ package exoformation.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  *
@@ -16,15 +15,25 @@ import java.util.Objects;
  */
 public class ECF implements Serializable {
 
+    private int id;
     private Formation formation;
     private String nom;
     private final List<Resultat> resultats = new ArrayList<>();
 
-    public ECF(Formation formation, String nom) {
+    public ECF(int id, Formation formation, String nom) {
+        this.id = id;
         this.nom = nom;
         this.formation = formation;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNom() {
         return nom;
     }
@@ -60,9 +69,8 @@ public class ECF implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + Objects.hashCode(this.formation);
-        hash = 59 * hash + Objects.hashCode(this.nom);
+        int hash = 7;
+        hash = 97 * hash + this.id;
         return hash;
     }
 
@@ -78,10 +86,7 @@ public class ECF implements Serializable {
             return false;
         }
         final ECF other = (ECF) obj;
-        if (!Objects.equals(this.nom, other.nom)) {
-            return false;
-        }
-        if (!Objects.equals(this.formation, other.formation)) {
+        if (this.id != other.id) {
             return false;
         }
         return true;

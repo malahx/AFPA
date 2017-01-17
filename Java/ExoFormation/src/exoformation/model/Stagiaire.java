@@ -13,10 +13,10 @@ import java.util.Objects;
  */
 public class Stagiaire extends Personne {
 
-    String code;
+    private String code;
 
-    public Stagiaire(String nom, String prenom, String code) {
-        super(nom, prenom);
+    public Stagiaire(int id, String nom, String prenom, String code) {
+        super(id, nom, prenom);
         this.code = code;
     }
 
@@ -52,7 +52,7 @@ public class Stagiaire extends Personne {
             return false;
         }
         final Stagiaire other = (Stagiaire) obj;
-        if (this.code != other.code) {
+        if (!Objects.equals(this.code, other.code)) {
             return false;
         }
         return true;

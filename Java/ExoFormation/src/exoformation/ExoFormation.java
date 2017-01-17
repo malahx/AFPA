@@ -27,8 +27,8 @@ public class ExoFormation {
     private static Scanner sc;
 
     // Fichier des serialisations
-    private static final String PATH_STAGIAIRE = "stagiaires.ser";
-    private static final String PATH_FORMATION = "formations.ser";
+//    private static final String PATH_STAGIAIRE = "stagiaires.ser";
+//    private static final String PATH_FORMATION = "formations.ser";
 
     /**
      * @param args the command line arguments
@@ -161,7 +161,7 @@ public class ExoFormation {
         String nom = sc.nextLine();
         System.out.println(Color.GREEN + "Prénom du stagiaire :");
         String prenom = sc.nextLine();
-        Stagiaire stagiaire = new Stagiaire(nom, prenom, "" + stagiaires.size());
+        Stagiaire stagiaire = new Stagiaire(0, nom, prenom, "" + stagiaires.size());
         stagiaires.add(stagiaire);
         if (formations.size() > 0) {
             System.out.println(Color.GREEN + "Voulez vous affecter le stagiaire à une formation [o/N] ?");
@@ -181,7 +181,7 @@ public class ExoFormation {
     private static Formation addFormation() {
         System.out.println(Color.GREEN + "Nom de la formation :");
         String nom = sc.nextLine();
-        Formation formation = new Formation(nom);
+        Formation formation = new Formation(0, nom);
         formations.add(formation);
         if (stagiaires.size() > 0) {
             System.out.println(Color.GREEN + "Voulez vous affecter des stagiaires [o/N] ?");
@@ -297,7 +297,7 @@ public class ExoFormation {
     private static void addECFTo(Formation formation) {
         System.out.println(Color.GREEN + "Nom de l'ECF :");
         String nom = sc.nextLine();
-        formation.addECF(new ECF(formation, nom));
+        formation.addECF(new ECF(0, formation, nom));
         infoFormation(formation);
     }
 

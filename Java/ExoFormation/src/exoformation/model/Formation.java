@@ -8,19 +8,28 @@ package exoformation.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * @author gwenole
  */
 public class Formation implements Serializable {
 
+    private int id;
     private List<Stagiaire> stagiaires = new ArrayList<>();
     private List<ECF> ecfs = new ArrayList<>();
     private String nom;
 
-    public Formation(String nom) {
+    public Formation(int id, String nom) {
+        this.id = id;
         this.nom = nom.substring(0, 1).toUpperCase() + nom.substring(1).toLowerCase();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<Stagiaire> getStagiaires() {
@@ -42,7 +51,7 @@ public class Formation implements Serializable {
     public List<ECF> getECFs() {
         return ecfs;
     }
-    
+
     public void addECF(ECF ecf) {
         this.ecfs.add(ecf);
     }
@@ -54,7 +63,7 @@ public class Formation implements Serializable {
     public void setECFs(List<ECF> ecfs) {
         this.ecfs = ecfs;
     }
-    
+
     public String getNom() {
         return nom;
     }
@@ -70,8 +79,7 @@ public class Formation implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + Objects.hashCode(this.nom);
+        int hash = 7;
         return hash;
     }
 
@@ -87,7 +95,7 @@ public class Formation implements Serializable {
             return false;
         }
         final Formation other = (Formation) obj;
-        if (!Objects.equals(this.nom, other.nom)) {
+        if (this.id != other.id) {
             return false;
         }
         return true;

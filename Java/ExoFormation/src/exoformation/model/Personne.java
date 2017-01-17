@@ -6,7 +6,6 @@
 package exoformation.model;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  *
@@ -14,13 +13,16 @@ import java.util.Objects;
  */
 public class Personne implements Serializable {
 
+    private int id;
     private String nom;
     private String prenom;
 
-    public Personne() {}
-    
-    public Personne(String nom, String prenom) {
+    public Personne() {
+    }
+
+    public Personne(int id, String nom, String prenom) {
         super();
+        this.id = id;
         this.nom = nom.toUpperCase();
         this.prenom = prenom.substring(0, 1).toUpperCase() + prenom.substring(1).toLowerCase();
     }
@@ -41,11 +43,18 @@ public class Personne implements Serializable {
         this.prenom = prenom;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.nom);
-        hash = 89 * hash + Objects.hashCode(this.prenom);
+        int hash = 3;
+        hash = 79 * hash + this.id;
         return hash;
     }
 
@@ -61,10 +70,7 @@ public class Personne implements Serializable {
             return false;
         }
         final Personne other = (Personne) obj;
-        if (!Objects.equals(this.nom, other.nom)) {
-            return false;
-        }
-        if (!Objects.equals(this.prenom, other.prenom)) {
+        if (this.id != other.id) {
             return false;
         }
         return true;

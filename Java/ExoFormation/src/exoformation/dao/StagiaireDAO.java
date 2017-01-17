@@ -32,7 +32,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             String query = "SELECT * FROM stagiaire INNER JOIN personne p ON personne_id = p.id";
             ResultSet result = state.executeQuery(query);
             while (result.next()) {
-                stagiaires.add(new Stagiaire(result.getString("nom"), result.getString("prenom"), result.getString("code")));
+                stagiaires.add(new Stagiaire(result.getInt("p.id"), result.getString("nom"), result.getString("prenom"), result.getString("code")));
             }
             result.close();
             state.close();
@@ -52,14 +52,14 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             }
             String query = "SELECT * FROM stagiaire s "
                     + "INNER JOIN personne pe ON s.personne_id = pe.id "
-                    + "INNER JOIN promo pr ON s.id = pr.stagiaire_id "
+                    + "INNER JOIN promo pr ON s.code = pr.stagiaire_code "
                     + "INNER JOIN formation f ON pr.formation_id = f.id "
-                    + "WHERE f.nom like ?";
+                    + "WHERE f.nom = ?";
             PreparedStatement prepare = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            prepare.setString(1, ((Formation)o).getNom());
+            prepare.setInt(1, ((Formation)o).getId());
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
-                stagiaires.add(new Stagiaire(result.getString("nom"), result.getString("prenom"), result.getString("code")));
+                stagiaires.add(new Stagiaire(result.getInt("p.id"), result.getString("nom"), result.getString("prenom"), result.getString("code")));
             }
             result.close();
             prepare.close();

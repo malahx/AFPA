@@ -30,7 +30,7 @@ public class FormationDAO extends DAO {
             String query = "SELECT * FROM formation";
             ResultSet result = state.executeQuery(query);
             while (result.next()) {
-                formations.add(new Formation(result.getString("nom")));
+                formations.add(new Formation(result.getInt("id"), result.getString("nom")));
             }
             result.close();
             state.close();
