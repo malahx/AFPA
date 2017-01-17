@@ -15,17 +15,12 @@ import java.util.Objects;
  */
 public class Formation implements Serializable {
 
-    private List<Stagiaire> stagiaires = new ArrayList<>();
-    private List<ECF> ecfs = new ArrayList<>();
+    private final List<Stagiaire> stagiaires = new ArrayList<>();
+    private final List<ECF> ecfs = new ArrayList<>();
     private String nom;
 
     public Formation(String nom) {
         this.nom = nom.substring(0, 1).toUpperCase() + nom.substring(1).toLowerCase();
-    }
-
-    public Formation(String nom, List<Stagiaire> stagiaires) {
-        this.nom = nom.substring(0, 1).toUpperCase() + nom.substring(1).toLowerCase();
-        this.stagiaires = stagiaires;
     }
 
     public List<Stagiaire> getStagiaires() {
