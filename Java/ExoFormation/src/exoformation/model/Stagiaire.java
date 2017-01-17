@@ -31,4 +31,29 @@ public class Stagiaire extends Personne {
         return this.getNom() + " " + this.getPrenom() + "(" + this.code + ")";
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + this.code;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Stagiaire other = (Stagiaire) obj;
+        if (this.code != other.code) {
+            return false;
+        }
+        return true;
+    }
+
 }

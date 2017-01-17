@@ -8,6 +8,7 @@ package exoformation.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author gwenole
@@ -15,6 +16,7 @@ import java.io.Serializable;
 public class Formation implements Serializable {
 
     private List<Stagiaire> stagiaires = new ArrayList<>();
+    private List<ECF> ecf = new ArrayList<>();
     private String nom;
 
     public Formation(String nom) {
@@ -49,6 +51,31 @@ public class Formation implements Serializable {
     @Override
     public String toString() {
         return this.nom;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.nom);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Formation other = (Formation) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        return true;
     }
 
 }
