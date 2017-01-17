@@ -50,10 +50,9 @@ public class Resultat implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 29 * hash + (this.value ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.ecf);
-        hash = 29 * hash + Objects.hashCode(this.stagiaire);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.ecf);
+        hash = 53 * hash + Objects.hashCode(this.stagiaire);
         return hash;
     }
 
@@ -69,9 +68,6 @@ public class Resultat implements Serializable {
             return false;
         }
         final Resultat other = (Resultat) obj;
-        if (this.value != other.value) {
-            return false;
-        }
         if (!Objects.equals(this.ecf, other.ecf)) {
             return false;
         }
