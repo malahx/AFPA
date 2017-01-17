@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Formation implements Serializable {
 
     private List<Stagiaire> stagiaires = new ArrayList<>();
-    private List<ECF> ecf = new ArrayList<>();
+    private List<ECF> ecfs = new ArrayList<>();
     private String nom;
 
     public Formation(String nom) {
@@ -40,6 +40,18 @@ public class Formation implements Serializable {
         this.stagiaires.remove(stagiaire);
     }
 
+    public List<ECF> getECFs() {
+        return ecfs;
+    }
+    
+    public void addECF(ECF ecf) {
+        this.ecfs.add(ecf);
+    }
+
+    public void remECF(ECF ecf) {
+        this.ecfs.remove(ecf);
+    }
+    
     public String getNom() {
         return nom;
     }

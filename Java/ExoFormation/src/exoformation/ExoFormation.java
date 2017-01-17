@@ -3,7 +3,9 @@
  */
 package exoformation;
 
+import exoformation.model.ECF;
 import exoformation.model.Formation;
+import exoformation.model.Resultat;
 import exoformation.model.Stagiaire;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,7 @@ public class ExoFormation {
         // Fonctionnement de l'application en continue
         while (true) {
             // Initialisation des variables pour les différentes options
-            int i = 1, lf = 0, ls = 0, f, s, sf = 0;
+            int i = 1, lf = 0, ls = 0, f, s, sf = 0, secf = 0, recf = 0;
 
             // Options possibles
             System.out.println("------------------------------------------------");
@@ -62,21 +64,29 @@ public class ExoFormation {
                 lf = i;
                 i++;
             }
+            System.out.println(Color.YELLOW + i + " - Saisir une formation");
+            f = i;
+            i++;
             if (stagiaires.size() > 0) {
                 System.out.println(Color.YELLOW + i + " - Lister les stagiaires");
                 ls = i;
                 i++;
             }
-            System.out.println(Color.YELLOW + i + " - Saisir une formation");
-            f = i;
-            i++;
             System.out.println(Color.YELLOW + i + " - Saisir un stagiaire");
             s = i;
             i++;
-            if (stagiaires.size() > 0 && formations.size() > 0 && stagiaireDispo() > 0) {
-                System.out.println(Color.YELLOW + i + " - Ajouter un stagiaire à une formation");
-                sf = i;
+            if (formations.size() > 0) {
+                System.out.println(Color.YELLOW + i + " - Saisir un ECF");
+                secf = i;
                 i++;
+                System.out.println(Color.YELLOW + i + " - Saisir un Résultat d'ECF");
+                recf = i;
+                i++;
+                if (stagiaires.size() > 0 && stagiaireDispo() > 0) {
+                    System.out.println(Color.YELLOW + i + " - Ajouter un stagiaire à une formation");
+                    sf = i;
+                    i++;
+                }
             }
             String str = sc.nextLine();
             System.out.println("------------------------------------------------");
@@ -97,12 +107,19 @@ public class ExoFormation {
                 addStagiaire();
             } else if (j == sf) {
                 addStagiairesTo(selectFormation());
+            } else if (j == secf) {
+                addECFTo(selectFormation());
+            } else if (j == recf) {
+                Formation formation = selectFormation();
+                ECF ecf = selectECFFrom(formation);
+                Stagiaire stagiaire = selectStagiaireFrom(formation);
+                addRECFTo(formation, ecf, stagiaire);
             }
         }
-        
-        Utils.serialize(PATH_STAGIAIRE, (Object)stagiaires);
-        Utils.serialize(PATH_FORMATION, (Object)formations);
-        
+
+        Utils.serialize(PATH_STAGIAIRE, (Object) stagiaires);
+        Utils.serialize(PATH_FORMATION, (Object) formations);
+
         // Affichage des formations et des stagiaires
         listFormations();
         listStagiaires();
@@ -176,7 +193,7 @@ public class ExoFormation {
         int size = formations.size();
         for (int i = 0; i < size; i++) {
             int j = i + 1;
-            System.out.println(Color.YELLOW +  j + " - " + formations.get(i));
+            System.out.println(Color.YELLOW + j + " - " + formations.get(i));
         }
         String str = sc.nextLine();
         if (str.equals("")) {
@@ -190,8 +207,59 @@ public class ExoFormation {
         return formation;
     }
 
+    // Sélectionner une formation
+    private static Stagiaire selectStagiaireFrom(Formation formation) {
+        if (formation == null) {
+            return null;
+        }
+        System.out.println(Color.GREEN + "Choisissez la formation :");
+        System.out.println(Color.RED + 0 + " - Sortir");
+        int size = formation.getStagiaires().size();
+        for (int i = 0; i < size; i++) {
+            int j = i + 1;
+            System.out.println(Color.YELLOW + j + " - " + formation.getStagiaires().get(i));
+        }
+        String str = sc.nextLine();
+        if (str.equals("")) {
+            return null;
+        }
+        int j = Integer.parseInt(str);
+        if (j == 0 || j > size) {
+            return null;
+        }
+        Stagiaire stagiaire = formation.getStagiaires().get(j - 1);
+        return stagiaire;
+    }
+
+    // Sélectionner l'ECF
+    private static ECF selectECFFrom(Formation formation) {
+        if (formation == null) {
+            return null;
+        }
+        System.out.println(Color.GREEN + "Choisissez l'ecf :");
+        System.out.println(Color.RED + 0 + " - Sortir");
+        int size = formation.getECFs().size();
+        for (int i = 0; i < size; i++) {
+            int j = i + 1;
+            System.out.println(Color.YELLOW + j + " - " + formation.getECFs().get(i));
+        }
+        String str = sc.nextLine();
+        if (str.equals("")) {
+            return null;
+        }
+        int j = Integer.parseInt(str);
+        if (j == 0 || j > size) {
+            return null;
+        }
+        ECF ecf = formation.getECFs().get(j - 1);
+        return ecf;
+    }
+
     // Ajouter des stagiaires à une formation
     private static void addStagiairesTo(Formation formation) {
+        if (formation == null) {
+            return;
+        }
         System.out.println(Color.GREEN + "Ajoutez le stagiaire :");
         System.out.println(Color.RED + 0 + " - Retour au menu");
         List<Stagiaire> stgs = new ArrayList<>();
@@ -215,6 +283,28 @@ public class ExoFormation {
         }
         formation.addStagiaire(stgs.get(j - 1));
         addStagiairesTo(formation);
+    }
+
+    // Ajouter un ECF à une formation
+    private static void addECFTo(Formation formation) {
+        System.out.println(Color.GREEN + "Nom de l'ECF :");
+        String nom = sc.nextLine();
+        formation.addECF(new ECF(nom));
+        infoFormation(formation);
+    }
+
+    // Ajouter un Résultat d'un stagiaire à un ECF
+    private static void addRECFTo(Formation formation, ECF ecf, Stagiaire stagiaire) {
+        System.out.println(Color.GREEN + "Résultat de l'ECF [o/N] ?");
+        String str = sc.nextLine();
+        boolean value;
+        if (str.toLowerCase().equals("o")) {
+            value = true;
+        } else {
+            value = false;
+        }
+        ecf.addResultat(new Resultat(value, ecf, stagiaire));
+        infoFormation(formation);
     }
 
     // Afficher tous les stagiaires
@@ -247,8 +337,17 @@ public class ExoFormation {
     // Afficher les stagiaires d'une formation
     private static void infoFormation(Formation formation) {
         System.out.println(Color.CYAN + "Information sur la formation :");
+        System.out.println(Color.CYAN + "- Liste des stagiaires :");
         formation.getStagiaires().forEach((s) -> {
             System.out.println(Color.CYAN + " -- " + s);
+        });
+        System.out.println(Color.CYAN + "- Liste des ECF :");
+        formation.getECFs().forEach((s) -> {
+            System.out.println(Color.CYAN + " -- " + s.getNom());
+            s.getResultats().forEach((r) -> {
+                System.out.println(Color.CYAN + " -- -> " + r.getStagiaire() + " Obtenu : " + (r.isValue() ? "OUI" : "NON"));
+
+            });
         });
     }
 }
