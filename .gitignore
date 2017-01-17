@@ -2,6 +2,11 @@ Java/*/build
 Java/*/build.xml
 Java/*/manifest.mf
 Java/*/nbproject/private/
+Java/*/*.ser
+Java/*/out
+Java/*/.idea/
+Java/*/.idea/
+Java/*/*.iml
 TrackList-PHP-MySQL/nbproject/private/
 TrackList-PHP-MySQL/uploads/*
 Tautof-Symfony/nbproject/private/
