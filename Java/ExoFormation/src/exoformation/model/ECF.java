@@ -8,6 +8,7 @@ package exoformation.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -15,27 +16,13 @@ import java.util.List;
  */
 public class ECF implements Serializable {
 
-    private static int lastId = 0;
-    private int id;
+    private Formation formation;
     private String nom;
-    private List<Resultat> resultats = new ArrayList<>();
+    private final List<Resultat> resultats = new ArrayList<>();
 
-    public ECF(String nom) {
-        lastId++;
-        this.id = lastId;
+    public ECF(Formation formation, String nom) {
         this.nom = nom;
-    }
-
-    public static int getLastId() {
-        return lastId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        this.formation = formation;
     }
 
     public String getNom() {
@@ -44,6 +31,14 @@ public class ECF implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
+    }
+
+    public Formation getFormation() {
+        return formation;
+    }
+
+    public void setFormation(Formation formation) {
+        this.formation = formation;
     }
 
     public List<Resultat> getResultats() {
@@ -65,8 +60,9 @@ public class ECF implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 67 * hash + this.id;
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.formation);
+        hash = 59 * hash + Objects.hashCode(this.nom);
         return hash;
     }
 
@@ -82,7 +78,10 @@ public class ECF implements Serializable {
             return false;
         }
         final ECF other = (ECF) obj;
-        if (this.id != other.id) {
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.formation, other.formation)) {
             return false;
         }
         return true;
