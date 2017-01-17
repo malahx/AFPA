@@ -23,7 +23,7 @@ public class Utils {
     // Sérializer un object
     public static void serialize(String path, Object o) {
         File f = new File(path);
-        if (f.isDirectory() || !f.canWrite()) {
+        if (f.isDirectory() || (f.exists() && !f.canWrite())) {
             return;
         }
         ObjectOutputStream oos = null;
