@@ -18,7 +18,7 @@ public class ECF implements Serializable {
     private int id;
     private Formation formation;
     private String nom;
-    private final List<Resultat> resultats = new ArrayList<>();
+    private List<Resultat> resultats = new ArrayList<>();
 
     public ECF(int id, Formation formation, String nom) {
         this.id = id;
@@ -33,7 +33,7 @@ public class ECF implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public String getNom() {
         return nom;
     }
@@ -60,6 +60,10 @@ public class ECF implements Serializable {
 
     public void remResultat(Resultat res) {
         this.resultats.remove(res);
+    }
+
+    public void setResultats(List<Resultat> res) {
+        this.resultats = res;
     }
 
     @Override

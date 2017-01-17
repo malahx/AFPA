@@ -14,22 +14,22 @@ import java.util.Objects;
  */
 public class Resultat implements Serializable {
 
-    private boolean value;
+    private boolean obtenu;
     private ECF ecf;
     private Stagiaire stagiaire;
 
-    public Resultat(boolean value, ECF ecf, Stagiaire stagiaire) {
-        this.value = value;
+    public Resultat(boolean obtenu, ECF ecf, Stagiaire stagiaire) {
+        this.obtenu = obtenu;
         this.ecf = ecf;
         this.stagiaire = stagiaire;
     }
 
-    public boolean isValue() {
-        return value;
+    public boolean isObtenu() {
+        return obtenu;
     }
 
-    public void setValue(boolean value) {
-        this.value = value;
+    public void setObtenu(boolean obtenu) {
+        this.obtenu = obtenu;
     }
 
     public ECF getECF() {

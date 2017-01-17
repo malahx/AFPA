@@ -29,7 +29,6 @@ public class ExoFormation {
     // Fichier des serialisations
 //    private static final String PATH_STAGIAIRE = "stagiaires.ser";
 //    private static final String PATH_FORMATION = "formations.ser";
-
     /**
      * @param args the command line arguments
      */
@@ -41,6 +40,7 @@ public class ExoFormation {
         sc = new Scanner(System.in);
 
         List[] data = Utils.Load();
+        
         formations = data[0];
         stagiaires = data[1];
 //        Object o = Utils.deSerialize(PATH_STAGIAIRE);
@@ -127,7 +127,6 @@ public class ExoFormation {
 
 //        Utils.serialize(PATH_STAGIAIRE, (Object) stagiaires);
 //        Utils.serialize(PATH_FORMATION, (Object) formations);
-
         // Affichage des formations et des stagiaires
         listFormations();
         listStagiaires();
@@ -353,7 +352,7 @@ public class ExoFormation {
         formation.getECFs().forEach((s) -> {
             System.out.println(Color.CYAN + " -- " + s.getNom());
             s.getResultats().forEach((r) -> {
-                System.out.println(Color.CYAN + " -- -> " + r.getStagiaire() + " Obtenu : " + (r.isValue() ? "OUI" : "NON"));
+                System.out.println(Color.CYAN + " -- -> " + r.getStagiaire() + " Obtenu : " + (r.isObtenu() ? "OUI" : "NON"));
 
             });
         });

@@ -7,7 +7,9 @@ package exoformation;
 
 import exoformation.dao.EcfDAO;
 import exoformation.dao.FormationDAO;
+import exoformation.dao.ResultatDAO;
 import exoformation.dao.StagiaireDAO;
+import exoformation.model.ECF;
 import exoformation.model.Formation;
 import exoformation.model.Stagiaire;
 import java.io.File;
@@ -83,11 +85,16 @@ public class Utils {
         FormationDAO formationDAO = new FormationDAO();
         StagiaireDAO stagiaireDAO = new StagiaireDAO();
         EcfDAO ecfeDAO = new EcfDAO();
+        ResultatDAO resDAO = new ResultatDAO();
 
         List<Formation> formations = formationDAO.findAll();
         for (Formation formation : formations) {
             formation.setStagiaires(stagiaireDAO.findBy(formation));
-            formation.setECFs(ecfeDAO.findBy(formation));
+            List<ECF> ecfs = ecfeDAO.findBy(formation);
+            formation.setECFs(ecfs);
+            for (ECF ecf : ecfs) {
+                ecf.setResultats(resDAO.findBy(ecf));
+            }
         }
 
         return new List[]{formations, stagiaireDAO.findAll()};
