@@ -6,6 +6,7 @@
 package exoformation;
 
 import exoformation.model.Stagiaire;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,6 +22,10 @@ public class Utils {
 
     // Sérializer un object
     public static void serialize(String path, Object o) {
+        File f = new File(path);
+        if (f.isDirectory() || !f.canWrite()) {
+            return;
+        }
         ObjectOutputStream oos = null;
 
         try {
@@ -44,6 +49,10 @@ public class Utils {
 
     // Déserializer un objet
     public static Object deSerialize(String path) {
+        File f = new File(path);
+        if (!f.exists() || f.isDirectory() || !f.canRead()) {
+            return null;
+        }
         ObjectInputStream ois = null;
         Object o = null;
         try {
