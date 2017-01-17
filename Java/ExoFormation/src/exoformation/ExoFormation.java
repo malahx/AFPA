@@ -40,15 +40,18 @@ public class ExoFormation {
         stagiaires = new ArrayList<>();
         sc = new Scanner(System.in);
 
-        Object o = Utils.deSerialize(PATH_STAGIAIRE);
-        if (o != null) {
-            stagiaires = (List<Stagiaire>) o;
-        }
-
-        o = Utils.deSerialize(PATH_FORMATION);
-        if (o != null) {
-            formations = (List<Formation>) o;
-        }
+        List[] data = Utils.Load();
+        formations = data[0];
+        stagiaires = data[1];
+//        Object o = Utils.deSerialize(PATH_STAGIAIRE);
+//        if (o != null) {
+//            stagiaires = (List<Stagiaire>) o;
+//        }
+//
+//        o = Utils.deSerialize(PATH_FORMATION);
+//        if (o != null) {
+//            formations = (List<Formation>) o;
+//        }
 
         // Fonctionnement de l'application en continue
         while (true) {
@@ -122,8 +125,8 @@ public class ExoFormation {
             }
         }
 
-        Utils.serialize(PATH_STAGIAIRE, (Object) stagiaires);
-        Utils.serialize(PATH_FORMATION, (Object) formations);
+//        Utils.serialize(PATH_STAGIAIRE, (Object) stagiaires);
+//        Utils.serialize(PATH_FORMATION, (Object) formations);
 
         // Affichage des formations et des stagiaires
         listFormations();
@@ -158,7 +161,7 @@ public class ExoFormation {
         String nom = sc.nextLine();
         System.out.println(Color.GREEN + "Prénom du stagiaire :");
         String prenom = sc.nextLine();
-        Stagiaire stagiaire = new Stagiaire(nom, prenom, stagiaires.size());
+        Stagiaire stagiaire = new Stagiaire(nom, prenom, "" + stagiaires.size());
         stagiaires.add(stagiaire);
         if (formations.size() > 0) {
             System.out.println(Color.GREEN + "Voulez vous affecter le stagiaire à une formation [o/N] ?");

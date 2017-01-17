@@ -5,24 +5,26 @@
  */
 package exoformation.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author gwenole
  */
 public class Stagiaire extends Personne {
 
-    int code;
+    String code;
 
-    public Stagiaire(String nom, String prenom, int code) {
+    public Stagiaire(String nom, String prenom, String code) {
         super(nom, prenom);
         this.code = code;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -33,8 +35,8 @@ public class Stagiaire extends Personne {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + this.code;
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.code);
         return hash;
     }
 

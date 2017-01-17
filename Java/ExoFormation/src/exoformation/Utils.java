@@ -5,6 +5,10 @@
  */
 package exoformation;
 
+import exoformation.dao.EcfDAO;
+import exoformation.dao.FormationDAO;
+import exoformation.dao.StagiaireDAO;
+import exoformation.model.Formation;
 import exoformation.model.Stagiaire;
 import java.io.File;
 import java.io.FileInputStream;
@@ -73,5 +77,19 @@ public class Utils {
             }
         }
         return o;
+    }
+
+    public static List[] Load() {
+        FormationDAO formationDAO = new FormationDAO();
+        StagiaireDAO stagiaireDAO = new StagiaireDAO();
+        EcfDAO ecfeDAO = new EcfDAO();
+
+        List<Formation> formations = formationDAO.findAll();
+        for (Formation formation : formations) {
+            formation.setStagiaires(stagiaireDAO.findBy(formation));
+            formation.setECFs(ecfeDAO.findBy(formation));
+        }
+
+        return new List[]{formations, stagiaireDAO.findAll()};
     }
 }

@@ -15,8 +15,8 @@ import java.util.Objects;
  */
 public class Formation implements Serializable {
 
-    private final List<Stagiaire> stagiaires = new ArrayList<>();
-    private final List<ECF> ecfs = new ArrayList<>();
+    private List<Stagiaire> stagiaires = new ArrayList<>();
+    private List<ECF> ecfs = new ArrayList<>();
     private String nom;
 
     public Formation(String nom) {
@@ -35,6 +35,10 @@ public class Formation implements Serializable {
         this.stagiaires.remove(stagiaire);
     }
 
+    public void setStagiaires(List<Stagiaire> stagiaires) {
+        this.stagiaires = stagiaires;
+    }
+
     public List<ECF> getECFs() {
         return ecfs;
     }
@@ -45,6 +49,10 @@ public class Formation implements Serializable {
 
     public void remECF(ECF ecf) {
         this.ecfs.remove(ecf);
+    }
+
+    public void setECFs(List<ECF> ecfs) {
+        this.ecfs = ecfs;
     }
     
     public String getNom() {
