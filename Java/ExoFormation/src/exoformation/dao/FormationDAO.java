@@ -126,8 +126,6 @@ public class FormationDAO extends DAO {
                 throw new SQLException("Erreur à l'insertion de la formation.");
             }
 
-            formation.addStagiaire(stagiaire);
-
         } catch (SQLException e) {
             e.printStackTrace();
             try {

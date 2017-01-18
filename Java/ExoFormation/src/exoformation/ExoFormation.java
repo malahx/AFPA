@@ -292,6 +292,7 @@ public class ExoFormation {
             System.out.println(Color.RED + "Le stagiaire n'a pas pu être ajouté à la formation");
             return;
         }
+        formation.addStagiaire(stagiaire);
         addStagiairesTo(formation);
     }
 
