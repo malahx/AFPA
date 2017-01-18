@@ -286,7 +286,12 @@ public class ExoFormation {
         if (j == 0 || j > i) {
             return;
         }
-        formation.addStagiaire(stgs.get(j - 1));
+        Stagiaire stagiaire = stgs.get(j - 1);
+        boolean isDone = Utils.addToDB(formation, stagiaire);
+        if (!isDone) {
+            System.out.println(Color.RED + "Le stagiaire n'a pas pu être ajouté à la formation");
+            return;
+        }
         addStagiairesTo(formation);
     }
 

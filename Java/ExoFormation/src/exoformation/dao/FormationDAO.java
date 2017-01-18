@@ -54,7 +54,7 @@ public class FormationDAO extends DAO {
         Connection conn = null;
 
         Formation formation = (Formation) o;
-        String query = "INSERT INTO `formation` (`id`, `nom`) VALUES (0, ?);";
+        String query = "INSERT INTO `formation` (`id`, `nom`) VALUES (0, ?)";
 
         try {
             int id = -1;
@@ -62,7 +62,7 @@ public class FormationDAO extends DAO {
             if (conn == null) {
                 return null;
             }
-            
+
             prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             prepare.setString(1, formation.getNom());
 
@@ -104,4 +104,52 @@ public class FormationDAO extends DAO {
         return formation;
     }
 
+    public boolean insert(Formation formation, Stagiaire stagiaire) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "INSERT INTO `promo` (`formation_id`, `stagiaire_code`) VALUES (?, ?)";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setInt(1, formation.getId());
+            prepare.setString(2, stagiaire.getCode());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à l'insertion de la formation.");
+            }
+
+            formation.addStagiaire(stagiaire);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return false;
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
 }

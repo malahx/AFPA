@@ -49,6 +49,11 @@ public class Utils {
         FormationDAO dao = new FormationDAO();
         return dao.insert(formation);
     }
+    
+    public static boolean addToDB(Formation formation, Stagiaire stagiaire) {
+        FormationDAO dao = new FormationDAO();
+        return dao.insert(formation, stagiaire);
+    }
 
     public static ECF addToDB(ECF ecf) {
         EcfDAO dao = new EcfDAO();
