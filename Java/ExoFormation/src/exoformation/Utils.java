@@ -11,13 +11,8 @@ import exoformation.dao.ResultatDAO;
 import exoformation.dao.StagiaireDAO;
 import exoformation.model.ECF;
 import exoformation.model.Formation;
+import exoformation.model.Resultat;
 import exoformation.model.Stagiaire;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 /**
@@ -25,61 +20,6 @@ import java.util.List;
  * @author gwenole
  */
 public class Utils {
-
-    // Sérializer un object
-    public static void serialize(String path, Object o) {
-        File f = new File(path);
-        if (f.isDirectory() || (f.exists() && !f.canWrite())) {
-            return;
-        }
-        ObjectOutputStream oos = null;
-
-        try {
-            final FileOutputStream fichier = new FileOutputStream(path);
-            oos = new ObjectOutputStream(fichier);
-            oos.writeObject(o);
-            oos.flush();
-        } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (oos != null) {
-                    oos.flush();
-                    oos.close();
-                }
-            } catch (final IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    // Déserializer un objet
-    public static Object deSerialize(String path) {
-        File f = new File(path);
-        if (!f.exists() || f.isDirectory() || !f.canRead()) {
-            return null;
-        }
-        ObjectInputStream ois = null;
-        Object o = null;
-        try {
-            final FileInputStream fichier = new FileInputStream(path);
-            ois = new ObjectInputStream(fichier);
-            o = (List<Stagiaire>) ois.readObject();
-        } catch (final java.io.IOException e) {
-            e.printStackTrace();
-        } catch (final ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ois != null) {
-                    ois.close();
-                }
-            } catch (final IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        return o;
-    }
 
     public static List[] Load() {
         FormationDAO formationDAO = new FormationDAO();
@@ -98,5 +38,25 @@ public class Utils {
         }
 
         return new List[]{formations, stagiaireDAO.findAll()};
+    }
+
+    public static Stagiaire addToDB(Stagiaire stagiaire) {
+        StagiaireDAO dao = new StagiaireDAO();
+        return dao.insert(stagiaire);
+    }
+
+    public static Formation addToDB(Formation formation) {
+        FormationDAO dao = new FormationDAO();
+        return dao.insert(formation);
+    }
+
+    public static ECF addToDB(ECF ecf) {
+        EcfDAO dao = new EcfDAO();
+        return dao.insert(ecf);
+    }
+
+    public static Resultat addToDB(Resultat res) {
+        ResultatDAO dao = new ResultatDAO();
+        return dao.insert(res);
     }
 }

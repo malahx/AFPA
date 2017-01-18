@@ -11,6 +11,8 @@ import exoformation.model.Stagiaire;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,4 +55,55 @@ public class ResultatDAO extends DAO<Resultat> {
         return res;
     }
 
+    @Override
+    public Resultat insert(Object o) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        Resultat res = (Resultat) o;
+        String query = "INSERT INTO `resultat` (`ecf_id`, `stagiaire_code`, `obtenu`) VALUES (?, ?, ?)";
+
+        try {
+            int id = -1;
+            conn = getConnection();
+            if (conn == null) {
+                return null;
+            }
+            
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setInt(1, res.getECF().getId());
+            prepare.setString(2, res.getStagiaire().getCode());
+            prepare.setBoolean(2, res.isObtenu());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à l'insertion de l'ECF.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+    
 }

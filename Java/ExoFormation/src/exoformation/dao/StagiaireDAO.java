@@ -10,6 +10,7 @@ import exoformation.model.Stagiaire;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
                     + "INNER JOIN formation f ON pr.formation_id = f.id "
                     + "WHERE f.id = ?";
             PreparedStatement prepare = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            prepare.setInt(1, ((Formation)o).getId());
+            prepare.setInt(1, ((Formation) o).getId());
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
                 stagiaires.add(new Stagiaire(result.getInt("pe.id"), result.getString("nom"), result.getString("prenom"), result.getString("code")));
@@ -67,6 +68,77 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             e.printStackTrace();
         }
         return stagiaires;
+    }
+
+    @Override
+    public Stagiaire insert(Object o) { // o = Stagiaire
+        PreparedStatement prepareP = null;
+        PreparedStatement prepareS = null;
+        Connection conn = null;
+
+        Stagiaire stagiaire = (Stagiaire) o;
+        String queryP = "INSERT INTO `personne` (`id`, `nom`, `prenom`) VALUES (0, ?, ?)";
+        String queryS = "INSERT INTO `stagiaire` (`code`, `personne_id`) VALUES (?, ?)";
+
+        try {
+            int id = -1;
+            conn = getConnection();
+            if (conn == null) {
+                return null;
+            }
+            conn.setAutoCommit(false);
+
+            prepareP = conn.prepareStatement(queryP, Statement.RETURN_GENERATED_KEYS);
+            prepareP.setString(1, stagiaire.getNom());
+            prepareP.setString(2, stagiaire.getPrenom());
+
+            int row = prepareP.executeUpdate();
+
+            ResultSet generatedKeys = prepareP.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
+
+            if (row == 0 || id < 0) {
+                throw new SQLException("Erreur à l'insertion du stagiaire.");
+            }
+
+            prepareS = conn.prepareStatement(queryS);
+            prepareS.setString(1, stagiaire.getCode());
+            prepareS.setInt(2, id);
+            prepareS.executeUpdate();
+
+            conn.commit();
+            conn.setAutoCommit(true);
+
+            stagiaire.setId(id);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        } finally {
+            try {
+                if (prepareP != null) {
+                    prepareP.close();
+                }
+                if (prepareS != null) {
+                    prepareP.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return stagiaire;
     }
 
 }

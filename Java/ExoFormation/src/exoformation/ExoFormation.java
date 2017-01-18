@@ -26,9 +26,6 @@ public class ExoFormation {
     // Le scanner de touche
     private static Scanner sc;
 
-    // Fichier des serialisations
-//    private static final String PATH_STAGIAIRE = "stagiaires.ser";
-//    private static final String PATH_FORMATION = "formations.ser";
     /**
      * @param args the command line arguments
      */
@@ -40,18 +37,9 @@ public class ExoFormation {
         sc = new Scanner(System.in);
 
         List[] data = Utils.Load();
-        
+
         formations = data[0];
         stagiaires = data[1];
-//        Object o = Utils.deSerialize(PATH_STAGIAIRE);
-//        if (o != null) {
-//            stagiaires = (List<Stagiaire>) o;
-//        }
-//
-//        o = Utils.deSerialize(PATH_FORMATION);
-//        if (o != null) {
-//            formations = (List<Formation>) o;
-//        }
 
         // Fonctionnement de l'application en continue
         while (true) {
@@ -125,8 +113,6 @@ public class ExoFormation {
             }
         }
 
-//        Utils.serialize(PATH_STAGIAIRE, (Object) stagiaires);
-//        Utils.serialize(PATH_FORMATION, (Object) formations);
         // Affichage des formations et des stagiaires
         listFormations();
         listStagiaires();
@@ -160,7 +146,14 @@ public class ExoFormation {
         String nom = sc.nextLine();
         System.out.println(Color.GREEN + "Prénom du stagiaire :");
         String prenom = sc.nextLine();
-        Stagiaire stagiaire = new Stagiaire(0, nom, prenom, "" + stagiaires.size());
+        System.out.println(Color.GREEN + "Code du stagiaire :");
+        String code = sc.nextLine();
+        Stagiaire stagiaire = new Stagiaire(0, nom, prenom, code);
+        stagiaire = Utils.addToDB(stagiaire);
+        if (stagiaire == null) {
+            System.out.println(Color.RED + "Le stagiaire n'a pas pu être ajouté à la base de donnée");
+            return null;
+        }
         stagiaires.add(stagiaire);
         if (formations.size() > 0) {
             System.out.println(Color.GREEN + "Voulez vous affecter le stagiaire à une formation [o/N] ?");
@@ -181,6 +174,11 @@ public class ExoFormation {
         System.out.println(Color.GREEN + "Nom de la formation :");
         String nom = sc.nextLine();
         Formation formation = new Formation(0, nom);
+        formation = Utils.addToDB(formation);
+        if (formation == null) {
+            System.out.println(Color.RED + "La formation n'a pas pu être ajouté à la base de donnée");
+            return null;
+        }
         formations.add(formation);
         if (stagiaires.size() > 0) {
             System.out.println(Color.GREEN + "Voulez vous affecter des stagiaires [o/N] ?");
@@ -293,15 +291,22 @@ public class ExoFormation {
     }
 
     // Ajouter un ECF à une formation
-    private static void addECFTo(Formation formation) {
+    private static ECF addECFTo(Formation formation) {
         System.out.println(Color.GREEN + "Nom de l'ECF :");
         String nom = sc.nextLine();
-        formation.addECF(new ECF(0, formation, nom));
+        ECF ecf = new ECF(0, formation, nom);
+        ecf = Utils.addToDB(ecf);
+        if (ecf == null) {
+            System.out.println(Color.RED + "L'ECF n'a pas pu être ajouté à la base de donnée");
+            return null;
+        }
+        formation.addECF(ecf);
         infoFormation(formation);
+        return ecf;
     }
 
     // Ajouter un Résultat d'un stagiaire à un ECF
-    private static void addRECFTo(Formation formation, ECF ecf, Stagiaire stagiaire) {
+    private static Resultat addRECFTo(Formation formation, ECF ecf, Stagiaire stagiaire) {
         System.out.println(Color.GREEN + "Résultat de l'ECF [o/N] ?");
         String str = sc.nextLine();
         boolean value;
@@ -310,8 +315,15 @@ public class ExoFormation {
         } else {
             value = false;
         }
-        ecf.addResultat(new Resultat(value, ecf, stagiaire));
+        Resultat res = new Resultat(value, ecf, stagiaire);
+        res = Utils.addToDB(res);
+        if (res == null) {
+            System.out.println(Color.RED + "L'ECF n'a pas pu être ajouté à la base de donnée");
+            return null;
+        }
+        ecf.addResultat(res);
         infoFormation(formation);
+        return res;
     }
 
     // Afficher tous les stagiaires

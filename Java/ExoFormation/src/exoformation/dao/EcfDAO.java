@@ -10,6 +10,8 @@ import exoformation.model.Formation;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,4 +51,61 @@ public class EcfDAO extends DAO<ECF> {
         return ecf;
     }
 
+    @Override
+    public ECF insert(Object o) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        ECF ecf = (ECF) o;
+        String query = "INSERT INTO `ecf` (`id`, `nom`, `formation_id`) VALUES (0, ?, ?)";
+
+        try {
+            int id = -1;
+            conn = getConnection();
+            if (conn == null) {
+                return null;
+            }
+            
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setString(1, ecf.getNom());
+            prepare.setInt(2, ecf.getFormation().getId());
+
+            int row = prepare.executeUpdate();
+
+            ResultSet generatedKeys = prepare.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                id = generatedKeys.getInt(1);
+            }
+
+            if (row == 0 || id < 0) {
+                throw new SQLException("Erreur à l'insertion de l'ECF.");
+            }
+
+            ecf.setId(id);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return ecf;
+    }
+    
 }
