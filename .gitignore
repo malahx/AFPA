@@ -1,3 +1,4 @@
+Java/*/bin
 Java/*/build
 Java/*/build.xml
 Java/*/manifest.mf
@@ -6,7 +7,9 @@ Java/*/*.ser
 Java/*/out
 Java/*/.idea/
 Java/*/.idea/
+Java/*/.settings/
 Java/*/*.iml
+Java/.metadata
 TrackList-PHP-MySQL/nbproject/private/
 TrackList-PHP-MySQL/uploads/*
 Tautof-Symfony/nbproject/private/
