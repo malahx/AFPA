@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package exoformation;
+package org.glehenaff.gestform;
 
-import exoformation.dao.EcfDAO;
-import exoformation.dao.FormationDAO;
-import exoformation.dao.ResultatDAO;
-import exoformation.dao.StagiaireDAO;
-import exoformation.model.ECF;
-import exoformation.model.Formation;
-import exoformation.model.Resultat;
-import exoformation.model.Stagiaire;
 import java.util.List;
+
+import org.glehenaff.gestform.dao.EcfDAO;
+import org.glehenaff.gestform.dao.FormationDAO;
+import org.glehenaff.gestform.dao.ResultatDAO;
+import org.glehenaff.gestform.dao.StagiaireDAO;
+import org.glehenaff.gestform.model.ECF;
+import org.glehenaff.gestform.model.Formation;
+import org.glehenaff.gestform.model.Resultat;
+import org.glehenaff.gestform.model.Stagiaire;
 
 /**
  *

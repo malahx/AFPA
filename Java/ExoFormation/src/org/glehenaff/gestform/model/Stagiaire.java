@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package exoformation.model;
+package org.glehenaff.gestform.model;
 
 import java.util.Objects;
 

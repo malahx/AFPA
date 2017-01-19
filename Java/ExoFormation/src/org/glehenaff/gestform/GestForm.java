@@ -1,21 +1,22 @@
 /*
  * Unlisense
- */
-package exoformation;
+ * */
+package org.glehenaff.gestform;
 
-import exoformation.model.ECF;
-import exoformation.model.Formation;
-import exoformation.model.Resultat;
-import exoformation.model.Stagiaire;
-import java.util.ArrayList;
+import java.util.ArrayList;	
 import java.util.List;
 import java.util.Scanner;
+
+import org.glehenaff.gestform.model.ECF;
+import org.glehenaff.gestform.model.Formation;
+import org.glehenaff.gestform.model.Resultat;
+import org.glehenaff.gestform.model.Stagiaire;
 
 /**
  *
  * @author gwenole
  */
-public class ExoFormation {
+public class GestForm {
 
     // Liste de toutes les formations saisies
     private static List<Formation> formations;
@@ -30,7 +31,6 @@ public class ExoFormation {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         // Initialisation des variables globales
         formations = new ArrayList<>();
         stagiaires = new ArrayList<>();

@@ -3,11 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package exoformation.dao;
+package org.glehenaff.gestform.dao;
 
-import exoformation.model.ECF;
-import exoformation.model.Resultat;
-import exoformation.model.Stagiaire;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.glehenaff.gestform.model.ECF;
+import org.glehenaff.gestform.model.Resultat;
+import org.glehenaff.gestform.model.Stagiaire;
 
 /**
  *
