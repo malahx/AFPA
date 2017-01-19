@@ -59,14 +59,14 @@ public class ResultatDAO extends DAO<Resultat> {
             }
             result.close();
             prepare.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return res;
     }
 
     @Override
-    public Resultat insert(Object o) {
+    public Resultat insert(Object o) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
 
@@ -92,15 +92,10 @@ public class ResultatDAO extends DAO<Resultat> {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            return null;
+        	if (e.getErrorCode() == 1062) {
+        		throw new AlreadyExistsException(e);
+        	}
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (prepare != null) {
@@ -110,7 +105,7 @@ public class ResultatDAO extends DAO<Resultat> {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return res;

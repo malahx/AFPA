@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.management.RuntimeErrorException;
+
 /**
  *
  * @author gwenole
@@ -27,18 +29,18 @@ public abstract class DAO<T> implements IDAO<T> {
                 try {
                     Class.forName(DRIVER).newInstance();
                 } catch (InstantiationException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
 
             try {
                 connect = DriverManager.getConnection(URL, USER, PWD);
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
 

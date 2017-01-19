@@ -47,7 +47,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             }
             result.close();
             state.close();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return stagiaires;
@@ -81,7 +81,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
     }
 
     @Override
-    public Stagiaire insert(Object o) { // o = Stagiaire
+    public Stagiaire insert(Object o) throws AlreadyExistsException { // o = Stagiaire
         PreparedStatement prepareP = null;
         PreparedStatement prepareS = null;
         Connection conn = null;
@@ -124,15 +124,17 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             stagiaire.setId(id);
 
         } catch (SQLException e) {
-            e.printStackTrace();
             try {
                 if (conn != null) {
                     conn.rollback();
                 }
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                throw new RuntimeException(ex);
             }
-            return null;
+        	if (e.getErrorCode() == 1062) {
+        		throw new AlreadyExistsException(e);
+        	}
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (prepareP != null) {
@@ -145,7 +147,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return stagiaire;

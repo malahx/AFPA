@@ -47,8 +47,8 @@ public class FormationDAO extends DAO<Formation> {
             }
             result.close();
             state.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return formations;
     }
@@ -59,7 +59,7 @@ public class FormationDAO extends DAO<Formation> {
     }
 
     @Override
-    public Formation insert(Object o) {
+    public Formation insert(Object o) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
 
@@ -90,15 +90,10 @@ public class FormationDAO extends DAO<Formation> {
             formation.setId(id);
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            return null;
+        	if (e.getErrorCode() == 1062) {
+        		throw new AlreadyExistsException(e);
+        	}
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (prepare != null) {
@@ -108,13 +103,13 @@ public class FormationDAO extends DAO<Formation> {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return formation;
     }
 
-    public boolean insert(Formation formation, Stagiaire stagiaire) {
+    public boolean insert(Formation formation, Stagiaire stagiaire) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
 
@@ -137,15 +132,10 @@ public class FormationDAO extends DAO<Formation> {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            return false;
+        	if (e.getErrorCode() == 1062) {
+        		throw new AlreadyExistsException(e);
+        	}
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (prepare != null) {
@@ -155,7 +145,7 @@ public class FormationDAO extends DAO<Formation> {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return true;

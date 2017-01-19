@@ -7,6 +7,7 @@ package org.glehenaff.gestform;
 
 import java.util.List;
 
+import org.glehenaff.gestform.dao.AlreadyExistsException;
 import org.glehenaff.gestform.dao.EcfDAO;
 import org.glehenaff.gestform.dao.FormationDAO;
 import org.glehenaff.gestform.dao.ResultatDAO;
@@ -37,22 +38,47 @@ public class Utils {
     }
 
     public static Stagiaire addToDB(Stagiaire stagiaire) {
-        return StagiaireDAO.Instance().insert(stagiaire);
+    	try {
+    		return StagiaireDAO.Instance().insert(stagiaire);
+    	} catch (AlreadyExistsException e) {
+    		System.out.println("AlreadyExistsException: " + e.getMessage());
+    		throw new RuntimeException(e);
+		}
     }
 
     public static Formation addToDB(Formation formation) {
-        return FormationDAO.Instance().insert(formation);
+    	try {
+            return FormationDAO.Instance().insert(formation);
+    	} catch (AlreadyExistsException e) {
+    		System.out.println("AlreadyExistsException: " + e.getMessage());
+    		throw new RuntimeException(e);
+		}
     }
     
     public static boolean addToDB(Formation formation, Stagiaire stagiaire) {
-        return FormationDAO.Instance().insert(formation, stagiaire);
+    	try {
+            return FormationDAO.Instance().insert(formation, stagiaire);
+    	} catch (AlreadyExistsException e) {
+    		System.out.println("AlreadyExistsException: " + e.getMessage());
+    		throw new RuntimeException(e);
+		}
     }
 
     public static ECF addToDB(ECF ecf) {
-        return EcfDAO.Instance().insert(ecf);
+    	try {
+            return EcfDAO.Instance().insert(ecf);
+    	} catch (AlreadyExistsException e) {
+    		System.out.println("AlreadyExistsException: " + e.getMessage());
+    		throw new RuntimeException(e);
+		}
     }
 
     public static Resultat addToDB(Resultat res) {
-        return ResultatDAO.Instance().insert(res);
+    	try {
+            return ResultatDAO.Instance().insert(res);
+    	} catch (AlreadyExistsException e) {
+    		System.out.println("AlreadyExistsException: " + e.getMessage());
+    		throw new RuntimeException(e);
+		}
     }
 }

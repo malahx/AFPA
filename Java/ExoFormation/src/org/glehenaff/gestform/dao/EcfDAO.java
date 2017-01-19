@@ -55,14 +55,14 @@ public class EcfDAO extends DAO<ECF> {
             }
             result.close();
             prepare.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return ecf;
     }
 
     @Override
-    public ECF insert(Object o) {
+    public ECF insert(Object o) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
 
@@ -94,15 +94,10 @@ public class EcfDAO extends DAO<ECF> {
             ecf.setId(id);
 
         } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                }
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            return null;
+        	if (e.getErrorCode() == 1062) {
+        		throw new AlreadyExistsException(e);
+        	}
+            throw new RuntimeException(e);
         } finally {
             try {
                 if (prepare != null) {
@@ -112,7 +107,7 @@ public class EcfDAO extends DAO<ECF> {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return ecf;

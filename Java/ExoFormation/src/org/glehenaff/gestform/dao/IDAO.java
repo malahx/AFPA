@@ -14,5 +14,5 @@ import java.util.List;
 public interface IDAO<T> {
     public List<T> findAll();
     public List<T> findBy(Object o);
-    public T insert(Object o);
+    public T insert(Object o) throws AlreadyExistsException;
 }
