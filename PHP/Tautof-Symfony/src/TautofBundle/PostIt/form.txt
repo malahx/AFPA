@@ -1,0 +1,24 @@
+$user = new User();
+
+$formBuilder = $this->createFormBuilder($user);
+
+$formBuilder
+    ->add('username', TextType::class, array('required' => true))
+    ->add('password', PasswordType::class, array('required' => true))
+    ->add('login', SubmitType::class);
+
+$loginForm = $formBuilder->getForm();
+//'login' => $loginForm->createView() dans le render
+
+Editer un fichier :
+use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\HttpFoundation\File\File;
+        $builder->get('pic1')->addModelTransformer(
+                new CallbackTransformer(
+                function ($picsAsImg) {
+            return new File('/home/gwenole/Documents/www/Tautof-Symfony/web/' . $picsAsImg);
+        }, function ($picsAsString) {
+            return (string) $picsAsString;
+        }
+                )
+        );

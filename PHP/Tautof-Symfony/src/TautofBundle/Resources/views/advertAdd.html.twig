@@ -1,0 +1,13 @@
+{# advertAdd Twig template #}
+{% extends 'TautofBundle:elements:base.html.twig' %}
+{% block body %}
+    {{ form_start(make) }}
+    {{ form_widget(make) }}
+    {{ form_end(make) }}
+    {{ form_start(advertadd) }}
+    {{ form_widget(advertadd) }}
+    {{ form_end(advertadd) }}
+{% endblock %}
+{% block javascripts %}
+    {% include 'TautofBundle:elements:ajax.js.twig' %}
+{% endblock %}

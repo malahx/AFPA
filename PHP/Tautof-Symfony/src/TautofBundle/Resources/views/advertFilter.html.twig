@@ -1,0 +1,49 @@
+{# advertFilter Twig template #}
+{% extends 'TautofBundle:elements:base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <select id="make_name" class="form-control" name="makeFilter" placeholder="Marques">
+
+            <option value="-1" {% if make_id == -1 and currentModel == null %}selected{% endif %}>Marque</option>
+
+            {% for make in makes %}
+                <option value="{{ make.id }}" {% if make_id == make.id %}selected{% endif %}>{{ make.name }}</option>  
+            {% endfor %}
+        </select>
+        <select id="advert_model" class="form-control" name="modelFilter" placeholder="Modèle">
+
+            <option value="-1" {% if currentModel == null %}selected{% endif %}>Modèle</option>
+
+            {% for model in models %}
+                <option value="{{ model.id }}" {% if currentModel != null and currentModel.id == model.id %}selected{% endif %}>{{ model.name }}</option>  
+            {% endfor %}
+        </select>
+        <br><br>
+        <div class="row">
+            <div class="col-md-2 col-md-offset-10">
+                <select id="sortby" class="form-control" name="sortby" placeholder="Trier">
+
+                    <option value="-1" selected>Trier</option>
+                    <option value="0">Prix</option>  
+                    <option value="1">Kilométrage</option>  
+                    <option value="2">Année</option>  
+
+                </select>
+                <select id="orderby" class="form-control" name="orderby" placeholder="Trier" disabled>
+
+                    <option value="" selected>Ordre</option>
+                    <option value="ASC">ASC</option>  
+                    <option value="DESC">DESC</option>  
+
+                </select>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div id="advertsFilter">
+        {% include 'TautofBundle:elements:advertList.html.twig' %}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {% include 'TautofBundle:elements:ajax.js.twig' %}
+{% endblock %}
