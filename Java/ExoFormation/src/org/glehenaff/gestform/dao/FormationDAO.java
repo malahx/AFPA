@@ -20,10 +20,10 @@ import org.glehenaff.gestform.model.Stagiaire;
  *
  * @author gwenole
  */
-public class FormationDAO extends DAO {
+public class FormationDAO extends DAO<Formation> {
 
     @Override
-    public List findAll() {
+    public List<Formation> findAll() {
         List<Formation> formations = new ArrayList<>();
         try {
             Connection conn = getConnection();
@@ -45,7 +45,7 @@ public class FormationDAO extends DAO {
     }
 
     @Override
-    public List findBy(Object o) {
+    public List<Formation> findBy(Object o) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
