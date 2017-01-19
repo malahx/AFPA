@@ -21,6 +21,15 @@ import org.glehenaff.gestform.model.Formation;
  * @author gwenole
  */
 public class EcfDAO extends DAO<ECF> {
+	
+	private static EcfDAO instance = null;
+	
+	public static EcfDAO Instance() {
+		if (instance == null) {
+			instance = new EcfDAO();
+		}
+		return instance;
+	}
 
     @Override
     public List<ECF> findAll() {

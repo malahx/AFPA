@@ -36,10 +36,10 @@ public class GestForm {
         stagiaires = new ArrayList<>();
         sc = new Scanner(System.in);
 
-        List[] data = Utils.Load();
+        Object[] data = Utils.Load();
 
-        formations = data[0];
-        stagiaires = data[1];
+        formations = (List<Formation>) data[0];
+        stagiaires = (List<Stagiaire>) data[1];
 
         // Fonctionnement de l'application en continue
         while (true) {

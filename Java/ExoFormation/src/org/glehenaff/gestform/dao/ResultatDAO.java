@@ -22,6 +22,15 @@ import org.glehenaff.gestform.model.Stagiaire;
  * @author gwenole
  */
 public class ResultatDAO extends DAO<Resultat> {
+	
+	private static ResultatDAO instance = null;
+	
+	public static ResultatDAO Instance() {
+		if (instance == null) {
+			instance = new ResultatDAO();
+		}
+		return instance;
+	}
 
     @Override
     public List<Resultat> findAll() {

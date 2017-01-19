@@ -21,6 +21,15 @@ import org.glehenaff.gestform.model.Stagiaire;
  * @author gwenole
  */
 public class FormationDAO extends DAO<Formation> {
+	
+	private static FormationDAO instance = null;
+	
+	public static FormationDAO Instance() {
+		if (instance == null) {
+			instance = new FormationDAO();
+		}
+		return instance;
+	}
 
     @Override
     public List<Formation> findAll() {

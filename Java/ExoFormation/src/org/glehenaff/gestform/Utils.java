@@ -22,47 +22,37 @@ import org.glehenaff.gestform.model.Stagiaire;
  */
 public class Utils {
 
-    public static List[] Load() {
-        FormationDAO formationDAO = new FormationDAO();
-        StagiaireDAO stagiaireDAO = new StagiaireDAO();
-        EcfDAO ecfeDAO = new EcfDAO();
-        ResultatDAO resDAO = new ResultatDAO();
-
-        List<Formation> formations = formationDAO.findAll();
+    public static Object[] Load() {
+        List<Formation> formations = FormationDAO.Instance().findAll();
         for (Formation formation : formations) {
-            formation.setStagiaires(stagiaireDAO.findBy(formation));
-            List<ECF> ecfs = ecfeDAO.findBy(formation);
+            formation.setStagiaires(StagiaireDAO.Instance().findBy(formation));
+            List<ECF> ecfs = EcfDAO.Instance().findBy(formation);
             formation.setECFs(ecfs);
             for (ECF ecf : ecfs) {
-                ecf.setResultats(resDAO.findBy(ecf));
+                ecf.setResultats(ResultatDAO.Instance().findBy(ecf));
             }
         }
 
-        return new List[]{formations, stagiaireDAO.findAll()};
+        return new Object[]{formations, StagiaireDAO.Instance().findAll()};
     }
 
     public static Stagiaire addToDB(Stagiaire stagiaire) {
-        StagiaireDAO dao = new StagiaireDAO();
-        return dao.insert(stagiaire);
+        return StagiaireDAO.Instance().insert(stagiaire);
     }
 
     public static Formation addToDB(Formation formation) {
-        FormationDAO dao = new FormationDAO();
-        return dao.insert(formation);
+        return FormationDAO.Instance().insert(formation);
     }
     
     public static boolean addToDB(Formation formation, Stagiaire stagiaire) {
-        FormationDAO dao = new FormationDAO();
-        return dao.insert(formation, stagiaire);
+        return FormationDAO.Instance().insert(formation, stagiaire);
     }
 
     public static ECF addToDB(ECF ecf) {
-        EcfDAO dao = new EcfDAO();
-        return dao.insert(ecf);
+        return EcfDAO.Instance().insert(ecf);
     }
 
     public static Resultat addToDB(Resultat res) {
-        ResultatDAO dao = new ResultatDAO();
-        return dao.insert(res);
+        return ResultatDAO.Instance().insert(res);
     }
 }
