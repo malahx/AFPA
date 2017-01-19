@@ -10,6 +10,7 @@ Java/*/.idea/
 Java/*/.settings/
 Java/*/*.iml
 Java/.metadata
+Java/.recommenders
 TrackList-PHP-MySQL/nbproject/private/
 TrackList-PHP-MySQL/uploads/*
 Tautof-Symfony/nbproject/private/
