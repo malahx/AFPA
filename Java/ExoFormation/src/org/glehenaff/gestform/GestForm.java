@@ -6,7 +6,7 @@ package org.glehenaff.gestform;
 import java.util.ArrayList;	
 import java.util.List;
 import java.util.Scanner;
-
+import org.glehenaff.gestform.view.Form;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Resultat;
@@ -30,7 +30,9 @@ public class GestForm {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) {    	
+        
+         System.out.println("ok");
         // Initialisation des variables globales
         formations = new ArrayList<>();
         stagiaires = new ArrayList<>();
@@ -40,82 +42,86 @@ public class GestForm {
 
         formations = (List<Formation>) data[0];
         stagiaires = (List<Stagiaire>) data[1];
-
-        // Fonctionnement de l'application en continue
-        while (true) {
-            // Initialisation des variables pour les différentes options
-            int i = 1, lf = 0, ls = 0, f, s, sf = 0, secf = 0, recf = 0, info = 0;
-
-            // Options possibles
-            System.out.println("------------------------------------------------");
-            System.out.println(Color.GREEN + "Que voulez vous faire :");
-            System.out.println(Color.RED + "0 - Quitter");
-            if (formations.size() > 0) {
-                System.out.println(Color.YELLOW + i + " - Lister les formations");
-                lf = i;
-                i++;
-                System.out.println(Color.YELLOW + i + " - Information sur une formation");
-                info = i;
-                i++;
-            }
-            System.out.println(Color.YELLOW + i + " - Saisir une formation");
-            f = i;
-            i++;
-            if (stagiaires.size() > 0) {
-                System.out.println(Color.YELLOW + i + " - Lister les stagiaires");
-                ls = i;
-                i++;
-            }
-            System.out.println(Color.YELLOW + i + " - Saisir un stagiaire");
-            s = i;
-            i++;
-            if (formations.size() > 0) {
-                System.out.println(Color.YELLOW + i + " - Saisir un ECF");
-                secf = i;
-                i++;
-                System.out.println(Color.YELLOW + i + " - Saisir un Résultat d'ECF");
-                recf = i;
-                i++;
-                if (stagiaires.size() > 0 && stagiaireDispo() > 0) {
-                    System.out.println(Color.YELLOW + i + " - Ajouter un stagiaire à une formation");
-                    sf = i;
-                    i++;
-                }
-            }
-            String str = sc.nextLine();
-            System.out.println("------------------------------------------------");
-            if (str.equals("")) {
-                continue;
-            }
-            int j = Integer.parseInt(str);
-            // Fonctions en fonction des options
-            if (j == 0) {
-                break;
-            } else if (j == lf) {
-                listFormations();
-            } else if (j == ls) {
-                listStagiaires();
-            } else if (j == info) {
-                infoFormation(selectFormation());
-            } else if (j == f) {
-                addFormation();
-            } else if (j == s) {
-                addStagiaire();
-            } else if (j == sf) {
-                addStagiairesTo(selectFormation());
-            } else if (j == secf) {
-                addECFTo(selectFormation());
-            } else if (j == recf) {
-                Formation formation = selectFormation();
-                ECF ecf = selectECFFrom(formation);
-                Stagiaire stagiaire = selectStagiaireFrom(formation);
-                addRECFTo(formation, ecf, stagiaire);
-            }
-        }
-
-        // Affichage des formations et des stagiaires
-        listFormations();
-        listStagiaires();
+        
+        Form formationView = new Form();
+        formationView.Refresh(formations, stagiaires);
+        formationView.setVisible(true);
+//
+//        // Fonctionnement de l'application en continue
+//        while (true) {
+//            // Initialisation des variables pour les différentes options
+//            int i = 1, lf = 0, ls = 0, f, s, sf = 0, secf = 0, recf = 0, info = 0;
+//
+//            // Options possibles
+//            System.out.println("------------------------------------------------");
+//            System.out.println(Color.GREEN + "Que voulez vous faire :");
+//            System.out.println(Color.RED + "0 - Quitter");
+//            if (formations.size() > 0) {
+//                System.out.println(Color.YELLOW + i + " - Lister les formations");
+//                lf = i;
+//                i++;
+//                System.out.println(Color.YELLOW + i + " - Information sur une formation");
+//                info = i;
+//                i++;
+//            }
+//            System.out.println(Color.YELLOW + i + " - Saisir une formation");
+//            f = i;
+//            i++;
+//            if (stagiaires.size() > 0) {
+//                System.out.println(Color.YELLOW + i + " - Lister les stagiaires");
+//                ls = i;
+//                i++;
+//            }
+//            System.out.println(Color.YELLOW + i + " - Saisir un stagiaire");
+//            s = i;
+//            i++;
+//            if (formations.size() > 0) {
+//                System.out.println(Color.YELLOW + i + " - Saisir un ECF");
+//                secf = i;
+//                i++;
+//                System.out.println(Color.YELLOW + i + " - Saisir un Résultat d'ECF");
+//                recf = i;
+//                i++;
+//                if (stagiaires.size() > 0 && stagiaireDispo() > 0) {
+//                    System.out.println(Color.YELLOW + i + " - Ajouter un stagiaire à une formation");
+//                    sf = i;
+//                    i++;
+//                }
+//            }
+//            String str = sc.nextLine();
+//            System.out.println("------------------------------------------------");
+//            if (str.equals("")) {
+//                continue;
+//            }
+//            int j = Integer.parseInt(str);
+//            // Fonctions en fonction des options
+//            if (j == 0) {
+//                break;
+//            } else if (j == lf) {
+//                listFormations();
+//            } else if (j == ls) {
+//                listStagiaires();
+//            } else if (j == info) {
+//                infoFormation(selectFormation());
+//            } else if (j == f) {
+//                addFormation();
+//            } else if (j == s) {
+//                addStagiaire();
+//            } else if (j == sf) {
+//                addStagiairesTo(selectFormation());
+//            } else if (j == secf) {
+//                addECFTo(selectFormation());
+//            } else if (j == recf) {
+//                Formation formation = selectFormation();
+//                ECF ecf = selectECFFrom(formation);
+//                Stagiaire stagiaire = selectStagiaireFrom(formation);
+//                addRECFTo(formation, ecf, stagiaire);
+//            }
+//        }
+//
+//        // Affichage des formations et des stagiaires
+//        listFormations();
+//        listStagiaires();
     }
 
     // Vérifier si un stagiaire est dans une formation
