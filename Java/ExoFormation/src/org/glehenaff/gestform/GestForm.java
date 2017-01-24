@@ -43,8 +43,7 @@ public class GestForm {
         formations = (List<Formation>) data[0];
         stagiaires = (List<Stagiaire>) data[1];
         
-        Form formationView = new Form();
-        formationView.Refresh(formations, stagiaires);
+        Form formationView = new Form(formations, stagiaires);
         formationView.setVisible(true);
 //
 //        // Fonctionnement de l'application en continue
