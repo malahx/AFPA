@@ -18,14 +18,28 @@ import org.glehenaff.gestform.model.Resultat;
 public class ECFTableModel extends AbstractTableModel {
 
     private final String[] entetes = {"Nom", "N° Résultats", "N° Obtenu"};
-    private final List<ECF> ecf;
+    private List<ECF> ecfs;
 
     public ECFTableModel() {
-        this.ecf = new ArrayList<>();
+        this.ecfs = new ArrayList<>();
     }
 
-    public ECFTableModel(List<ECF> ecf) {
-        this.ecf = ecf;
+    public ECFTableModel(List<ECF> ecfs) {
+        this.ecfs = ecfs;
+    }
+
+    public void add(ECF e) {
+        ecfs.add(e);
+        this.fireTableDataChanged();
+    }
+
+    public void reset() {
+        ecfs = new ArrayList<>();
+        this.fireTableDataChanged();
+    }
+
+    public ECF getEcf(int rowIndex) {
+        return ecfs.get(rowIndex);
     }
 
     @Override
@@ -35,7 +49,7 @@ public class ECFTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return ecf.size();
+        return ecfs.size();
     }
 
     @Override
@@ -43,23 +57,19 @@ public class ECFTableModel extends AbstractTableModel {
         return entetes.length;
     }
 
-    public ECF getEcf(int rowIndex) {
-        return ecf.get(rowIndex);
-    }
-
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
 
             case 0:
-                return ecf.get(rowIndex).getNom();
+                return ecfs.get(rowIndex).getNom();
 
             case 1:
-                return ecf.get(rowIndex).getResultats().size();
+                return ecfs.get(rowIndex).getResultats().size();
 
             case 2:
                 Integer i = 0;
-                for (Resultat r : ecf.get(rowIndex).getResultats()) {
+                for (Resultat r : ecfs.get(rowIndex).getResultats()) {
                     if (r.isObtenu()) {
                         i++;
                     }

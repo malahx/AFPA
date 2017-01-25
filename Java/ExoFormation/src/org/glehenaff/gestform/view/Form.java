@@ -6,8 +6,10 @@
 package org.glehenaff.gestform.view;
 
 import java.util.List;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
 
@@ -36,10 +38,12 @@ public class Form extends javax.swing.JFrame {
             public void changedUpdate(DocumentEvent e) {
                 txtFormNomActionPerformed(null);
             }
+
             @Override
             public void removeUpdate(DocumentEvent e) {
                 txtFormNomActionPerformed(null);
             }
+
             @Override
             public void insertUpdate(DocumentEvent e) {
                 txtFormNomActionPerformed(null);
@@ -56,7 +60,6 @@ public class Form extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         panFooter = new javax.swing.JPanel();
@@ -132,6 +135,11 @@ public class Form extends javax.swing.JFrame {
         lstForm.setModel(lstFormModel);
         lstForm.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstForm.setVisibleRowCount(20);
+        lstForm.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lstFormValueChanged(evt);
+            }
+        });
         scrlForm.setViewportView(lstForm);
 
         panLstForm.add(scrlForm);
@@ -301,16 +309,61 @@ public class Form extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFormECFAddActionPerformed
 
     private void txtFormNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFormNomActionPerformed
-        if (txtFormNom.getText().isEmpty()) {
-            btnFormAdd.setEnabled(false);
-            btnFormECFAdd.setEnabled(false);
-            btnFormStagAdd.setEnabled(false);
-        } else {
-            btnFormAdd.setEnabled(true);
+        lstForm.setSelectedIndex(-1);
+        ResetFormBtn();
+    }//GEN-LAST:event_txtFormNomActionPerformed
+
+    private void lstFormValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFormValueChanged
+        ResetFormBtn();
+        int index = lstForm.getSelectedIndex();
+        if (index > -1) {
+            Formation f = lstFormModel.getFormation(index);
+
+            txtFormNom.setText(f.getNom());
+            tblStagFormModel.reset();
+            for (Stagiaire s : f.getStagiaires()) {
+                tblStagFormModel.add(s);
+            }
+            tblECFModel.reset();
+            for (ECF e : f.getECFs()) {
+                tblECFModel.add(e);
+            }
+        }
+    }//GEN-LAST:event_lstFormValueChanged
+
+    private void ResetFormBtn() {
+        if (lstForm.getSelectedIndex() > -1) {
             btnFormECFAdd.setEnabled(true);
             btnFormStagAdd.setEnabled(true);
+            if (tblFormECF.getSelectedRow() > -1) {
+                btnFormECFSuppr.setEnabled(true);
+                btnFormECFRes.setEnabled(true);
+            } else {
+                btnFormECFSuppr.setEnabled(false);
+                btnFormECFRes.setEnabled(false);
+            }
+            if (tblFormStag.getSelectedRow() > -1) {
+                btnFormStagSuppr.setEnabled(true);
+            } else {
+                btnFormStagSuppr.setEnabled(false);
+            }
+            btnFormAdd.setEnabled(false);
+            btnFormSuppr.setEnabled(true);
+        } else {
+            tblECFModel.reset();
+            tblStagFormModel.reset();
+
+            txtFormNom.setText("");
+            btnFormAdd.setEnabled(false);
+            btnFormSuppr.setEnabled(false);
+
+            btnFormECFAdd.setEnabled(false);
+            btnFormStagAdd.setEnabled(false);
+            btnFormECFSuppr.setEnabled(false);
+            btnFormECFRes.setEnabled(false);
+            btnFormStagSuppr.setEnabled(false);
         }
-    }//GEN-LAST:event_txtFormNomActionPerformed
+    }
 
     private void itmAproposActionPerformed(java.awt.event.ActionEvent evt) {
         Apropos aPropos = new Apropos(this, true);

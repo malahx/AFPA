@@ -17,14 +17,28 @@ import org.glehenaff.gestform.model.Stagiaire;
 public class StagTableModel extends AbstractTableModel {
 
     private final String[] entetes = {"Code", "Nom", "Prénom"};
-    private final List<Stagiaire> stagiaires;
+    private List<Stagiaire> stagiaires;
 
     public StagTableModel() {
         this.stagiaires = new ArrayList<>();
     }
-    
+
     public StagTableModel(List<Stagiaire> stagiaires) {
         this.stagiaires = stagiaires;
+    }
+
+    public void add(Stagiaire s) {
+        stagiaires.add(s);
+        this.fireTableDataChanged();
+    }
+
+    public void reset() {
+        stagiaires = new ArrayList<>();
+        this.fireTableDataChanged();
+    }
+
+    public Stagiaire getFormation(int rowIndex) {
+        return stagiaires.get(rowIndex);
     }
 
     @Override
@@ -40,10 +54,6 @@ public class StagTableModel extends AbstractTableModel {
     @Override
     public int getColumnCount() {
         return entetes.length;
-    }
-
-    public Stagiaire getFormation(int rowIndex) {
-        return stagiaires.get(rowIndex);
     }
 
     @Override
