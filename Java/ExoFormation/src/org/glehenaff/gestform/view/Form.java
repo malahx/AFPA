@@ -373,6 +373,11 @@ public class Form extends javax.swing.JFrame {
         btnFormStagAdd.setForeground(new java.awt.Color(69, 118, 61));
         btnFormStagAdd.setText("Ajouter");
         btnFormStagAdd.setEnabled(false);
+        btnFormStagAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFormStagAddActionPerformed(evt);
+            }
+        });
         panFormStagBtn.add(btnFormStagAdd);
 
         panFormStag.add(panFormStagBtn);
@@ -500,10 +505,14 @@ public class Form extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itmActualiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmActualiserActionPerformed
+        RefreshData();
+    }//GEN-LAST:event_itmActualiserActionPerformed
+
+    public void RefreshData() {
         GestForm.RefreshData();
         lstFormModel.set(GestForm.getFormations());
         tblStagModel.set(GestForm.getStagiaires());
-    }//GEN-LAST:event_itmActualiserActionPerformed
+    }
 
     private void tblStagValueChanged(javax.swing.event.ListSelectionEvent evt) {
         ResetStagBtn();
@@ -683,7 +692,7 @@ public class Form extends javax.swing.JFrame {
         try {
             s = StagiaireDAO.Instance().insert(s);
             tblStagModel.add(s);
-            tblStag.setRowSelectionInterval(tblStagModel.getRowCount() -1, 0);
+            tblStag.setRowSelectionInterval(tblStagModel.getRowCount() - 1, 0);
             ResetFormBtn();
         } catch (AlreadyExistsException e) {
             txtFooter.setText("La formation semble déjà exister");
@@ -704,6 +713,17 @@ public class Form extends javax.swing.JFrame {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé");
         }
     }//GEN-LAST:event_btnSupprStagActionPerformed
+
+    private void btnFormStagAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormStagAddActionPerformed
+        int indexForm = lstForm.getSelectedIndex();
+        if (indexForm == -1) {
+            txtFooter.setText("Aucune formation n'est selectionnée");
+            return;
+        }
+        Formation f = lstFormModel.getFormation(indexForm);
+        AddStagToForm addStag = new AddStagToForm(this, true, f, tblStagFormModel);
+        addStag.setVisible(true);
+    }//GEN-LAST:event_btnFormStagAddActionPerformed
 
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();

@@ -26,7 +26,7 @@ public class GestForm {
 
     // Le scanner de touche
     private static Scanner sc;
-    
+
     // La vue
     private static Form formationView;
 
@@ -147,16 +147,20 @@ public class GestForm {
         return false;
     }
 
+    // Récupérer les stagiaires libres
+    public static List<Stagiaire> getDispoStagiaires() {
+        List<Stagiaire> dispoStagiaires = new ArrayList<>();
+        for (Stagiaire s : stagiaires) {
+            if (!isInForm(s)) {
+                dispoStagiaires.add(s);
+            }
+        }
+        return dispoStagiaires;
+    }
+
     // Récupérer le nombre de stagiaires libres
     private static int stagiaireDispo() {
-        int i = 0;
-        for (Stagiaire s : stagiaires) {
-            if (isInForm(s)) {
-                continue;
-            }
-            i++;
-        }
-        return i;
+        return getDispoStagiaires().size();
     }
 
     // Ajouter un stagiaire
