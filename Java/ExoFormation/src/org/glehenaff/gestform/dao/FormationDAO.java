@@ -21,15 +21,15 @@ import org.glehenaff.gestform.model.Stagiaire;
  * @author gwenole
  */
 public class FormationDAO extends DAO<Formation> {
-	
-	private static FormationDAO instance = null;
-	
-	public static FormationDAO Instance() {
-		if (instance == null) {
-			instance = new FormationDAO();
-		}
-		return instance;
-	}
+
+    private static FormationDAO instance = null;
+
+    public static FormationDAO Instance() {
+        if (instance == null) {
+            instance = new FormationDAO();
+        }
+        return instance;
+    }
 
     @Override
     public List<Formation> findAll() {
@@ -90,9 +90,9 @@ public class FormationDAO extends DAO<Formation> {
             formation.setId(id);
 
         } catch (SQLException e) {
-        	if (e.getErrorCode() == 1062) {
-        		throw new AlreadyExistsException(e);
-        	}
+            if (e.getErrorCode() == 1062) {
+                throw new AlreadyExistsException(e);
+            }
             throw new RuntimeException(e);
         } finally {
             try {
@@ -132,9 +132,47 @@ public class FormationDAO extends DAO<Formation> {
             }
 
         } catch (SQLException e) {
-        	if (e.getErrorCode() == 1062) {
-        		throw new AlreadyExistsException(e);
-        	}
+            if (e.getErrorCode() == 1062) {
+                throw new AlreadyExistsException(e);
+            }
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
+    }
+
+    public boolean delete(Formation formation) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "DELETE FROM `formation` WHERE `formation`.`id` = ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setInt(1, formation.getId());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à la suppression de la formation.");
+            }
+
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             try {

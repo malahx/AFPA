@@ -8,6 +8,7 @@ package org.glehenaff.gestform.view;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import org.glehenaff.gestform.model.Formation;
+import org.glehenaff.gestform.model.Stagiaire;
 
 /**
  *
@@ -24,14 +25,15 @@ public class FormListModel extends AbstractListModel {
     public Formation getFormation(int index) {
         return formations.get(index);
     }
-    
-    public boolean has(String txt) {
-        for (Formation f: formations) {
-            if (f.getNom().equals(txt)) {
-                return true;
-            }
-        }
-        return false;
+
+    public void add(Formation f) {
+        formations.add(f);
+        this.fireContentsChanged(this, getSize() -1, getSize() -1);
+    }
+
+    public void remove(Formation f) {
+        formations.remove(f);
+        this.fireContentsChanged(this, getSize() -1, getSize() -1);
     }
 
     @Override
@@ -43,5 +45,5 @@ public class FormListModel extends AbstractListModel {
     public Object getElementAt(int index) {
         return formations.get(index);
     }
- 
+
 }

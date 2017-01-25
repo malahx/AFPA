@@ -6,9 +6,10 @@
 package org.glehenaff.gestform.view;
 
 import java.util.List;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import org.glehenaff.gestform.dao.FormationDAO;
+import org.glehenaff.gestform.dao.AlreadyExistsException;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
@@ -245,12 +246,22 @@ public class Form extends javax.swing.JFrame {
         btnFormSuppr.setForeground(new java.awt.Color(169, 68, 68));
         btnFormSuppr.setText("Supprimer");
         btnFormSuppr.setEnabled(false);
+        btnFormSuppr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFormSupprActionPerformed(evt);
+            }
+        });
         panFormBtn.add(btnFormSuppr);
 
         btnFormAdd.setBackground(new java.awt.Color(223, 240, 216));
         btnFormAdd.setForeground(new java.awt.Color(69, 118, 61));
         btnFormAdd.setText("Ajouter");
         btnFormAdd.setEnabled(false);
+        btnFormAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFormAddActionPerformed(evt);
+            }
+        });
         panFormBtn.add(btnFormAdd);
 
         panAddForm.add(panFormBtn);
@@ -331,6 +342,43 @@ public class Form extends javax.swing.JFrame {
             disabledTextFields = false;
         }
     }//GEN-LAST:event_lstFormValueChanged
+
+    private void btnFormAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormAddActionPerformed
+        int index = lstForm.getSelectedIndex();
+        if (txtFormNom.getText().isEmpty()) {
+            txtFooter.setText("Le champ texte est vide");
+            return;
+        }
+        if (index > -1) {
+            txtFooter.setText("Une formation est selectionné");
+            return;
+        }
+        Formation f = new Formation(0, txtFormNom.getText());
+        try {
+            FormationDAO.Instance().insert(f);
+            lstFormModel.add(f);
+            lstForm.setSelectedIndex(lstFormModel.getSize() - 1);
+            ResetFormBtn();
+        } catch (AlreadyExistsException e) {
+            txtFooter.setText("La formation semble déjà exister");
+        }
+
+    }//GEN-LAST:event_btnFormAddActionPerformed
+
+    private void btnFormSupprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormSupprActionPerformed
+        int index = lstForm.getSelectedIndex();
+        if (index == -1) {
+            txtFooter.setText("Aucune formation n'est selectionnée");
+            return;
+        }
+        Formation f = lstFormModel.getFormation(index);
+        if (FormationDAO.Instance().delete(f)) {
+            lstFormModel.remove(f);
+            lstForm.clearSelection();
+        } else {
+            txtFooter.setText("La formation n'a pas pu être supprimée");
+        }
+    }//GEN-LAST:event_btnFormSupprActionPerformed
 
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();

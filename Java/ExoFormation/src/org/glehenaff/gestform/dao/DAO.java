@@ -24,7 +24,7 @@ public abstract class DAO<T> implements IDAO<T> {
     private static Connection connect = null;
 
     protected Connection getConnection() {
-        if (connect == null) {
+        if (connect == null || isClosed()) {
             try {
                 try {
                     Class.forName(DRIVER).newInstance();
@@ -45,5 +45,16 @@ public abstract class DAO<T> implements IDAO<T> {
         }
 
         return connect;
+    }
+
+    private boolean isClosed() {
+        if (connect != null) {
+            try {
+                return connect.isClosed();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
     }
 }
