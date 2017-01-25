@@ -16,7 +16,7 @@ import org.glehenaff.gestform.model.Stagiaire;
  */
 public class FormListModel extends AbstractListModel {
 
-    private final List<Formation> formations;
+    private List<Formation> formations;
 
     public FormListModel(List<Formation> formations) {
         this.formations = formations;
@@ -24,6 +24,11 @@ public class FormListModel extends AbstractListModel {
 
     public Formation getFormation(int index) {
         return formations.get(index);
+    }
+
+    public void set(List<Formation> formations) {
+        this.formations = formations;
+        this.fireContentsChanged(this, getSize() -1, getSize() -1);
     }
 
     public void add(Formation f) {

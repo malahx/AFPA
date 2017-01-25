@@ -8,6 +8,7 @@ package org.glehenaff.gestform.view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
 
 /**
@@ -25,6 +26,11 @@ public class StagTableModel extends AbstractTableModel {
 
     public StagTableModel(List<Stagiaire> stagiaires) {
         this.stagiaires = stagiaires;
+    }
+
+    public void set(List<Stagiaire> stagiaires) {
+        this.stagiaires = stagiaires;
+        this.fireTableDataChanged();
     }
 
     public void add(Stagiaire s) {

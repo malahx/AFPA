@@ -3,7 +3,7 @@
  * */
 package org.glehenaff.gestform;
 
-import java.util.ArrayList;	
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import org.glehenaff.gestform.view.Form;
@@ -26,24 +26,19 @@ public class GestForm {
 
     // Le scanner de touche
     private static Scanner sc;
+    
+    // La vue
+    private static Form formationView;
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {    	
-        
-         System.out.println("ok");
+    public static void main(String[] args) {
+
         // Initialisation des variables globales
-        formations = new ArrayList<>();
-        stagiaires = new ArrayList<>();
-        sc = new Scanner(System.in);
+        RefreshData();
 
-        Object[] data = Utils.Load();
-
-        formations = (List<Formation>) data[0];
-        stagiaires = (List<Stagiaire>) data[1];
-        
-        Form formationView = new Form(formations, stagiaires);
+        formationView = new Form();
         formationView.setVisible(true);
 //
 //        // Fonctionnement de l'application en continue
@@ -121,6 +116,25 @@ public class GestForm {
 //        // Affichage des formations et des stagiaires
 //        listFormations();
 //        listStagiaires();
+    }
+
+    public static List<Formation> getFormations() {
+        return formations;
+    }
+
+    public static List<Stagiaire> getStagiaires() {
+        return stagiaires;
+    }
+
+    public static void RefreshData() {
+        formations = new ArrayList<>();
+        stagiaires = new ArrayList<>();
+        sc = new Scanner(System.in);
+
+        Object[] data = Utils.Load();
+
+        formations = (List<Formation>) data[0];
+        stagiaires = (List<Stagiaire>) data[1];
     }
 
     // Vérifier si un stagiaire est dans une formation

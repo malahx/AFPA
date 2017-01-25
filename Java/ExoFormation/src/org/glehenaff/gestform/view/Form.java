@@ -10,6 +10,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.glehenaff.gestform.GestForm;
 import org.glehenaff.gestform.dao.FormationDAO;
 import org.glehenaff.gestform.dao.AlreadyExistsException;
 import org.glehenaff.gestform.dao.EcfDAO;
@@ -32,9 +33,9 @@ public class Form extends javax.swing.JFrame {
     /**
      * Creates new form Form
      */
-    public Form(List<Formation> formations, List<Stagiaire> stagiaires) {
-        lstFormModel = new FormListModel(formations);
-        tblStagModel = new StagTableModel(stagiaires);
+    public Form() {
+        lstFormModel = new FormListModel(GestForm.getFormations());
+        tblStagModel = new StagTableModel(GestForm.getStagiaires());
         tblStagFormModel = new StagTableModel();
         tblECFModel = new ECFTableModel();
         initComponents();
@@ -54,6 +55,54 @@ public class Form extends javax.swing.JFrame {
                 txtFormNomActionPerformed(null);
             }
         });
+        txtPreStag.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+        });
+        txtNomStag.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+        });
+        txtCodeStag.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+        });
         tblFormECF.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
@@ -64,6 +113,12 @@ public class Form extends javax.swing.JFrame {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
                 tblFormStagValueChanged(evt);
+            }
+        });
+        tblStag.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                tblStagValueChanged(evt);
             }
         });
         setLocationRelativeTo(null);
@@ -97,10 +152,10 @@ public class Form extends javax.swing.JFrame {
         txtPreStag = new javax.swing.JTextField();
         panBtnStag = new javax.swing.JPanel();
         btnSupprStag = new javax.swing.JButton();
-        BtnAddStag = new javax.swing.JButton();
+        btnAddStag = new javax.swing.JButton();
         panListStag = new javax.swing.JPanel();
         sclStag = new javax.swing.JScrollPane();
-        lstStag = new javax.swing.JTable();
+        tblStag = new javax.swing.JTable();
         panForm = new javax.swing.JPanel();
         panList = new javax.swing.JPanel();
         panLstForm = new javax.swing.JPanel();
@@ -200,16 +255,16 @@ public class Form extends javax.swing.JFrame {
         btnSupprStag.setEnabled(false);
         panBtnStag.add(btnSupprStag);
 
-        BtnAddStag.setBackground(new java.awt.Color(223, 240, 216));
-        BtnAddStag.setForeground(new java.awt.Color(69, 118, 61));
-        BtnAddStag.setText("Ajouter");
-        BtnAddStag.setEnabled(false);
-        BtnAddStag.addActionListener(new java.awt.event.ActionListener() {
+        btnAddStag.setBackground(new java.awt.Color(223, 240, 216));
+        btnAddStag.setForeground(new java.awt.Color(69, 118, 61));
+        btnAddStag.setText("Ajouter");
+        btnAddStag.setEnabled(false);
+        btnAddStag.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnAddStagActionPerformed(evt);
+                btnAddStagActionPerformed(evt);
             }
         });
-        panBtnStag.add(BtnAddStag);
+        panBtnStag.add(btnAddStag);
 
         panPreBtnStag.add(panBtnStag);
 
@@ -225,9 +280,9 @@ public class Form extends javax.swing.JFrame {
         sclStag.setMinimumSize(new java.awt.Dimension(0, 0));
         sclStag.setPreferredSize(new java.awt.Dimension(400, 200));
 
-        lstStag.setModel(tblStagModel);
-        lstStag.setPreferredSize(new java.awt.Dimension(580, 400));
-        sclStag.setViewportView(lstStag);
+        tblStag.setModel(tblStagModel);
+        tblStag.setPreferredSize(new java.awt.Dimension(580, 400));
+        sclStag.setViewportView(tblStag);
 
         panListStag.add(sclStag, java.awt.BorderLayout.CENTER);
 
@@ -440,8 +495,50 @@ public class Form extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void itmActualiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmActualiserActionPerformed
-        // TODO add your handling code here:
+        GestForm.RefreshData();
+        lstFormModel.set(GestForm.getFormations());
+        tblStagModel.set(GestForm.getStagiaires());
     }//GEN-LAST:event_itmActualiserActionPerformed
+
+    private void tblStagValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        ResetStagBtn();
+        int index = tblStag.getSelectedRow();
+        if (index > -1) {
+            Stagiaire s = tblStagModel.getStagiaire(index);
+            disabledTextFields = true;
+            txtNomStag.setText(s.getNom());
+            txtPreStag.setText(s.getPrenom());
+            txtCodeStag.setText(s.getCode());
+            disabledTextFields = false;
+        }
+    }
+
+    private void txtStagActionPerformed(java.awt.event.ActionEvent evt) {
+        if (disabledTextFields) {
+            return;
+        }
+        int index = tblStag.getSelectedRow();
+        if (index > -1) {
+            tblStag.clearSelection();
+        } else {
+            ResetStagBtn();
+        }
+    }
+
+    private void ResetStagBtn() {
+        int index = tblStag.getSelectedRow();
+        if (index > -1) {
+            btnAddStag.setEnabled(false);
+            btnSupprStag.setEnabled(true);
+        } else {
+            if (txtNomStag.getText().isEmpty() || txtPreStag.getText().isEmpty() || txtCodeStag.getText().isEmpty()) {
+                btnAddStag.setEnabled(false);
+            } else {
+                btnAddStag.setEnabled(true);
+            }
+            btnSupprStag.setEnabled(false);
+        }
+    }
 
     private void btnFormECFAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormECFAddActionPerformed
         // TODO add your handling code here:
@@ -557,9 +654,9 @@ public class Form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFormECFSupprActionPerformed
 
-    private void BtnAddStagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddStagActionPerformed
+    private void btnAddStagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStagActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnAddStagActionPerformed
+    }//GEN-LAST:event_btnAddStagActionPerformed
 
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();
@@ -607,7 +704,7 @@ public class Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnAddStag;
+    private javax.swing.JButton btnAddStag;
     private javax.swing.JButton btnFormAdd;
     private javax.swing.JButton btnFormECFAdd;
     private javax.swing.JButton btnFormECFRes;
@@ -626,7 +723,6 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JLabel lblNomStag;
     private javax.swing.JLabel lblPreStag;
     private javax.swing.JList<String> lstForm;
-    private javax.swing.JTable lstStag;
     private javax.swing.JMenu mnuAide;
     private javax.swing.JMenuBar mnuBar;
     private javax.swing.JMenu mnuFichier;
@@ -656,6 +752,7 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JScrollPane scrlForm;
     private javax.swing.JTable tblFormECF;
     private javax.swing.JTable tblFormStag;
+    private javax.swing.JTable tblStag;
     private javax.swing.JTabbedPane tbpContent;
     private javax.swing.JTextField txtCodeStag;
     private javax.swing.JTextField txtFooter;
