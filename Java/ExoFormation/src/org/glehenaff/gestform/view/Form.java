@@ -360,16 +360,16 @@ public class Form extends javax.swing.JFrame {
     private void lstFormValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFormValueChanged
         ResetFormBtn();
         int index = lstForm.getSelectedIndex();
+        tblStagFormModel.reset();
+        tblECFModel.reset();
         if (index > -1) {
             Formation f = lstFormModel.getFormation(index);
             disabledTextFields = true;
             txtFormNom.setText(f.getNom());
             disabledTextFields = false;
-            tblStagFormModel.reset();
             for (Stagiaire s : f.getStagiaires()) {
                 tblStagFormModel.add(s);
             }
-            tblECFModel.reset();
             for (ECF e : f.getECFs()) {
                 tblECFModel.add(e);
             }
