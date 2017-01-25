@@ -5,7 +5,6 @@
  */
 package org.glehenaff.gestform.view;
 
-import java.util.List;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -14,6 +13,7 @@ import org.glehenaff.gestform.GestForm;
 import org.glehenaff.gestform.dao.FormationDAO;
 import org.glehenaff.gestform.dao.AlreadyExistsException;
 import org.glehenaff.gestform.dao.EcfDAO;
+import org.glehenaff.gestform.dao.StagiaireDAO;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
@@ -253,6 +253,11 @@ public class Form extends javax.swing.JFrame {
         btnSupprStag.setForeground(new java.awt.Color(169, 68, 68));
         btnSupprStag.setText("Supprimer");
         btnSupprStag.setEnabled(false);
+        btnSupprStag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSupprStagActionPerformed(evt);
+            }
+        });
         panBtnStag.add(btnSupprStag);
 
         btnAddStag.setBackground(new java.awt.Color(223, 240, 216));
@@ -590,19 +595,18 @@ public class Form extends javax.swing.JFrame {
             return;
         }
         if (index > -1) {
-            txtFooter.setText("Une formation est selectionné");
+            txtFooter.setText("Une formation est selectionnée");
             return;
         }
         Formation f = new Formation(0, txtFormNom.getText());
         try {
-            FormationDAO.Instance().insert(f);
+            f = FormationDAO.Instance().insert(f);
             lstFormModel.add(f);
             lstForm.setSelectedIndex(lstFormModel.getSize() - 1);
             ResetFormBtn();
         } catch (AlreadyExistsException e) {
             txtFooter.setText("La formation semble déjà exister");
         }
-
     }//GEN-LAST:event_btnFormAddActionPerformed
 
     private void btnFormSupprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormSupprActionPerformed
@@ -655,8 +659,51 @@ public class Form extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFormECFSupprActionPerformed
 
     private void btnAddStagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStagActionPerformed
-        // TODO add your handling code here:
+        int index = tblStag.getSelectedRow();
+        if (txtNomStag.getText().isEmpty() || txtCodeStag.getText().isEmpty()) {
+            txtFooter.setText("Il manque le nom du stagiaire");
+            return;
+        }
+        if (txtPreStag.getText().isEmpty()) {
+            txtFooter.setText("Il manque le prénom du stagiaire");
+            return;
+        }
+        if (txtCodeStag.getText().isEmpty()) {
+            txtFooter.setText("Il manque le code du stagiaire");
+            return;
+        }
+        if (index > -1) {
+            txtFooter.setText("Un stagiaire est selectionné");
+            return;
+        }
+        String nom = txtNomStag.getText();
+        String prenom = txtPreStag.getText();
+        String code = txtCodeStag.getText();
+        Stagiaire s = new Stagiaire(0, nom, prenom, code);
+        try {
+            s = StagiaireDAO.Instance().insert(s);
+            tblStagModel.add(s);
+            tblStag.setRowSelectionInterval(tblStagModel.getRowCount() -1, 0);
+            ResetFormBtn();
+        } catch (AlreadyExistsException e) {
+            txtFooter.setText("La formation semble déjà exister");
+        }
     }//GEN-LAST:event_btnAddStagActionPerformed
+
+    private void btnSupprStagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupprStagActionPerformed
+        int index = tblStag.getSelectedRow();
+        if (index == -1) {
+            txtFooter.setText("Aucun stagiaire n'est selectionnée");
+            return;
+        }
+        Stagiaire s = tblStagModel.getStagiaire(index);
+        if (StagiaireDAO.Instance().delete(s)) {
+            tblStagModel.remove(s);
+            tblStag.clearSelection();
+        } else {
+            txtFooter.setText("Le stagiaire n'a pas pu être supprimé");
+        }
+    }//GEN-LAST:event_btnSupprStagActionPerformed
 
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();

@@ -153,8 +153,41 @@ public class StagiaireDAO extends DAO<Stagiaire> {
     }
 
     @Override
-    public boolean delete(Stagiaire s) throws AlreadyExistsException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public boolean delete(Stagiaire stagiaire) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
 
+        String query = "DELETE FROM stagiaire WHERE code LIKE ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setString(1, stagiaire.getCode());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à la suppression du stagiaire.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
+    }   
 }
