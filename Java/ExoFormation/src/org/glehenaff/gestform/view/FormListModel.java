@@ -21,6 +21,19 @@ public class FormListModel extends AbstractListModel {
         this.formations = formations;
     }
 
+    public Formation getFormation(int index) {
+        return formations.get(index);
+    }
+    
+    public boolean has(String txt) {
+        for (Formation f: formations) {
+            if (f.getNom().equals(txt)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public int getSize() {
         return formations.size();
@@ -28,10 +41,6 @@ public class FormListModel extends AbstractListModel {
 
     @Override
     public Object getElementAt(int index) {
-        return formations.get(index);
-    }
-
-    public Formation getFormation(int index) {
         return formations.get(index);
     }
  

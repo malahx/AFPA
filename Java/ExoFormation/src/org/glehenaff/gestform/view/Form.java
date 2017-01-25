@@ -23,6 +23,7 @@ public class Form extends javax.swing.JFrame {
     private StagTableModel tblStagModel;
     private StagTableModel tblStagFormModel;
     private ECFTableModel tblECFModel;
+    private boolean disabledTextFields = false;
 
     /**
      * Creates new form Form
@@ -309,8 +310,15 @@ public class Form extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFormECFAddActionPerformed
 
     private void txtFormNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFormNomActionPerformed
-        lstForm.setSelectedIndex(-1);
-        ResetFormBtn();
+        if (disabledTextFields) {
+            return;
+        }
+        int index = lstForm.getSelectedIndex();
+        if (index > -1) {
+            lstForm.clearSelection();
+        } else {
+            ResetFormBtn();
+        }
     }//GEN-LAST:event_txtFormNomActionPerformed
 
     private void lstFormValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFormValueChanged
@@ -318,21 +326,26 @@ public class Form extends javax.swing.JFrame {
         int index = lstForm.getSelectedIndex();
         if (index > -1) {
             Formation f = lstFormModel.getFormation(index);
-
+            disabledTextFields = true;
             txtFormNom.setText(f.getNom());
-            tblStagFormModel.reset();
-            for (Stagiaire s : f.getStagiaires()) {
-                tblStagFormModel.add(s);
-            }
-            tblECFModel.reset();
-            for (ECF e : f.getECFs()) {
-                tblECFModel.add(e);
-            }
+            disabledTextFields = false;
         }
     }//GEN-LAST:event_lstFormValueChanged
 
     private void ResetFormBtn() {
-        if (lstForm.getSelectedIndex() > -1) {
+        int index = lstForm.getSelectedIndex();
+        tblStagFormModel.reset();
+        tblECFModel.reset();
+
+        if (index > -1) {
+            Formation f = lstFormModel.getFormation(index);
+            for (Stagiaire s : f.getStagiaires()) {
+                tblStagFormModel.add(s);
+            }
+            for (ECF e : f.getECFs()) {
+                tblECFModel.add(e);
+            }
+
             btnFormECFAdd.setEnabled(true);
             btnFormStagAdd.setEnabled(true);
             if (tblFormECF.getSelectedRow() > -1) {
@@ -350,11 +363,11 @@ public class Form extends javax.swing.JFrame {
             btnFormAdd.setEnabled(false);
             btnFormSuppr.setEnabled(true);
         } else {
-            tblECFModel.reset();
-            tblStagFormModel.reset();
-
-            txtFormNom.setText("");
-            btnFormAdd.setEnabled(false);
+            if (txtFormNom.getText().isEmpty()) {
+                btnFormAdd.setEnabled(false);
+            } else {
+                btnFormAdd.setEnabled(true);
+            }
             btnFormSuppr.setEnabled(false);
 
             btnFormECFAdd.setEnabled(false);
