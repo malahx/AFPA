@@ -21,15 +21,15 @@ import org.glehenaff.gestform.model.Formation;
  * @author gwenole
  */
 public class EcfDAO extends DAO<ECF> {
-	
-	private static EcfDAO instance = null;
-	
-	public static EcfDAO Instance() {
-		if (instance == null) {
-			instance = new EcfDAO();
-		}
-		return instance;
-	}
+
+    private static EcfDAO instance = null;
+
+    public static EcfDAO Instance() {
+        if (instance == null) {
+            instance = new EcfDAO();
+        }
+        return instance;
+    }
 
     @Override
     public List<ECF> findAll() {
@@ -37,7 +37,7 @@ public class EcfDAO extends DAO<ECF> {
     }
 
     @Override
-    public List<ECF> findBy(Object o) {
+    public List<ECF> findBy(Formation formation) {
         List<ECF> ecf = new ArrayList<>();
         try {
             Connection conn = getConnection();
@@ -48,10 +48,10 @@ public class EcfDAO extends DAO<ECF> {
                     + "INNER JOIN formation f ON e.formation_id = f.id "
                     + "WHERE f.id = ?";
             PreparedStatement prepare = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            prepare.setInt(1, ((Formation) o).getId());
+            prepare.setInt(1, formation.getId());
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
-                ecf.add(new ECF(result.getInt("e.id"), (Formation) o, result.getString("e.nom")));
+                ecf.add(new ECF(result.getInt("e.id"), formation, result.getString("e.nom")));
             }
             result.close();
             prepare.close();
@@ -62,11 +62,10 @@ public class EcfDAO extends DAO<ECF> {
     }
 
     @Override
-    public ECF insert(Object o) throws AlreadyExistsException {
+    public ECF insert(ECF ecf) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
 
-        ECF ecf = (ECF) o;
         String query = "INSERT INTO `ecf` (`id`, `nom`, `formation_id`) VALUES (0, ?, ?)";
 
         try {
@@ -75,7 +74,7 @@ public class EcfDAO extends DAO<ECF> {
             if (conn == null) {
                 return null;
             }
-            
+
             prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             prepare.setString(1, ecf.getNom());
             prepare.setInt(2, ecf.getFormation().getId());
@@ -94,9 +93,9 @@ public class EcfDAO extends DAO<ECF> {
             ecf.setId(id);
 
         } catch (SQLException e) {
-        	if (e.getErrorCode() == 1062) {
-        		throw new AlreadyExistsException(e);
-        	}
+            if (e.getErrorCode() == 1062) {
+                throw new AlreadyExistsException(e);
+            }
             throw new RuntimeException(e);
         } finally {
             try {
@@ -112,5 +111,44 @@ public class EcfDAO extends DAO<ECF> {
         }
         return ecf;
     }
-    
+
+    @Override
+    public boolean delete(ECF ecf) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "DELETE FROM ecf WHERE id = ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setInt(1, ecf.getId());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à la suppression de l'ECF.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
+    }
+
 }

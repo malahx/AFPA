@@ -54,12 +54,12 @@ public class FormationDAO extends DAO<Formation> {
     }
 
     @Override
-    public List<Formation> findBy(Object o) {
+    public List<Formation> findBy(Formation f) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Formation insert(Object o) throws AlreadyExistsException {
+    public Formation insert(Formation o) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
 
@@ -170,6 +170,45 @@ public class FormationDAO extends DAO<Formation> {
 
             if (row == 0) {
                 throw new SQLException("Erreur à la suppression de la formation.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
+    }
+
+    public boolean delete(Formation formation, Stagiaire stagiaire) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "DELETE FROM promo WHERE formation_id = ? AND stagiaire_code LIKE ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setInt(1, formation.getId());
+            prepare.setString(2, stagiaire.getCode());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à la suppression du stagiaire de la formation.");
             }
 
         } catch (SQLException e) {

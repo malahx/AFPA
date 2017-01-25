@@ -33,6 +33,11 @@ public class ECFTableModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
+    public void remove(ECF e) {
+        ecfs.remove(e);
+        this.fireTableDataChanged();
+    }
+
     public void reset() {
         ecfs = new ArrayList<>();
         this.fireTableDataChanged();

@@ -32,12 +32,17 @@ public class StagTableModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
+    public void remove(Stagiaire s) {
+        stagiaires.remove(s);
+        this.fireTableDataChanged();
+    }
+
     public void reset() {
         stagiaires = new ArrayList<>();
         this.fireTableDataChanged();
     }
 
-    public Stagiaire getFormation(int rowIndex) {
+    public Stagiaire getStagiaire(int rowIndex) {
         return stagiaires.get(rowIndex);
     }
 

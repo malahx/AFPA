@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.glehenaff.gestform.model.ECF;
+import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Resultat;
 import org.glehenaff.gestform.model.Stagiaire;
 
@@ -37,8 +38,7 @@ public class ResultatDAO extends DAO<Resultat> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public List<Resultat> findBy(Object o) { // o = ECF
+    public List<Resultat> findBy(ECF ecf) { // o = ECF
         List<Resultat> res = new ArrayList<>();
         try {
             Connection conn = getConnection();
@@ -51,11 +51,11 @@ public class ResultatDAO extends DAO<Resultat> {
                     + "INNER JOIN personne pe ON s.personne_id = pe.id "
                     + "WHERE e.id = ?";
             PreparedStatement prepare = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            prepare.setInt(1, ((ECF) o).getId());
+            prepare.setInt(1, ecf.getId());
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
                 Stagiaire stagiaire = new Stagiaire(result.getInt("pe.id"), result.getString("pe.nom"), result.getString("pe.prenom"), result.getString("code"));
-                res.add(new Resultat(result.getBoolean("r.obtenu"), (ECF)o, stagiaire));
+                res.add(new Resultat(result.getBoolean("r.obtenu"), ecf, stagiaire));
             }
             result.close();
             prepare.close();
@@ -66,11 +66,10 @@ public class ResultatDAO extends DAO<Resultat> {
     }
 
     @Override
-    public Resultat insert(Object o) throws AlreadyExistsException {
+    public Resultat insert(Resultat res) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
 
-        Resultat res = (Resultat) o;
         String query = "INSERT INTO `resultat` (`ecf_id`, `stagiaire_code`, `obtenu`) VALUES (?, ?, ?)";
 
         try {
@@ -109,6 +108,16 @@ public class ResultatDAO extends DAO<Resultat> {
             }
         }
         return res;
+    }
+
+    @Override
+    public List<Resultat> findBy(Formation formation) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean delete(Resultat o) throws AlreadyExistsException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

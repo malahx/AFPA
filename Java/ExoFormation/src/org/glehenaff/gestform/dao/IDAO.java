@@ -6,6 +6,7 @@
 package org.glehenaff.gestform.dao;
 
 import java.util.List;
+import org.glehenaff.gestform.model.Formation;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.util.List;
  */
 public interface IDAO<T> {
     public List<T> findAll();
-    public List<T> findBy(Object o);
-    public T insert(Object o) throws AlreadyExistsException;
+    public List<T> findBy(Formation formation);
+    public T insert(T o) throws AlreadyExistsException;
+    public boolean delete(T o) throws AlreadyExistsException;
 }

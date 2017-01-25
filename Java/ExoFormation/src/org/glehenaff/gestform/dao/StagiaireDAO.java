@@ -21,15 +21,15 @@ import org.glehenaff.gestform.model.Stagiaire;
  * @author gwenole
  */
 public class StagiaireDAO extends DAO<Stagiaire> {
-	
-	private static StagiaireDAO instance = null;
-	
-	public static StagiaireDAO Instance() {
-		if (instance == null) {
-			instance = new StagiaireDAO();
-		}
-		return instance;
-	}
+
+    private static StagiaireDAO instance = null;
+
+    public static StagiaireDAO Instance() {
+        if (instance == null) {
+            instance = new StagiaireDAO();
+        }
+        return instance;
+    }
 
     @Override
     public List<Stagiaire> findAll() {
@@ -54,7 +54,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
     }
 
     @Override
-    public List<Stagiaire> findBy(Object o) { // o = Formation
+    public List<Stagiaire> findBy(Formation formation) {
         List<Stagiaire> stagiaires = new ArrayList<>();
         try {
             Connection conn = getConnection();
@@ -67,7 +67,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
                     + "INNER JOIN formation f ON pr.formation_id = f.id "
                     + "WHERE f.id = ?";
             PreparedStatement prepare = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            prepare.setInt(1, ((Formation) o).getId());
+            prepare.setInt(1, formation.getId());
             ResultSet result = prepare.executeQuery();
             while (result.next()) {
                 stagiaires.add(new Stagiaire(result.getInt("pe.id"), result.getString("nom"), result.getString("prenom"), result.getString("code")));
@@ -81,12 +81,11 @@ public class StagiaireDAO extends DAO<Stagiaire> {
     }
 
     @Override
-    public Stagiaire insert(Object o) throws AlreadyExistsException { // o = Stagiaire
+    public Stagiaire insert(Stagiaire stagiaire) throws AlreadyExistsException { // o = Stagiaire
         PreparedStatement prepareP = null;
         PreparedStatement prepareS = null;
         Connection conn = null;
 
-        Stagiaire stagiaire = (Stagiaire) o;
         String queryP = "INSERT INTO `personne` (`id`, `nom`, `prenom`) VALUES (0, ?, ?)";
         String queryS = "INSERT INTO `stagiaire` (`code`, `personne_id`) VALUES (?, ?)";
 
@@ -131,9 +130,9 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-        	if (e.getErrorCode() == 1062) {
-        		throw new AlreadyExistsException(e);
-        	}
+            if (e.getErrorCode() == 1062) {
+                throw new AlreadyExistsException(e);
+            }
             throw new RuntimeException(e);
         } finally {
             try {
@@ -151,6 +150,11 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             }
         }
         return stagiaire;
+    }
+
+    @Override
+    public boolean delete(Stagiaire s) throws AlreadyExistsException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
