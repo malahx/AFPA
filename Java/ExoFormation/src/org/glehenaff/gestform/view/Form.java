@@ -83,12 +83,30 @@ public class Form extends javax.swing.JFrame {
         txtFooter = new javax.swing.JTextField();
         tbpContent = new javax.swing.JTabbedPane();
         panStag = new javax.swing.JPanel();
+        panInfoStag = new javax.swing.JPanel();
+        panCodeNomStag = new javax.swing.JPanel();
+        panNomStag = new javax.swing.JPanel();
+        lblNomStag = new javax.swing.JLabel();
+        txtNomStag = new javax.swing.JTextField();
+        panCodeStag = new javax.swing.JPanel();
+        lblCodeStag = new javax.swing.JLabel();
+        txtCodeStag = new javax.swing.JTextField();
+        panPreBtnStag = new javax.swing.JPanel();
+        panPreStag = new javax.swing.JPanel();
+        lblPreStag = new javax.swing.JLabel();
+        txtPreStag = new javax.swing.JTextField();
+        panBtnStag = new javax.swing.JPanel();
+        btnSupprStag = new javax.swing.JButton();
+        BtnAddStag = new javax.swing.JButton();
+        panListStag = new javax.swing.JPanel();
+        sclStag = new javax.swing.JScrollPane();
+        lstStag = new javax.swing.JTable();
         panForm = new javax.swing.JPanel();
         panList = new javax.swing.JPanel();
         panLstForm = new javax.swing.JPanel();
         scrlForm = new javax.swing.JScrollPane();
         lstForm = new javax.swing.JList<>();
-        panAddForm = new javax.swing.JPanel();
+        panInfoForm = new javax.swing.JPanel();
         panFormNom = new javax.swing.JPanel();
         lblFormNom = new javax.swing.JLabel();
         txtFormNom = new javax.swing.JTextField();
@@ -119,6 +137,9 @@ public class Form extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestionnaire de formation");
         setMaximumSize(null);
+        setMinimumSize(new java.awt.Dimension(600, 600));
+        setPreferredSize(new java.awt.Dimension(750, 600));
+        setResizable(false);
 
         panFooter.setLayout(new javax.swing.BoxLayout(panFooter, javax.swing.BoxLayout.LINE_AXIS));
 
@@ -131,11 +152,92 @@ public class Form extends javax.swing.JFrame {
         getContentPane().add(panFooter, java.awt.BorderLayout.PAGE_END);
 
         panStag.setLayout(new java.awt.BorderLayout());
+
+        panInfoStag.setBorder(javax.swing.BorderFactory.createTitledBorder("Donnée d'un stagiaire"));
+        panInfoStag.setMinimumSize(new java.awt.Dimension(800, 100));
+
+        panCodeNomStag.setMinimumSize(new java.awt.Dimension(400, 23));
+        panCodeNomStag.setPreferredSize(new java.awt.Dimension(580, 30));
+        panCodeNomStag.setLayout(new java.awt.GridLayout(1, 2, 100, 0));
+
+        panNomStag.setLayout(new javax.swing.BoxLayout(panNomStag, javax.swing.BoxLayout.LINE_AXIS));
+
+        lblNomStag.setText("Nom :");
+        lblNomStag.setPreferredSize(new java.awt.Dimension(75, 15));
+        panNomStag.add(lblNomStag);
+        panNomStag.add(txtNomStag);
+
+        panCodeNomStag.add(panNomStag);
+
+        panCodeStag.setLayout(new javax.swing.BoxLayout(panCodeStag, javax.swing.BoxLayout.LINE_AXIS));
+
+        lblCodeStag.setText("Code :");
+        lblCodeStag.setPreferredSize(new java.awt.Dimension(75, 15));
+        panCodeStag.add(lblCodeStag);
+        panCodeStag.add(txtCodeStag);
+
+        panCodeNomStag.add(panCodeStag);
+
+        panInfoStag.add(panCodeNomStag);
+
+        panPreBtnStag.setPreferredSize(new java.awt.Dimension(580, 30));
+        panPreBtnStag.setLayout(new java.awt.GridLayout(1, 2, 100, 0));
+
+        panPreStag.setLayout(new javax.swing.BoxLayout(panPreStag, javax.swing.BoxLayout.LINE_AXIS));
+
+        lblPreStag.setText("Prénom :");
+        lblPreStag.setPreferredSize(new java.awt.Dimension(75, 15));
+        panPreStag.add(lblPreStag);
+        panPreStag.add(txtPreStag);
+
+        panPreBtnStag.add(panPreStag);
+
+        panBtnStag.setLayout(new java.awt.GridLayout(1, 2, 20, 0));
+
+        btnSupprStag.setBackground(new java.awt.Color(242, 222, 222));
+        btnSupprStag.setForeground(new java.awt.Color(169, 68, 68));
+        btnSupprStag.setText("Supprimer");
+        btnSupprStag.setEnabled(false);
+        panBtnStag.add(btnSupprStag);
+
+        BtnAddStag.setBackground(new java.awt.Color(223, 240, 216));
+        BtnAddStag.setForeground(new java.awt.Color(69, 118, 61));
+        BtnAddStag.setText("Ajouter");
+        BtnAddStag.setEnabled(false);
+        BtnAddStag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAddStagActionPerformed(evt);
+            }
+        });
+        panBtnStag.add(BtnAddStag);
+
+        panPreBtnStag.add(panBtnStag);
+
+        panInfoStag.add(panPreBtnStag);
+
+        panStag.add(panInfoStag, java.awt.BorderLayout.CENTER);
+
+        panListStag.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste de stagiaire"));
+        panListStag.setPreferredSize(new java.awt.Dimension(550, 430));
+        panListStag.setLayout(new java.awt.BorderLayout());
+
+        sclStag.setMaximumSize(new java.awt.Dimension(0, 0));
+        sclStag.setMinimumSize(new java.awt.Dimension(0, 0));
+        sclStag.setPreferredSize(new java.awt.Dimension(400, 200));
+
+        lstStag.setModel(tblStagModel);
+        lstStag.setPreferredSize(new java.awt.Dimension(580, 400));
+        sclStag.setViewportView(lstStag);
+
+        panListStag.add(sclStag, java.awt.BorderLayout.CENTER);
+
+        panStag.add(panListStag, java.awt.BorderLayout.NORTH);
+
         tbpContent.addTab("Stagiaires", panStag);
 
         panForm.setLayout(new java.awt.BorderLayout(5, 5));
 
-        panList.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste de formations"));
+        panList.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste de formation"));
         panList.setAlignmentX(0.0F);
         panList.setAlignmentY(0.0F);
         panList.setLayout(new javax.swing.BoxLayout(panList, javax.swing.BoxLayout.Y_AXIS));
@@ -165,8 +267,8 @@ public class Form extends javax.swing.JFrame {
 
         panForm.add(panList, java.awt.BorderLayout.LINE_START);
 
-        panAddForm.setBorder(javax.swing.BorderFactory.createTitledBorder("Informations d'une formation"));
-        panAddForm.setLayout(new javax.swing.BoxLayout(panAddForm, javax.swing.BoxLayout.PAGE_AXIS));
+        panInfoForm.setBorder(javax.swing.BorderFactory.createTitledBorder("Donnée d'une formation"));
+        panInfoForm.setLayout(new javax.swing.BoxLayout(panInfoForm, javax.swing.BoxLayout.PAGE_AXIS));
 
         panFormNom.setMaximumSize(new java.awt.Dimension(99999999, 23));
         panFormNom.setPreferredSize(new java.awt.Dimension(54, 23));
@@ -182,7 +284,7 @@ public class Form extends javax.swing.JFrame {
         });
         panFormNom.add(txtFormNom);
 
-        panAddForm.add(panFormNom);
+        panInfoForm.add(panFormNom);
 
         panFormStag.setBorder(javax.swing.BorderFactory.createTitledBorder("Stagaires de la formation"));
         panFormStag.setName(""); // NOI18N
@@ -215,7 +317,7 @@ public class Form extends javax.swing.JFrame {
 
         panFormStag.add(panFormStagBtn);
 
-        panAddForm.add(panFormStag);
+        panInfoForm.add(panFormStag);
 
         panFormECF.setBorder(javax.swing.BorderFactory.createTitledBorder("ECF de la formation"));
         panFormECF.setMinimumSize(new java.awt.Dimension(500, 200));
@@ -265,7 +367,7 @@ public class Form extends javax.swing.JFrame {
 
         panFormECF.add(sclFormECF, java.awt.BorderLayout.CENTER);
 
-        panAddForm.add(panFormECF);
+        panInfoForm.add(panFormECF);
 
         btnFormSuppr.setBackground(new java.awt.Color(242, 222, 222));
         btnFormSuppr.setForeground(new java.awt.Color(169, 68, 68));
@@ -289,9 +391,9 @@ public class Form extends javax.swing.JFrame {
         });
         panFormBtn.add(btnFormAdd);
 
-        panAddForm.add(panFormBtn);
+        panInfoForm.add(panFormBtn);
 
-        panForm.add(panAddForm, java.awt.BorderLayout.CENTER);
+        panForm.add(panInfoForm, java.awt.BorderLayout.CENTER);
 
         tbpContent.addTab("Formations", panForm);
 
@@ -455,6 +557,10 @@ public class Form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFormECFSupprActionPerformed
 
+    private void BtnAddStagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddStagActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnAddStagActionPerformed
+
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();
         if (index > -1) {
@@ -501,6 +607,7 @@ public class Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnAddStag;
     private javax.swing.JButton btnFormAdd;
     private javax.swing.JButton btnFormECFAdd;
     private javax.swing.JButton btnFormECFRes;
@@ -508,17 +615,24 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JButton btnFormStagAdd;
     private javax.swing.JButton btnFormStagSuppr;
     private javax.swing.JButton btnFormSuppr;
+    private javax.swing.JButton btnSupprStag;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem itmActualiser;
     private javax.swing.JMenuItem itmApropos;
     private javax.swing.JMenuItem itmQuitter;
     private javax.swing.JPopupMenu.Separator itmSep;
+    private javax.swing.JLabel lblCodeStag;
     private javax.swing.JLabel lblFormNom;
+    private javax.swing.JLabel lblNomStag;
+    private javax.swing.JLabel lblPreStag;
     private javax.swing.JList<String> lstForm;
+    private javax.swing.JTable lstStag;
     private javax.swing.JMenu mnuAide;
     private javax.swing.JMenuBar mnuBar;
     private javax.swing.JMenu mnuFichier;
-    private javax.swing.JPanel panAddForm;
+    private javax.swing.JPanel panBtnStag;
+    private javax.swing.JPanel panCodeNomStag;
+    private javax.swing.JPanel panCodeStag;
     private javax.swing.JPanel panFooter;
     private javax.swing.JPanel panForm;
     private javax.swing.JPanel panFormBtn;
@@ -527,16 +641,26 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JPanel panFormNom;
     private javax.swing.JPanel panFormStag;
     private javax.swing.JPanel panFormStagBtn;
+    private javax.swing.JPanel panInfoForm;
+    private javax.swing.JPanel panInfoStag;
     private javax.swing.JPanel panList;
+    private javax.swing.JPanel panListStag;
     private javax.swing.JPanel panLstForm;
+    private javax.swing.JPanel panNomStag;
+    private javax.swing.JPanel panPreBtnStag;
+    private javax.swing.JPanel panPreStag;
     private javax.swing.JPanel panStag;
     private javax.swing.JScrollPane sclFormECF;
     private javax.swing.JScrollPane sclFormStag;
+    private javax.swing.JScrollPane sclStag;
     private javax.swing.JScrollPane scrlForm;
     private javax.swing.JTable tblFormECF;
     private javax.swing.JTable tblFormStag;
     private javax.swing.JTabbedPane tbpContent;
+    private javax.swing.JTextField txtCodeStag;
     private javax.swing.JTextField txtFooter;
     private javax.swing.JTextField txtFormNom;
+    private javax.swing.JTextField txtNomStag;
+    private javax.swing.JTextField txtPreStag;
     // End of variables declaration//GEN-END:variables
 }
