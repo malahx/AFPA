@@ -40,20 +40,20 @@ public class Form extends javax.swing.JFrame {
         tblStagFormModel = new StagTableModel();
         tblECFModel = new ECFTableModel();
         initComponents();
-        txtFormNom.getDocument().addDocumentListener(new DocumentListener() {
+        txtNomForm.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {
-                txtFormNomActionPerformed(null);
+                txtNomFormActionPerformed(null);
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                txtFormNomActionPerformed(null);
+                txtNomFormActionPerformed(null);
             }
 
             @Override
             public void insertUpdate(DocumentEvent e) {
-                txtFormNomActionPerformed(null);
+                txtNomFormActionPerformed(null);
             }
         });
         txtPreStag.getDocument().addDocumentListener(new DocumentListener() {
@@ -104,7 +104,7 @@ public class Form extends javax.swing.JFrame {
                 txtStagActionPerformed(null);
             }
         });
-        txtNomEcf.getDocument().addDocumentListener(new DocumentListener() {
+        txtEcfNomForm.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void changedUpdate(DocumentEvent e) {
                 txtNomEcfActionPerformed(null);
@@ -120,13 +120,13 @@ public class Form extends javax.swing.JFrame {
                 txtNomEcfActionPerformed(null);
             }
         });
-        tblFormECF.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        tblEcfForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
                 tblFormECFValueChanged(evt);
             }
         });
-        tblFormStag.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        tblStagForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent evt) {
                 tblFormStagValueChanged(evt);
@@ -174,33 +174,33 @@ public class Form extends javax.swing.JFrame {
         sclStag = new javax.swing.JScrollPane();
         tblStag = new javax.swing.JTable();
         panForm = new javax.swing.JPanel();
-        panList = new javax.swing.JPanel();
+        panListForm = new javax.swing.JPanel();
         panLstForm = new javax.swing.JPanel();
         scrlForm = new javax.swing.JScrollPane();
         lstForm = new javax.swing.JList<>();
         panInfoForm = new javax.swing.JPanel();
-        panFormNom = new javax.swing.JPanel();
-        lblFormNom = new javax.swing.JLabel();
-        txtFormNom = new javax.swing.JTextField();
-        panFormStag = new javax.swing.JPanel();
-        sclFormStag = new javax.swing.JScrollPane();
-        tblFormStag = new javax.swing.JTable();
-        panFormStagBtn = new javax.swing.JPanel();
-        btnFormStagSuppr = new javax.swing.JButton();
-        btnFormStagAdd = new javax.swing.JButton();
-        panFormECF = new javax.swing.JPanel();
-        sclFormECF = new javax.swing.JScrollPane();
-        tblFormECF = new javax.swing.JTable();
-        panFormECFBtn = new javax.swing.JPanel();
-        btnFormECFSuppr = new javax.swing.JButton();
-        btnFormECFRes = new javax.swing.JButton();
-        panAddEcf = new javax.swing.JPanel();
-        lblNomEcf = new javax.swing.JLabel();
-        txtNomEcf = new javax.swing.JTextField();
-        btnAddEcf = new javax.swing.JButton();
-        panFormBtn = new javax.swing.JPanel();
-        btnFormSuppr = new javax.swing.JButton();
-        btnFormAdd = new javax.swing.JButton();
+        panNomForm = new javax.swing.JPanel();
+        lblNomForm = new javax.swing.JLabel();
+        txtNomForm = new javax.swing.JTextField();
+        panStagForm = new javax.swing.JPanel();
+        sclStagForm = new javax.swing.JScrollPane();
+        tblStagForm = new javax.swing.JTable();
+        panStagBtnForm = new javax.swing.JPanel();
+        btnStagSupprForm = new javax.swing.JButton();
+        btnStagAddForm = new javax.swing.JButton();
+        panEcfForm = new javax.swing.JPanel();
+        sclEcfForm = new javax.swing.JScrollPane();
+        tblEcfForm = new javax.swing.JTable();
+        panEcfBtnForm = new javax.swing.JPanel();
+        btnEcfSupprForm = new javax.swing.JButton();
+        btnEcfResForm = new javax.swing.JButton();
+        panEcfAddForm = new javax.swing.JPanel();
+        lblEcfNomForm = new javax.swing.JLabel();
+        txtEcfNomForm = new javax.swing.JTextField();
+        btnEcfAddForm = new javax.swing.JButton();
+        panBtnForm = new javax.swing.JPanel();
+        btnSupprForm = new javax.swing.JButton();
+        btnAddForm = new javax.swing.JButton();
         mnuBar = new javax.swing.JMenuBar();
         mnuFichier = new javax.swing.JMenu();
         itmActualiser = new javax.swing.JMenuItem();
@@ -317,10 +317,10 @@ public class Form extends javax.swing.JFrame {
 
         panForm.setLayout(new java.awt.BorderLayout(5, 5));
 
-        panList.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste de formation"));
-        panList.setAlignmentX(0.0F);
-        panList.setAlignmentY(0.0F);
-        panList.setLayout(new javax.swing.BoxLayout(panList, javax.swing.BoxLayout.Y_AXIS));
+        panListForm.setBorder(javax.swing.BorderFactory.createTitledBorder("Liste de formation"));
+        panListForm.setAlignmentX(0.0F);
+        panListForm.setAlignmentY(0.0F);
+        panListForm.setLayout(new javax.swing.BoxLayout(panListForm, javax.swing.BoxLayout.Y_AXIS));
 
         panLstForm.setPreferredSize(new java.awt.Dimension(200, 400));
         panLstForm.setLayout(new javax.swing.BoxLayout(panLstForm, javax.swing.BoxLayout.LINE_AXIS));
@@ -343,153 +343,153 @@ public class Form extends javax.swing.JFrame {
 
         panLstForm.add(scrlForm);
 
-        panList.add(panLstForm);
+        panListForm.add(panLstForm);
 
-        panForm.add(panList, java.awt.BorderLayout.LINE_START);
+        panForm.add(panListForm, java.awt.BorderLayout.LINE_START);
 
         panInfoForm.setBorder(javax.swing.BorderFactory.createTitledBorder("Donnée d'une formation"));
         panInfoForm.setLayout(new javax.swing.BoxLayout(panInfoForm, javax.swing.BoxLayout.PAGE_AXIS));
 
-        panFormNom.setMaximumSize(new java.awt.Dimension(99999999, 23));
-        panFormNom.setPreferredSize(new java.awt.Dimension(54, 23));
-        panFormNom.setLayout(new javax.swing.BoxLayout(panFormNom, javax.swing.BoxLayout.LINE_AXIS));
+        panNomForm.setMaximumSize(new java.awt.Dimension(99999999, 23));
+        panNomForm.setPreferredSize(new java.awt.Dimension(54, 23));
+        panNomForm.setLayout(new javax.swing.BoxLayout(panNomForm, javax.swing.BoxLayout.LINE_AXIS));
 
-        lblFormNom.setText("Nom :");
-        panFormNom.add(lblFormNom);
+        lblNomForm.setText("Nom :");
+        panNomForm.add(lblNomForm);
 
-        txtFormNom.addActionListener(new java.awt.event.ActionListener() {
+        txtNomForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFormNomActionPerformed(evt);
+                txtNomFormActionPerformed(evt);
             }
         });
-        panFormNom.add(txtFormNom);
+        panNomForm.add(txtNomForm);
 
-        panInfoForm.add(panFormNom);
+        panInfoForm.add(panNomForm);
 
-        panFormStag.setBorder(javax.swing.BorderFactory.createTitledBorder("Stagaires de la formation"));
-        panFormStag.setName(""); // NOI18N
-        panFormStag.setLayout(new javax.swing.BoxLayout(panFormStag, javax.swing.BoxLayout.PAGE_AXIS));
+        panStagForm.setBorder(javax.swing.BorderFactory.createTitledBorder("Stagaires de la formation"));
+        panStagForm.setName(""); // NOI18N
+        panStagForm.setLayout(new javax.swing.BoxLayout(panStagForm, javax.swing.BoxLayout.PAGE_AXIS));
 
-        sclFormStag.setMinimumSize(new java.awt.Dimension(500, 200));
-        sclFormStag.setPreferredSize(new java.awt.Dimension(500, 200));
+        sclStagForm.setMinimumSize(new java.awt.Dimension(500, 200));
+        sclStagForm.setPreferredSize(new java.awt.Dimension(500, 200));
 
-        tblFormStag.setModel(tblStagFormModel);
-        sclFormStag.setViewportView(tblFormStag);
+        tblStagForm.setModel(tblStagFormModel);
+        sclStagForm.setViewportView(tblStagForm);
 
-        panFormStag.add(sclFormStag);
+        panStagForm.add(sclStagForm);
 
-        btnFormStagSuppr.setBackground(new java.awt.Color(242, 222, 222));
-        btnFormStagSuppr.setForeground(new java.awt.Color(169, 68, 68));
-        btnFormStagSuppr.setText("Supprimer le stagiaire");
-        btnFormStagSuppr.setEnabled(false);
-        btnFormStagSuppr.addActionListener(new java.awt.event.ActionListener() {
+        btnStagSupprForm.setBackground(new java.awt.Color(242, 222, 222));
+        btnStagSupprForm.setForeground(new java.awt.Color(169, 68, 68));
+        btnStagSupprForm.setText("Supprimer le stagiaire");
+        btnStagSupprForm.setEnabled(false);
+        btnStagSupprForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFormStagSupprActionPerformed(evt);
+                btnStagSupprFormActionPerformed(evt);
             }
         });
-        panFormStagBtn.add(btnFormStagSuppr);
+        panStagBtnForm.add(btnStagSupprForm);
 
-        btnFormStagAdd.setBackground(new java.awt.Color(223, 240, 216));
-        btnFormStagAdd.setForeground(new java.awt.Color(69, 118, 61));
-        btnFormStagAdd.setText("Ajouter le stagiaire");
-        btnFormStagAdd.setEnabled(false);
-        btnFormStagAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnStagAddForm.setBackground(new java.awt.Color(223, 240, 216));
+        btnStagAddForm.setForeground(new java.awt.Color(69, 118, 61));
+        btnStagAddForm.setText("Ajouter le stagiaire");
+        btnStagAddForm.setEnabled(false);
+        btnStagAddForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFormStagAddActionPerformed(evt);
+                btnStagAddFormActionPerformed(evt);
             }
         });
-        panFormStagBtn.add(btnFormStagAdd);
+        panStagBtnForm.add(btnStagAddForm);
 
-        panFormStag.add(panFormStagBtn);
+        panStagForm.add(panStagBtnForm);
 
-        panInfoForm.add(panFormStag);
+        panInfoForm.add(panStagForm);
 
-        panFormECF.setBorder(javax.swing.BorderFactory.createTitledBorder("ECF de la formation"));
-        panFormECF.setMinimumSize(new java.awt.Dimension(500, 200));
-        panFormECF.setPreferredSize(new java.awt.Dimension(500, 200));
-        panFormECF.setLayout(new java.awt.BorderLayout());
+        panEcfForm.setBorder(javax.swing.BorderFactory.createTitledBorder("ECF de la formation"));
+        panEcfForm.setMinimumSize(new java.awt.Dimension(500, 200));
+        panEcfForm.setPreferredSize(new java.awt.Dimension(500, 200));
+        panEcfForm.setLayout(new java.awt.BorderLayout());
 
-        sclFormECF.setMinimumSize(new java.awt.Dimension(500, 100));
-        sclFormECF.setPreferredSize(new java.awt.Dimension(500, 100));
+        sclEcfForm.setMinimumSize(new java.awt.Dimension(500, 100));
+        sclEcfForm.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        tblFormECF.setModel(tblECFModel);
-        sclFormECF.setViewportView(tblFormECF);
+        tblEcfForm.setModel(tblECFModel);
+        sclEcfForm.setViewportView(tblEcfForm);
 
-        panFormECF.add(sclFormECF, java.awt.BorderLayout.NORTH);
+        panEcfForm.add(sclEcfForm, java.awt.BorderLayout.NORTH);
 
-        panFormECFBtn.setMinimumSize(new java.awt.Dimension(500, 40));
-        panFormECFBtn.setName(""); // NOI18N
-        panFormECFBtn.setPreferredSize(new java.awt.Dimension(500, 40));
-        panFormECFBtn.setRequestFocusEnabled(false);
+        panEcfBtnForm.setMinimumSize(new java.awt.Dimension(500, 40));
+        panEcfBtnForm.setName(""); // NOI18N
+        panEcfBtnForm.setPreferredSize(new java.awt.Dimension(500, 40));
+        panEcfBtnForm.setRequestFocusEnabled(false);
 
-        btnFormECFSuppr.setBackground(new java.awt.Color(242, 222, 222));
-        btnFormECFSuppr.setForeground(new java.awt.Color(169, 68, 68));
-        btnFormECFSuppr.setText("Supprimer l'ECF");
-        btnFormECFSuppr.setEnabled(false);
-        btnFormECFSuppr.addActionListener(new java.awt.event.ActionListener() {
+        btnEcfSupprForm.setBackground(new java.awt.Color(242, 222, 222));
+        btnEcfSupprForm.setForeground(new java.awt.Color(169, 68, 68));
+        btnEcfSupprForm.setText("Supprimer l'ECF");
+        btnEcfSupprForm.setEnabled(false);
+        btnEcfSupprForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFormECFSupprActionPerformed(evt);
+                btnEcfSupprFormActionPerformed(evt);
             }
         });
-        panFormECFBtn.add(btnFormECFSuppr);
+        panEcfBtnForm.add(btnEcfSupprForm);
 
-        btnFormECFRes.setBackground(new java.awt.Color(217, 237, 247));
-        btnFormECFRes.setForeground(new java.awt.Color(49, 112, 143));
-        btnFormECFRes.setText("Résultats");
-        btnFormECFRes.setEnabled(false);
-        btnFormECFRes.addActionListener(new java.awt.event.ActionListener() {
+        btnEcfResForm.setBackground(new java.awt.Color(217, 237, 247));
+        btnEcfResForm.setForeground(new java.awt.Color(49, 112, 143));
+        btnEcfResForm.setText("Résultats");
+        btnEcfResForm.setEnabled(false);
+        btnEcfResForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFormECFResActionPerformed(evt);
+                btnEcfResFormActionPerformed(evt);
             }
         });
-        panFormECFBtn.add(btnFormECFRes);
+        panEcfBtnForm.add(btnEcfResForm);
 
-        panFormECF.add(panFormECFBtn, java.awt.BorderLayout.CENTER);
+        panEcfForm.add(panEcfBtnForm, java.awt.BorderLayout.CENTER);
 
-        panAddEcf.setLayout(new javax.swing.BoxLayout(panAddEcf, javax.swing.BoxLayout.LINE_AXIS));
+        panEcfAddForm.setLayout(new javax.swing.BoxLayout(panEcfAddForm, javax.swing.BoxLayout.LINE_AXIS));
 
-        lblNomEcf.setText("Nom :");
-        panAddEcf.add(lblNomEcf);
-        panAddEcf.add(txtNomEcf);
+        lblEcfNomForm.setText("Nom :");
+        panEcfAddForm.add(lblEcfNomForm);
+        panEcfAddForm.add(txtEcfNomForm);
 
-        btnAddEcf.setBackground(new java.awt.Color(223, 240, 216));
-        btnAddEcf.setForeground(new java.awt.Color(69, 118, 61));
-        btnAddEcf.setText("Ajouter ECF");
-        btnAddEcf.setEnabled(false);
-        btnAddEcf.addActionListener(new java.awt.event.ActionListener() {
+        btnEcfAddForm.setBackground(new java.awt.Color(223, 240, 216));
+        btnEcfAddForm.setForeground(new java.awt.Color(69, 118, 61));
+        btnEcfAddForm.setText("Ajouter l'ECF");
+        btnEcfAddForm.setEnabled(false);
+        btnEcfAddForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddEcfActionPerformed(evt);
+                btnEcfAddFormActionPerformed(evt);
             }
         });
-        panAddEcf.add(btnAddEcf);
+        panEcfAddForm.add(btnEcfAddForm);
 
-        panFormECF.add(panAddEcf, java.awt.BorderLayout.SOUTH);
+        panEcfForm.add(panEcfAddForm, java.awt.BorderLayout.SOUTH);
 
-        panInfoForm.add(panFormECF);
+        panInfoForm.add(panEcfForm);
 
-        btnFormSuppr.setBackground(new java.awt.Color(242, 222, 222));
-        btnFormSuppr.setForeground(new java.awt.Color(169, 68, 68));
-        btnFormSuppr.setText("Supprimer formation");
-        btnFormSuppr.setEnabled(false);
-        btnFormSuppr.addActionListener(new java.awt.event.ActionListener() {
+        btnSupprForm.setBackground(new java.awt.Color(242, 222, 222));
+        btnSupprForm.setForeground(new java.awt.Color(169, 68, 68));
+        btnSupprForm.setText("Supprimer formation");
+        btnSupprForm.setEnabled(false);
+        btnSupprForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFormSupprActionPerformed(evt);
+                btnSupprFormActionPerformed(evt);
             }
         });
-        panFormBtn.add(btnFormSuppr);
+        panBtnForm.add(btnSupprForm);
 
-        btnFormAdd.setBackground(new java.awt.Color(223, 240, 216));
-        btnFormAdd.setForeground(new java.awt.Color(69, 118, 61));
-        btnFormAdd.setText("Ajouter formation");
-        btnFormAdd.setEnabled(false);
-        btnFormAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnAddForm.setBackground(new java.awt.Color(223, 240, 216));
+        btnAddForm.setForeground(new java.awt.Color(69, 118, 61));
+        btnAddForm.setText("Ajouter une formation");
+        btnAddForm.setEnabled(false);
+        btnAddForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFormAddActionPerformed(evt);
+                btnAddFormActionPerformed(evt);
             }
         });
-        panFormBtn.add(btnFormAdd);
+        panBtnForm.add(btnAddForm);
 
-        panInfoForm.add(panFormBtn);
+        panInfoForm.add(panBtnForm);
 
         panForm.add(panInfoForm, java.awt.BorderLayout.CENTER);
 
@@ -592,10 +592,10 @@ public class Form extends javax.swing.JFrame {
         }
     }
 
-    private void btnAddEcfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEcfActionPerformed
+    private void btnEcfAddFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEcfAddFormActionPerformed
         int indexForm = lstForm.getSelectedIndex();
-        int indexEcf = tblFormECF.getSelectedRow();
-        if (txtNomEcf.getText().isEmpty()) {
+        int indexEcf = tblEcfForm.getSelectedRow();
+        if (txtEcfNomForm.getText().isEmpty()) {
             txtFooter.setText("Le champ texte est vide");
             return;
         }
@@ -608,18 +608,18 @@ public class Form extends javax.swing.JFrame {
             return;
         }
         Formation f = lstFormModel.getFormation(indexForm);
-        ECF ecf = new ECF(0, f, txtNomEcf.getText());
+        ECF ecf = new ECF(0, f, txtEcfNomForm.getText());
         try {
             ecf = EcfDAO.Instance().insert(ecf);
             tblECFModel.add(ecf);
-            tblFormECF.setRowSelectionInterval(tblECFModel.getRowCount() - 1, tblECFModel.getRowCount() - 1);
+            tblEcfForm.setRowSelectionInterval(tblECFModel.getRowCount() - 1, tblECFModel.getRowCount() - 1);
             ResetFormBtn();
         } catch (AlreadyExistsException e) {
             txtFooter.setText("L'ECF semble déjà exister");
         }
-    }//GEN-LAST:event_btnAddEcfActionPerformed
+    }//GEN-LAST:event_btnEcfAddFormActionPerformed
 
-    private void txtFormNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFormNomActionPerformed
+    private void txtNomFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomFormActionPerformed
         if (disabledTextFields) {
             return;
         }
@@ -629,7 +629,7 @@ public class Form extends javax.swing.JFrame {
         } else {
             ResetFormBtn();
         }
-    }//GEN-LAST:event_txtFormNomActionPerformed
+    }//GEN-LAST:event_txtNomFormActionPerformed
 
     private void lstFormValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFormValueChanged
         ResetFormBtn();
@@ -639,7 +639,7 @@ public class Form extends javax.swing.JFrame {
         if (index > -1) {
             Formation f = lstFormModel.getFormation(index);
             disabledTextFields = true;
-            txtFormNom.setText(f.getNom());
+            txtNomForm.setText(f.getNom());
             disabledTextFields = false;
             RefreshValues(f);
         }
@@ -658,11 +658,11 @@ public class Form extends javax.swing.JFrame {
 
     private void tblFormECFValueChanged(javax.swing.event.ListSelectionEvent evt) {
         ResetFormBtn();
-        int index = tblFormECF.getSelectedRow();
+        int index = tblEcfForm.getSelectedRow();
         if (index > -1) {
             ECF ecf = tblECFModel.getEcf(index);
             disabledTextFields = true;
-            txtNomEcf.setText(ecf.getNom());
+            txtEcfNomForm.setText(ecf.getNom());
             disabledTextFields = false;
         }
     }
@@ -671,9 +671,9 @@ public class Form extends javax.swing.JFrame {
         if (disabledTextFields) {
             return;
         }
-        int index = tblFormECF.getSelectedRow();
+        int index = tblEcfForm.getSelectedRow();
         if (index > -1) {
-            tblFormECF.clearSelection();
+            tblEcfForm.clearSelection();
         } else {
             ResetFormBtn();
         }
@@ -683,9 +683,9 @@ public class Form extends javax.swing.JFrame {
         ResetFormBtn();
     }
 
-    private void btnFormAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormAddActionPerformed
+    private void btnAddFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFormActionPerformed
         int index = lstForm.getSelectedIndex();
-        if (txtFormNom.getText().isEmpty()) {
+        if (txtNomForm.getText().isEmpty()) {
             txtFooter.setText("Le champ texte est vide");
             return;
         }
@@ -693,7 +693,7 @@ public class Form extends javax.swing.JFrame {
             txtFooter.setText("Une formation est selectionnée");
             return;
         }
-        Formation f = new Formation(0, txtFormNom.getText());
+        Formation f = new Formation(0, txtNomForm.getText());
         try {
             f = FormationDAO.Instance().insert(f);
             lstFormModel.add(f);
@@ -702,9 +702,9 @@ public class Form extends javax.swing.JFrame {
         } catch (AlreadyExistsException e) {
             txtFooter.setText("La formation semble déjà exister");
         }
-    }//GEN-LAST:event_btnFormAddActionPerformed
+    }//GEN-LAST:event_btnAddFormActionPerformed
 
-    private void btnFormSupprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormSupprActionPerformed
+    private void btnSupprFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSupprFormActionPerformed
         int index = lstForm.getSelectedIndex();
         if (index == -1) {
             txtFooter.setText("Aucune formation n'est selectionnée");
@@ -717,11 +717,11 @@ public class Form extends javax.swing.JFrame {
         } else {
             txtFooter.setText("La formation n'a pas pu être supprimée");
         }
-    }//GEN-LAST:event_btnFormSupprActionPerformed
+    }//GEN-LAST:event_btnSupprFormActionPerformed
 
-    private void btnFormStagSupprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormStagSupprActionPerformed
+    private void btnStagSupprFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStagSupprFormActionPerformed
         int indexForm = lstForm.getSelectedIndex();
-        int indexStag = tblFormStag.getSelectedRow();
+        int indexStag = tblStagForm.getSelectedRow();
         if (indexForm == -1) {
             txtFooter.setText("Aucune formation n'est selectionnée");
             return;
@@ -737,10 +737,10 @@ public class Form extends javax.swing.JFrame {
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé de la formation");
         }
-    }//GEN-LAST:event_btnFormStagSupprActionPerformed
+    }//GEN-LAST:event_btnStagSupprFormActionPerformed
 
-    private void btnFormECFSupprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormECFSupprActionPerformed
-        int indexEcf = tblFormECF.getSelectedRow();
+    private void btnEcfSupprFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEcfSupprFormActionPerformed
+        int indexEcf = tblEcfForm.getSelectedRow();
         if (indexEcf == -1) {
             txtFooter.setText("Aucun ECF n'est selectionné");
             return;
@@ -751,7 +751,7 @@ public class Form extends javax.swing.JFrame {
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé de la formation");
         }
-    }//GEN-LAST:event_btnFormECFSupprActionPerformed
+    }//GEN-LAST:event_btnEcfSupprFormActionPerformed
 
     private void btnAddStagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStagActionPerformed
         int index = tblStag.getSelectedRow();
@@ -800,7 +800,7 @@ public class Form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSupprStagActionPerformed
 
-    private void btnFormStagAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormStagAddActionPerformed
+    private void btnStagAddFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStagAddFormActionPerformed
         int indexForm = lstForm.getSelectedIndex();
         if (indexForm == -1) {
             txtFooter.setText("Aucune formation n'est selectionnée");
@@ -809,15 +809,15 @@ public class Form extends javax.swing.JFrame {
         Formation f = lstFormModel.getFormation(indexForm);
         AddStagToForm addStag = new AddStagToForm(this, true, f, tblStagFormModel);
         addStag.setVisible(true);
-    }//GEN-LAST:event_btnFormStagAddActionPerformed
+    }//GEN-LAST:event_btnStagAddFormActionPerformed
 
-    private void btnFormECFResActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFormECFResActionPerformed
+    private void btnEcfResFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEcfResFormActionPerformed
         int indexForm = lstForm.getSelectedIndex();
         if (indexForm == -1) {
             txtFooter.setText("Aucune formation n'est selectionnée");
             return;
         }
-        int indexEcf = tblFormECF.getSelectedRow();
+        int indexEcf = tblEcfForm.getSelectedRow();
         if (indexEcf == -1) {
             txtFooter.setText("Aucun ECF n'est selectionné");
             return;
@@ -827,45 +827,45 @@ public class Form extends javax.swing.JFrame {
         List<Stagiaire> stagiaires = f.getStagiaires();
         AddResultatToECF addRes = new AddResultatToECF(this, true, stagiaires, ecf);
         addRes.setVisible(true);
-    }//GEN-LAST:event_btnFormECFResActionPerformed
+    }//GEN-LAST:event_btnEcfResFormActionPerformed
 
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();
         if (index > -1) {
-            txtNomEcf.setEnabled(true);
-            if (txtNomEcf.getText().isEmpty() || tblFormECF.getSelectedRow() > -1) {
-                btnAddEcf.setEnabled(false);
+            txtEcfNomForm.setEnabled(true);
+            if (txtEcfNomForm.getText().isEmpty() || tblEcfForm.getSelectedRow() > -1) {
+                btnEcfAddForm.setEnabled(false);
             } else {
-                btnAddEcf.setEnabled(true);
+                btnEcfAddForm.setEnabled(true);
             }
-            btnFormStagAdd.setEnabled(true);
-            if (tblFormECF.getSelectedRow() > -1) {
-                btnFormECFSuppr.setEnabled(true);
-                btnFormECFRes.setEnabled(true);
+            btnStagAddForm.setEnabled(true);
+            if (tblEcfForm.getSelectedRow() > -1) {
+                btnEcfSupprForm.setEnabled(true);
+                btnEcfResForm.setEnabled(true);
             } else {
-                btnFormECFSuppr.setEnabled(false);
-                btnFormECFRes.setEnabled(false);
+                btnEcfSupprForm.setEnabled(false);
+                btnEcfResForm.setEnabled(false);
             }
-            if (tblFormStag.getSelectedRow() > -1) {
-                btnFormStagSuppr.setEnabled(true);
+            if (tblStagForm.getSelectedRow() > -1) {
+                btnStagSupprForm.setEnabled(true);
             } else {
-                btnFormStagSuppr.setEnabled(false);
+                btnStagSupprForm.setEnabled(false);
             }
-            btnFormAdd.setEnabled(false);
-            btnFormSuppr.setEnabled(true);
+            btnAddForm.setEnabled(false);
+            btnSupprForm.setEnabled(true);
         } else {
-            if (txtFormNom.getText().isEmpty()) {
-                btnFormAdd.setEnabled(false);
+            if (txtNomForm.getText().isEmpty()) {
+                btnAddForm.setEnabled(false);
             } else {
-                btnFormAdd.setEnabled(true);
+                btnAddForm.setEnabled(true);
             }
-            btnFormSuppr.setEnabled(false);
-            txtNomEcf.setEnabled(false);
-            btnAddEcf.setEnabled(false);
-            btnFormStagAdd.setEnabled(false);
-            btnFormECFSuppr.setEnabled(false);
-            btnFormECFRes.setEnabled(false);
-            btnFormStagSuppr.setEnabled(false);
+            btnSupprForm.setEnabled(false);
+            txtEcfNomForm.setEnabled(false);
+            btnEcfAddForm.setEnabled(false);
+            btnStagAddForm.setEnabled(false);
+            btnEcfSupprForm.setEnabled(false);
+            btnEcfResForm.setEnabled(false);
+            btnStagSupprForm.setEnabled(false);
         }
     }
 
@@ -880,14 +880,14 @@ public class Form extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddEcf;
+    private javax.swing.JButton btnAddForm;
     private javax.swing.JButton btnAddStag;
-    private javax.swing.JButton btnFormAdd;
-    private javax.swing.JButton btnFormECFRes;
-    private javax.swing.JButton btnFormECFSuppr;
-    private javax.swing.JButton btnFormStagAdd;
-    private javax.swing.JButton btnFormStagSuppr;
-    private javax.swing.JButton btnFormSuppr;
+    private javax.swing.JButton btnEcfAddForm;
+    private javax.swing.JButton btnEcfResForm;
+    private javax.swing.JButton btnEcfSupprForm;
+    private javax.swing.JButton btnStagAddForm;
+    private javax.swing.JButton btnStagSupprForm;
+    private javax.swing.JButton btnSupprForm;
     private javax.swing.JButton btnSupprStag;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JMenuItem itmActualiser;
@@ -895,47 +895,47 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JMenuItem itmQuitter;
     private javax.swing.JPopupMenu.Separator itmSep;
     private javax.swing.JLabel lblCodeStag;
-    private javax.swing.JLabel lblFormNom;
-    private javax.swing.JLabel lblNomEcf;
+    private javax.swing.JLabel lblEcfNomForm;
+    private javax.swing.JLabel lblNomForm;
     private javax.swing.JLabel lblNomStag;
     private javax.swing.JLabel lblPreStag;
     private javax.swing.JList<String> lstForm;
     private javax.swing.JMenu mnuAide;
     private javax.swing.JMenuBar mnuBar;
     private javax.swing.JMenu mnuFichier;
-    private javax.swing.JPanel panAddEcf;
+    private javax.swing.JPanel panBtnForm;
     private javax.swing.JPanel panBtnStag;
     private javax.swing.JPanel panCodeNomStag;
     private javax.swing.JPanel panCodeStag;
+    private javax.swing.JPanel panEcfAddForm;
+    private javax.swing.JPanel panEcfBtnForm;
+    private javax.swing.JPanel panEcfForm;
     private javax.swing.JPanel panFooter;
     private javax.swing.JPanel panForm;
-    private javax.swing.JPanel panFormBtn;
-    private javax.swing.JPanel panFormECF;
-    private javax.swing.JPanel panFormECFBtn;
-    private javax.swing.JPanel panFormNom;
-    private javax.swing.JPanel panFormStag;
-    private javax.swing.JPanel panFormStagBtn;
     private javax.swing.JPanel panInfoForm;
     private javax.swing.JPanel panInfoStag;
-    private javax.swing.JPanel panList;
+    private javax.swing.JPanel panListForm;
     private javax.swing.JPanel panListStag;
     private javax.swing.JPanel panLstForm;
+    private javax.swing.JPanel panNomForm;
     private javax.swing.JPanel panNomStag;
     private javax.swing.JPanel panPreBtnStag;
     private javax.swing.JPanel panPreStag;
     private javax.swing.JPanel panStag;
-    private javax.swing.JScrollPane sclFormECF;
-    private javax.swing.JScrollPane sclFormStag;
+    private javax.swing.JPanel panStagBtnForm;
+    private javax.swing.JPanel panStagForm;
+    private javax.swing.JScrollPane sclEcfForm;
     private javax.swing.JScrollPane sclStag;
+    private javax.swing.JScrollPane sclStagForm;
     private javax.swing.JScrollPane scrlForm;
-    private javax.swing.JTable tblFormECF;
-    private javax.swing.JTable tblFormStag;
+    private javax.swing.JTable tblEcfForm;
     private javax.swing.JTable tblStag;
+    private javax.swing.JTable tblStagForm;
     private javax.swing.JTabbedPane tbpContent;
     private javax.swing.JTextField txtCodeStag;
+    private javax.swing.JTextField txtEcfNomForm;
     private javax.swing.JTextField txtFooter;
-    private javax.swing.JTextField txtFormNom;
-    private javax.swing.JTextField txtNomEcf;
+    private javax.swing.JTextField txtNomForm;
     private javax.swing.JTextField txtNomStag;
     private javax.swing.JTextField txtPreStag;
     // End of variables declaration//GEN-END:variables

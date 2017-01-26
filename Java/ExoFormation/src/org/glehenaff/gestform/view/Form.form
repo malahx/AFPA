@@ -336,7 +336,7 @@
             <Property name="verticalGap" type="int" value="5"/>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="panList">
+            <Container class="javax.swing.JPanel" name="panListForm">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -421,7 +421,7 @@
                 <Property name="axis" type="int" value="3"/>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="panFormNom">
+                <Container class="javax.swing.JPanel" name="panNomForm">
                   <Properties>
                     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[99999999, 23]"/>
@@ -433,19 +433,19 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lblFormNom">
+                    <Component class="javax.swing.JLabel" name="lblNomForm">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Nom :"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtFormNom">
+                    <Component class="javax.swing.JTextField" name="txtNomForm">
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFormNomActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNomFormActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="panFormStag">
+                <Container class="javax.swing.JPanel" name="panStagForm">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -459,7 +459,7 @@
                     <Property name="axis" type="int" value="3"/>
                   </Layout>
                   <SubComponents>
-                    <Container class="javax.swing.JScrollPane" name="sclFormStag">
+                    <Container class="javax.swing.JScrollPane" name="sclStagForm">
                       <Properties>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[500, 200]"/>
@@ -474,7 +474,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="tblFormStag">
+                        <Component class="javax.swing.JTable" name="tblStagForm">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                               <Connection code="tblStagFormModel" type="code"/>
@@ -489,11 +489,11 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Container class="javax.swing.JPanel" name="panFormStagBtn">
+                    <Container class="javax.swing.JPanel" name="panStagBtnForm">
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JButton" name="btnFormStagSuppr">
+                        <Component class="javax.swing.JButton" name="btnStagSupprForm">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="de" green="de" red="f2" type="rgb"/>
@@ -505,10 +505,10 @@
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFormStagSupprActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStagSupprFormActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="btnFormStagAdd">
+                        <Component class="javax.swing.JButton" name="btnStagAddForm">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="d8" green="f0" red="df" type="rgb"/>
@@ -520,14 +520,14 @@
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFormStagAddActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStagAddFormActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
                     </Container>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="panFormECF">
+                <Container class="javax.swing.JPanel" name="panEcfForm">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -544,7 +544,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JScrollPane" name="sclFormECF">
+                    <Container class="javax.swing.JScrollPane" name="sclEcfForm">
                       <Properties>
                         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <SerializedValue value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,0,0,0,4,-1,-10"/>
@@ -567,7 +567,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="tblFormECF">
+                        <Component class="javax.swing.JTable" name="tblEcfForm">
                           <Properties>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                               <Connection code="tblECFModel" type="code"/>
@@ -582,7 +582,7 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Container class="javax.swing.JPanel" name="panFormECFBtn">
+                    <Container class="javax.swing.JPanel" name="panEcfBtnForm">
                       <Properties>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                           <Dimension value="[500, 40]"/>
@@ -601,7 +601,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JButton" name="btnFormECFSuppr">
+                        <Component class="javax.swing.JButton" name="btnEcfSupprForm">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="de" green="de" red="f2" type="rgb"/>
@@ -613,10 +613,10 @@
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFormECFSupprActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEcfSupprFormActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="btnFormECFRes">
+                        <Component class="javax.swing.JButton" name="btnEcfResForm">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="f7" green="ed" red="d9" type="rgb"/>
@@ -628,12 +628,12 @@
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFormECFResActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEcfResFormActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Container class="javax.swing.JPanel" name="panAddEcf">
+                    <Container class="javax.swing.JPanel" name="panEcfAddForm">
                       <Constraints>
                         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
                           <BorderConstraints direction="South"/>
@@ -642,14 +642,14 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JLabel" name="lblNomEcf">
+                        <Component class="javax.swing.JLabel" name="lblEcfNomForm">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Nom :"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtNomEcf">
+                        <Component class="javax.swing.JTextField" name="txtEcfNomForm">
                         </Component>
-                        <Component class="javax.swing.JButton" name="btnAddEcf">
+                        <Component class="javax.swing.JButton" name="btnEcfAddForm">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="d8" green="f0" red="df" type="rgb"/>
@@ -657,22 +657,22 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="3d" green="76" red="45" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Ajouter ECF"/>
+                            <Property name="text" type="java.lang.String" value="Ajouter l&apos;ECF"/>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddEcfActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEcfAddFormActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
                     </Container>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="panFormBtn">
+                <Container class="javax.swing.JPanel" name="panBtnForm">
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JButton" name="btnFormSuppr">
+                    <Component class="javax.swing.JButton" name="btnSupprForm">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="de" green="de" red="f2" type="rgb"/>
@@ -684,10 +684,10 @@
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFormSupprActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSupprFormActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="btnFormAdd">
+                    <Component class="javax.swing.JButton" name="btnAddForm">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="d8" green="f0" red="df" type="rgb"/>
@@ -695,11 +695,11 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="3d" green="76" red="45" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Ajouter formation"/>
+                        <Property name="text" type="java.lang.String" value="Ajouter une formation"/>
                         <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFormAddActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddFormActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
