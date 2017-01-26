@@ -190,4 +190,9 @@ public class StagiaireDAO extends DAO<Stagiaire> {
         }
         return true;
     }   
+
+    @Override
+    public boolean update(Stagiaire o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

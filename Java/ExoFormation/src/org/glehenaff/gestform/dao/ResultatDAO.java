@@ -23,15 +23,15 @@ import org.glehenaff.gestform.model.Stagiaire;
  * @author gwenole
  */
 public class ResultatDAO extends DAO<Resultat> {
-	
-	private static ResultatDAO instance = null;
-	
-	public static ResultatDAO Instance() {
-		if (instance == null) {
-			instance = new ResultatDAO();
-		}
-		return instance;
-	}
+
+    private static ResultatDAO instance = null;
+
+    public static ResultatDAO Instance() {
+        if (instance == null) {
+            instance = new ResultatDAO();
+        }
+        return instance;
+    }
 
     @Override
     public List<Resultat> findAll() {
@@ -73,27 +73,26 @@ public class ResultatDAO extends DAO<Resultat> {
         String query = "INSERT INTO `resultat` (`ecf_id`, `stagiaire_code`, `obtenu`) VALUES (?, ?, ?)";
 
         try {
-            int id = -1;
             conn = getConnection();
             if (conn == null) {
                 return null;
             }
-            
+
             prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             prepare.setInt(1, res.getECF().getId());
             prepare.setString(2, res.getStagiaire().getCode());
-            prepare.setBoolean(2, res.isObtenu());
+            prepare.setBoolean(3, res.isObtenu());
 
             int row = prepare.executeUpdate();
 
             if (row == 0) {
-                throw new SQLException("Erreur à l'insertion de l'ECF.");
+                throw new SQLException("Erreur à l'insertion du résultat.");
             }
 
         } catch (SQLException e) {
-        	if (e.getErrorCode() == 1062) {
-        		throw new AlreadyExistsException(e);
-        	}
+            if (e.getErrorCode() == 1062) {
+                throw new AlreadyExistsException(e);
+            }
             throw new RuntimeException(e);
         } finally {
             try {
@@ -116,8 +115,84 @@ public class ResultatDAO extends DAO<Resultat> {
     }
 
     @Override
-    public boolean delete(Resultat o) throws AlreadyExistsException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean delete(Resultat resultat) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "DELETE FROM resultat WHERE ecf_id = ? AND stagiaire_code LIKE ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setInt(1, resultat.getECF().getId());
+            prepare.setString(2, resultat.getStagiaire().getCode());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à la suppression du résultat.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
     }
-    
+
+    @Override
+    public boolean update(Resultat res) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "UPDATE resultat SET obtenu = ? WHERE ecf_id = ? AND stagiaire_code LIKE ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setBoolean(1, res.isObtenu());
+            prepare.setInt(2, res.getECF().getId());
+            prepare.setString(3, res.getStagiaire().getCode());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à l'update du résultat.");
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (prepare != null) {
+                    prepare.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return true;
+    }
+
 }

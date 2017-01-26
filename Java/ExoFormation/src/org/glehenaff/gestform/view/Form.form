@@ -501,7 +501,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="44" green="44" red="a9" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Supprimer stagiaire"/>
+                            <Property name="text" type="java.lang.String" value="Supprimer le stagiaire"/>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
@@ -516,7 +516,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="3d" green="76" red="45" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Ajouter stagiaire"/>
+                            <Property name="text" type="java.lang.String" value="Ajouter le stagiaire"/>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
@@ -609,7 +609,7 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="44" green="44" red="a9" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="Supprimer ECF"/>
+                            <Property name="text" type="java.lang.String" value="Supprimer l&apos;ECF"/>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
@@ -624,9 +624,12 @@
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="8f" green="70" red="31" type="rgb"/>
                             </Property>
-                            <Property name="text" type="java.lang.String" value="R&#xe9;sultat"/>
+                            <Property name="text" type="java.lang.String" value="R&#xe9;sultats"/>
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFormECFResActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>

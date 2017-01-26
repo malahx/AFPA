@@ -151,6 +151,7 @@ public class FormationDAO extends DAO<Formation> {
         return true;
     }
 
+    @Override
     public boolean delete(Formation formation) {
         PreparedStatement prepare = null;
         Connection conn = null;
@@ -226,5 +227,10 @@ public class FormationDAO extends DAO<Formation> {
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean update(Formation o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -151,4 +151,9 @@ public class EcfDAO extends DAO<ECF> {
         return true;
     }
 
+    @Override
+    public boolean update(ECF o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

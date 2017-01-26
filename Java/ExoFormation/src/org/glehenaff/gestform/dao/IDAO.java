@@ -13,8 +13,14 @@ import org.glehenaff.gestform.model.Formation;
  * @author gwenole
  */
 public interface IDAO<T> {
+
     public List<T> findAll();
+
     public List<T> findBy(Formation formation);
+
     public T insert(T o) throws AlreadyExistsException;
-    public boolean delete(T o) throws AlreadyExistsException;
+
+    public boolean delete(T o);
+
+    public boolean update(T o);
 }

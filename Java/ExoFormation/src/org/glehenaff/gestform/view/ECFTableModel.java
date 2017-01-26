@@ -48,6 +48,11 @@ public class ECFTableModel extends AbstractTableModel {
     }
 
     @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return getValueAt(0, columnIndex).getClass();
+    }
+
+    @Override
     public String getColumnName(int column) {
         return entetes[column];
     }

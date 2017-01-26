@@ -8,7 +8,6 @@ package org.glehenaff.gestform.view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
 
 /**
@@ -50,6 +49,11 @@ public class StagTableModel extends AbstractTableModel {
 
     public Stagiaire getStagiaire(int rowIndex) {
         return stagiaires.get(rowIndex);
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        return getValueAt(0, columnIndex).getClass();
     }
 
     @Override
