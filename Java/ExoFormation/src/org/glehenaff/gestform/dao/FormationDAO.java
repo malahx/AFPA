@@ -47,6 +47,7 @@ public class FormationDAO extends DAO<Formation> {
             }
             result.close();
             state.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -62,6 +63,7 @@ public class FormationDAO extends DAO<Formation> {
     public Formation insert(Formation o) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
+        ResultSet generatedKeys = null;
 
         Formation formation = (Formation) o;
         String query = "INSERT INTO `formation` (`id`, `nom`) VALUES (0, ?)";
@@ -78,7 +80,7 @@ public class FormationDAO extends DAO<Formation> {
 
             int row = prepare.executeUpdate();
 
-            ResultSet generatedKeys = prepare.getGeneratedKeys();
+            generatedKeys = prepare.getGeneratedKeys();
             if (generatedKeys.next()) {
                 id = generatedKeys.getInt(1);
             }
@@ -95,16 +97,7 @@ public class FormationDAO extends DAO<Formation> {
             }
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare, generatedKeys);
         }
         return formation;
     }
@@ -137,16 +130,7 @@ public class FormationDAO extends DAO<Formation> {
             }
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare);
         }
         return true;
     }
@@ -176,16 +160,7 @@ public class FormationDAO extends DAO<Formation> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare);
         }
         return true;
     }
@@ -215,16 +190,7 @@ public class FormationDAO extends DAO<Formation> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare);
         }
         return true;
     }

@@ -7,6 +7,8 @@ package org.glehenaff.gestform.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.management.RuntimeErrorException;
@@ -56,5 +58,47 @@ public abstract class DAO<T> implements IDAO<T> {
             }
         }
         return true;
+    }
+
+    protected void close(Connection connection, PreparedStatement[] prepares, ResultSet resultSet) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            for (PreparedStatement p : prepares) {
+                if (p != null) {
+                    p.close();
+                }
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void close(Connection connection, PreparedStatement prepare, ResultSet resultSet) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        close(connection, prepare);
+    }
+
+    protected void close(Connection connection, PreparedStatement prepare) {
+        try {
+            if (prepare != null) {
+                prepare.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -47,8 +47,9 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             }
             result.close();
             state.close();
+            conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return stagiaires;
     }
@@ -74,17 +75,19 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             }
             result.close();
             prepare.close();
+            conn.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return stagiaires;
     }
 
     @Override
-    public Stagiaire insert(Stagiaire stagiaire) throws AlreadyExistsException { // o = Stagiaire
+    public Stagiaire insert(Stagiaire stagiaire) throws AlreadyExistsException {
         PreparedStatement prepareP = null;
         PreparedStatement prepareS = null;
         Connection conn = null;
+        ResultSet generatedKeys = null;
 
         String queryP = "INSERT INTO `personne` (`id`, `nom`, `prenom`) VALUES (0, ?, ?)";
         String queryS = "INSERT INTO `stagiaire` (`code`, `personne_id`) VALUES (?, ?)";
@@ -103,7 +106,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
 
             int row = prepareP.executeUpdate();
 
-            ResultSet generatedKeys = prepareP.getGeneratedKeys();
+            generatedKeys = prepareP.getGeneratedKeys();
             if (generatedKeys.next()) {
                 id = generatedKeys.getInt(1);
             }
@@ -119,7 +122,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
 
             conn.commit();
             conn.setAutoCommit(true);
-
+            
             stagiaire.setId(id);
 
         } catch (SQLException e) {
@@ -135,19 +138,8 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             }
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepareP != null) {
-                    prepareP.close();
-                }
-                if (prepareS != null) {
-                    prepareP.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            PreparedStatement[] prepares = {prepareP, prepareS};
+            close(conn, prepares, generatedKeys);
         }
         return stagiaire;
     }
@@ -177,16 +169,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare);
         }
         return true;
     }   

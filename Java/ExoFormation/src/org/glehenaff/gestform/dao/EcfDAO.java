@@ -55,6 +55,7 @@ public class EcfDAO extends DAO<ECF> {
             }
             result.close();
             prepare.close();
+            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -65,7 +66,8 @@ public class EcfDAO extends DAO<ECF> {
     public ECF insert(ECF ecf) throws AlreadyExistsException {
         PreparedStatement prepare = null;
         Connection conn = null;
-
+        ResultSet generatedKeys = null;
+        
         String query = "INSERT INTO `ecf` (`id`, `nom`, `formation_id`) VALUES (0, ?, ?)";
 
         try {
@@ -81,7 +83,7 @@ public class EcfDAO extends DAO<ECF> {
 
             int row = prepare.executeUpdate();
 
-            ResultSet generatedKeys = prepare.getGeneratedKeys();
+            generatedKeys = prepare.getGeneratedKeys();
             if (generatedKeys.next()) {
                 id = generatedKeys.getInt(1);
             }
@@ -98,16 +100,7 @@ public class EcfDAO extends DAO<ECF> {
             }
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare, generatedKeys);
         }
         return ecf;
     }
@@ -137,16 +130,7 @@ public class EcfDAO extends DAO<ECF> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare);
         }
         return true;
     }

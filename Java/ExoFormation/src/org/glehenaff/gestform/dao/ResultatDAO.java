@@ -59,8 +59,9 @@ public class ResultatDAO extends DAO<Resultat> {
             }
             result.close();
             prepare.close();
+            conn.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return res;
     }
@@ -95,16 +96,7 @@ public class ResultatDAO extends DAO<Resultat> {
             }
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare);
         }
         return res;
     }
@@ -140,16 +132,7 @@ public class ResultatDAO extends DAO<Resultat> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare);
         }
         return true;
     }
@@ -181,16 +164,7 @@ public class ResultatDAO extends DAO<Resultat> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (prepare != null) {
-                    prepare.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            close(conn, prepare);
         }
         return true;
     }
