@@ -469,7 +469,7 @@ public class Form extends javax.swing.JFrame {
 
         btnSupprForm.setBackground(new java.awt.Color(242, 222, 222));
         btnSupprForm.setForeground(new java.awt.Color(169, 68, 68));
-        btnSupprForm.setText("Supprimer formation");
+        btnSupprForm.setText("Supprimer la formation");
         btnSupprForm.setEnabled(false);
         btnSupprForm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -553,6 +553,9 @@ public class Form extends javax.swing.JFrame {
     }
 
     private void tblStagValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
         ResetStagBtn();
         int index = tblStag.getSelectedRow();
         if (index > -1) {
@@ -632,6 +635,9 @@ public class Form extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomFormActionPerformed
 
     private void lstFormValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstFormValueChanged
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
         ResetFormBtn();
         int index = lstForm.getSelectedIndex();
         tblStagFormModel.reset();
@@ -657,6 +663,9 @@ public class Form extends javax.swing.JFrame {
     }
 
     private void tblFormECFValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
         ResetFormBtn();
         int index = tblEcfForm.getSelectedRow();
         if (index > -1) {
@@ -680,6 +689,9 @@ public class Form extends javax.swing.JFrame {
     }
 
     private void tblFormStagValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        if (evt.getValueIsAdjusting()) {
+            return;
+        }
         ResetFormBtn();
     }
 
