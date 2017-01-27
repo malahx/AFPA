@@ -11,10 +11,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.glehenaff.gestform.GestForm;
-import org.glehenaff.gestform.dao.FormationDAO;
-import org.glehenaff.gestform.dao.AlreadyExistsException;
-import org.glehenaff.gestform.dao.EcfDAO;
-import org.glehenaff.gestform.dao.StagiaireDAO;
+import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
@@ -30,7 +27,7 @@ public class Form extends javax.swing.JFrame {
     private final StagTableModel tblStagModel;
     private final StagTableModel tblStagFormModel;
     private final ECFTableModel tblECFModel;
-    
+
     // Désactiver les champs textes lorsque l'on les modifie.
     private boolean disabledTextFields = false;
 
@@ -43,7 +40,7 @@ public class Form extends javax.swing.JFrame {
         tblStagModel = new StagTableModel(GestForm.getStagiaires());
         tblStagFormModel = new StagTableModel();
         tblECFModel = new ECFTableModel();
-        
+
         // Initialisation de la fenètre
         initComponents();
         super.setLocationRelativeTo(null);
@@ -633,14 +630,15 @@ public class Form extends javax.swing.JFrame {
         }
         Formation f = lstFormModel.getFormation(indexForm);
         ECF ecf = new ECF(0, f, txtEcfNomForm.getText());
-        try {
-            ecf = EcfDAO.Instance().insert(ecf);
+        ecf = Utils.addToDB(ecf);
+        if (ecf != null) {
             tblECFModel.add(ecf);
             tblEcfForm.setRowSelectionInterval(tblECFModel.getRowCount() - 1, tblECFModel.getRowCount() - 1);
             ResetFormBtn();
-        } catch (AlreadyExistsException e) {
+        } else {
             txtFooter.setText("L'ECF semble déjà exister");
         }
+
     }//GEN-LAST:event_btnEcfAddFormActionPerformed
 
     private void txtNomFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomFormActionPerformed
@@ -728,12 +726,12 @@ public class Form extends javax.swing.JFrame {
             return;
         }
         Formation f = new Formation(0, txtNomForm.getText());
-        try {
-            f = FormationDAO.Instance().insert(f);
+        f = Utils.addToDB(f);
+        if (f != null) {
             lstFormModel.add(f);
             lstForm.setSelectedIndex(lstFormModel.getSize() - 1);
             ResetFormBtn();
-        } catch (AlreadyExistsException e) {
+        } else {
             txtFooter.setText("La formation semble déjà exister");
         }
     }//GEN-LAST:event_btnAddFormActionPerformed
@@ -745,7 +743,7 @@ public class Form extends javax.swing.JFrame {
             return;
         }
         Formation f = lstFormModel.getFormation(index);
-        if (FormationDAO.Instance().delete(f)) {
+        if (Utils.delToDB(f)) {
             lstFormModel.remove(f);
             lstForm.clearSelection();
         } else {
@@ -766,7 +764,7 @@ public class Form extends javax.swing.JFrame {
         }
         Formation f = lstFormModel.getFormation(indexForm);
         Stagiaire s = tblStagFormModel.getStagiaire(indexStag);
-        if (FormationDAO.Instance().delete(f, s)) {
+        if (Utils.delToDB(f, s)) {
             tblStagFormModel.remove(s);
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé de la formation");
@@ -780,7 +778,7 @@ public class Form extends javax.swing.JFrame {
             return;
         }
         ECF ecf = tblECFModel.getEcf(indexEcf);
-        if (EcfDAO.Instance().delete(ecf)) {
+        if (Utils.delToDB(ecf)) {
             tblECFModel.remove(ecf);
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé de la formation");
@@ -809,12 +807,12 @@ public class Form extends javax.swing.JFrame {
         String prenom = txtPreStag.getText();
         String code = txtCodeStag.getText();
         Stagiaire s = new Stagiaire(0, nom, prenom, code);
-        try {
-            s = StagiaireDAO.Instance().insert(s);
+        s = Utils.addToDB(s);
+        if (s != null) {
             tblStagModel.add(s);
             tblStag.setRowSelectionInterval(tblStagModel.getRowCount() - 1, tblStagModel.getRowCount() - 1);
             ResetFormBtn();
-        } catch (AlreadyExistsException e) {
+        } else {
             txtFooter.setText("La formation semble déjà exister");
         }
     }//GEN-LAST:event_btnAddStagActionPerformed
@@ -826,7 +824,7 @@ public class Form extends javax.swing.JFrame {
             return;
         }
         Stagiaire s = tblStagModel.getStagiaire(index);
-        if (StagiaireDAO.Instance().delete(s)) {
+        if (Utils.delToDB(s)) {
             tblStagModel.remove(s);
             tblStag.clearSelection();
         } else {

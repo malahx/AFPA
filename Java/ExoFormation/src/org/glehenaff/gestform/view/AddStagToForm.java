@@ -7,8 +7,7 @@ package org.glehenaff.gestform.view;
 
 import java.util.List;
 import org.glehenaff.gestform.GestForm;
-import org.glehenaff.gestform.dao.AlreadyExistsException;
-import org.glehenaff.gestform.dao.FormationDAO;
+import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
 
@@ -29,14 +28,16 @@ public class AddStagToForm extends javax.swing.JDialog {
 
     /**
      * Creates new form AddStagToForm
+     *
      * @param parent fenètre parente
      * @param modal active l'option en modal
      * @param formation la formation à modifier
-     * @param formStagTableModel Modèle du tableau de stagiaire de la formation, pourrait être emplacé par un parent.getStableTableModel()
+     * @param formStagTableModel Modèle du tableau de stagiaire de la formation,
+     * pourrait être emplacé par un parent.getStableTableModel()
      */
     public AddStagToForm(java.awt.Frame parent, boolean modal, Formation formation, StagTableModel formStagTableModel) {
         super(parent, modal);
-        this.parent = (Form)parent;
+        this.parent = (Form) parent;
         this.formation = formation;
         this.formStagTableModel = formStagTableModel;
         List<Stagiaire> stagiaires = GestForm.getDispoStagiaires();
@@ -99,16 +100,14 @@ public class AddStagToForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addStagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStagActionPerformed
-        try {
-            for (int i : tblStag.getSelectedRows()) {
-                Stagiaire s = tblStagModel.getStagiaire(i);
-                FormationDAO.Instance().insert(formation, s);
+        for (int i : tblStag.getSelectedRows()) {
+            Stagiaire s = tblStagModel.getStagiaire(i);
+            if (Utils.addToDB(formation, s)) {
                 tblStagModel.remove(s);
                 formStagTableModel.add(s);
             }
-        } catch (AlreadyExistsException e) {
-            throw new RuntimeException(e);
         }
+
     }//GEN-LAST:event_addStagActionPerformed
 
     private void fermerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerActionPerformed

@@ -87,4 +87,29 @@ public class Utils {
             throw new RuntimeException(e);
         }
     }
+
+    // Supprimer un stagiaire à la base de donnée
+    public static boolean delToDB(Stagiaire stagiaire) {
+        return StagiaireDAO.Instance().delete(stagiaire);
+    }
+
+    // Supprimer une formation à la base de donnée
+    public static boolean delToDB(Formation formation) {
+        return FormationDAO.Instance().delete(formation);
+    }
+
+    // Supprimer un stagiaire à une formation à la base de donnée
+    public static boolean delToDB(Formation formation, Stagiaire stagiaire) {
+        return FormationDAO.Instance().delete(formation, stagiaire);
+    }
+
+    // Supprimer un ecf à la base de donnée
+    public static boolean delToDB(ECF ecf) {
+        return EcfDAO.Instance().delete(ecf);
+    }
+
+    // Supprimer un résultat à la base de donnée
+    public static boolean delToDB(Resultat res) {
+        return ResultatDAO.Instance().delete(res);
+    }
 }
