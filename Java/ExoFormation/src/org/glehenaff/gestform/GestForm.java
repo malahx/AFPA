@@ -130,14 +130,17 @@ public class GestForm {
         listStagiaires();
     }
 
+    // Récupérer les formations
     public static List<Formation> getFormations() {
         return formations;
     }
 
+    // Récupérer les stagiaires
     public static List<Stagiaire> getStagiaires() {
         return stagiaires;
     }
 
+    // Réactualiser les données
     public static void RefreshData() {
         formations = new ArrayList<>();
         stagiaires = new ArrayList<>();

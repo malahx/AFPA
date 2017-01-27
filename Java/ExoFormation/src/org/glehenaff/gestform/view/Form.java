@@ -25,120 +25,28 @@ import org.glehenaff.gestform.model.Stagiaire;
  */
 public class Form extends javax.swing.JFrame {
 
-    private FormListModel lstFormModel;
-    private StagTableModel tblStagModel;
-    private StagTableModel tblStagFormModel;
-    private ECFTableModel tblECFModel;
+    // Modèle des listes et tableaux, pourrait être remplacé par lst.getModel()
+    private final FormListModel lstFormModel;
+    private final StagTableModel tblStagModel;
+    private final StagTableModel tblStagFormModel;
+    private final ECFTableModel tblECFModel;
+    
+    // Désactiver les champs textes lorsque l'on les modifie.
     private boolean disabledTextFields = false;
 
     /**
      * Creates new form Form
      */
     public Form() {
+        // Initialisation des variables modèles
         lstFormModel = new FormListModel(GestForm.getFormations());
         tblStagModel = new StagTableModel(GestForm.getStagiaires());
         tblStagFormModel = new StagTableModel();
         tblECFModel = new ECFTableModel();
+        
+        // Initialisation de la fenètre
         initComponents();
-        txtNomForm.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                txtNomFormActionPerformed(null);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                txtNomFormActionPerformed(null);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                txtNomFormActionPerformed(null);
-            }
-        });
-        txtPreStag.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-        });
-        txtNomStag.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-        });
-        txtCodeStag.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                txtStagActionPerformed(null);
-            }
-        });
-        txtEcfNomForm.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                txtNomEcfActionPerformed(null);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                txtNomEcfActionPerformed(null);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                txtNomEcfActionPerformed(null);
-            }
-        });
-        tblEcfForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent evt) {
-                tblFormECFValueChanged(evt);
-            }
-        });
-        tblStagForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent evt) {
-                tblFormStagValueChanged(evt);
-            }
-        });
-        tblStag.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent evt) {
-                tblStagValueChanged(evt);
-            }
-        });
-        setLocationRelativeTo(null);
+        super.setLocationRelativeTo(null);
     }
 
     /**
@@ -241,6 +149,23 @@ public class Form extends javax.swing.JFrame {
         lblNomStag.setText("Nom :");
         lblNomStag.setPreferredSize(new java.awt.Dimension(75, 15));
         panNomStag.add(lblNomStag);
+
+        txtNomStag.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+        });
         panNomStag.add(txtNomStag);
 
         panCodeNomStag.add(panNomStag);
@@ -250,6 +175,23 @@ public class Form extends javax.swing.JFrame {
         lblCodeStag.setText("Code :");
         lblCodeStag.setPreferredSize(new java.awt.Dimension(75, 15));
         panCodeStag.add(lblCodeStag);
+
+        txtCodeStag.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+        });
         panCodeStag.add(txtCodeStag);
 
         panCodeNomStag.add(panCodeStag);
@@ -264,6 +206,23 @@ public class Form extends javax.swing.JFrame {
         lblPreStag.setText("Prénom :");
         lblPreStag.setPreferredSize(new java.awt.Dimension(75, 15));
         panPreStag.add(lblPreStag);
+
+        txtPreStag.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                txtStagActionPerformed(null);
+            }
+        });
         panPreStag.add(txtPreStag);
 
         panPreBtnStag.add(panPreStag);
@@ -308,6 +267,12 @@ public class Form extends javax.swing.JFrame {
 
         tblStag.setModel(tblStagModel);
         tblStag.setPreferredSize(new java.awt.Dimension(580, 400));
+        tblStag.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                tblStagValueChanged(evt);
+            }
+        });
         sclStag.setViewportView(tblStag);
 
         panListStag.add(sclStag, java.awt.BorderLayout.CENTER);
@@ -363,6 +328,22 @@ public class Form extends javax.swing.JFrame {
                 txtNomFormActionPerformed(evt);
             }
         });
+        txtNomForm.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                txtNomFormActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                txtNomFormActionPerformed(null);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                txtNomFormActionPerformed(null);
+            }
+        });
         panNomForm.add(txtNomForm);
 
         panInfoForm.add(panNomForm);
@@ -375,6 +356,12 @@ public class Form extends javax.swing.JFrame {
         sclStagForm.setPreferredSize(new java.awt.Dimension(500, 200));
 
         tblStagForm.setModel(tblStagFormModel);
+        tblStagForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                tblFormStagValueChanged(evt);
+            }
+        });
         sclStagForm.setViewportView(tblStagForm);
 
         panStagForm.add(sclStagForm);
@@ -414,6 +401,12 @@ public class Form extends javax.swing.JFrame {
         sclEcfForm.setPreferredSize(new java.awt.Dimension(500, 100));
 
         tblEcfForm.setModel(tblECFModel);
+        tblEcfForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                tblFormECFValueChanged(evt);
+            }
+        });
         sclEcfForm.setViewportView(tblEcfForm);
 
         panEcfForm.add(sclEcfForm, java.awt.BorderLayout.NORTH);
@@ -451,6 +444,23 @@ public class Form extends javax.swing.JFrame {
 
         lblEcfNomForm.setText("Nom :");
         panEcfAddForm.add(lblEcfNomForm);
+
+        txtEcfNomForm.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                txtNomEcfActionPerformed(null);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                txtNomEcfActionPerformed(null);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                txtNomEcfActionPerformed(null);
+            }
+        });
         panEcfAddForm.add(txtEcfNomForm);
 
         btnEcfAddForm.setBackground(new java.awt.Color(223, 240, 216));
@@ -550,6 +560,7 @@ public class Form extends javax.swing.JFrame {
         RefreshData();
     }//GEN-LAST:event_itmActualiserActionPerformed
 
+    // Rafraichir les données
     public void RefreshData() {
         GestForm.RefreshData();
         lstFormModel.set(GestForm.getFormations());
@@ -589,6 +600,7 @@ public class Form extends javax.swing.JFrame {
         }
     }
 
+    // Activer/désactiver les boutons du pannneau stagiaire en fonctions de l'état actuel
     private void ResetStagBtn() {
         int index = tblStag.getSelectedRow();
         if (index > -1) {
@@ -660,6 +672,7 @@ public class Form extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_lstFormValueChanged
 
+    // Rafraichir les valeurs des tableaux en fonction d'un formation sélectionnée
     private void RefreshValues(Formation f) {
         tblStagFormModel.reset();
         tblECFModel.reset();
@@ -857,6 +870,7 @@ public class Form extends javax.swing.JFrame {
         GestForm.cli();
     }//GEN-LAST:event_mnuCliActionPerformed
 
+    // Activer/désactiver les boutons du pannneau formation en fonctions de l'état actuel
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();
         if (index > -1) {

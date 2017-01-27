@@ -178,6 +178,9 @@
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtNomStag">
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="txtNomStag.getDocument().addDocumentListener(new DocumentListener() {&#xa;    @Override&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;});"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -194,6 +197,9 @@
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtCodeStag">
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="txtCodeStag.getDocument().addDocumentListener(new DocumentListener() {&#xa;    @Override&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;});"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -225,6 +231,9 @@
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtPreStag">
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="txtPreStag.getDocument().addDocumentListener(new DocumentListener() {&#xa;    @Override&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        txtStagActionPerformed(null);&#xa;    }&#xa;});"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -323,6 +332,9 @@
                           <Dimension value="[580, 400]"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="tblStag.getSelectionModel().addListSelectionListener(new ListSelectionListener() {&#xa;    @Override&#xa;    public void valueChanged(ListSelectionEvent evt) {&#xa;        tblStagValueChanged(evt);&#xa;    }&#xa;});"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -450,6 +462,9 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNomFormActionPerformed"/>
                       </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="txtNomForm.getDocument().addDocumentListener(new DocumentListener() {&#xa;    @Override&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        txtNomFormActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        txtNomFormActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        txtNomFormActionPerformed(null);&#xa;    }&#xa;});"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -494,6 +509,9 @@
                               <SerializedValue value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,0,-56,0,0,1,-12"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="tblStagForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {&#xa;    @Override&#xa;    public void valueChanged(ListSelectionEvent evt) {&#xa;        tblFormStagValueChanged(evt);&#xa;    }&#xa;});"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -587,6 +605,9 @@
                               <SerializedValue value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,0,-56,0,0,1,-12"/>
                             </Property>
                           </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="tblEcfForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {&#xa;    @Override&#xa;    public void valueChanged(ListSelectionEvent evt) {&#xa;        tblFormECFValueChanged(evt);&#xa;    }&#xa;});"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -656,6 +677,9 @@
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JTextField" name="txtEcfNomForm">
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="txtEcfNomForm.getDocument().addDocumentListener(new DocumentListener() {&#xa;    @Override&#xa;    public void changedUpdate(DocumentEvent e) {&#xa;        txtNomEcfActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void removeUpdate(DocumentEvent e) {&#xa;        txtNomEcfActionPerformed(null);&#xa;    }&#xa;&#xa;    @Override&#xa;    public void insertUpdate(DocumentEvent e) {&#xa;        txtNomEcfActionPerformed(null);&#xa;    }&#xa;});"/>
+                          </AuxValues>
                         </Component>
                         <Component class="javax.swing.JButton" name="btnEcfAddForm">
                           <Properties>

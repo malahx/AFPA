@@ -23,6 +23,7 @@ import org.glehenaff.gestform.model.Stagiaire;
  */
 public class Utils {
 
+    // Charger les données
     public static Object[] Load() {
         List<Formation> formations = FormationDAO.Instance().findAll();
         for (Formation formation : formations) {
@@ -37,48 +38,53 @@ public class Utils {
         return new Object[]{formations, StagiaireDAO.Instance().findAll()};
     }
 
+    // Ajouter un stagiaire à la base de donnée
     public static Stagiaire addToDB(Stagiaire stagiaire) {
-    	try {
-    		return StagiaireDAO.Instance().insert(stagiaire);
-    	} catch (AlreadyExistsException e) {
-    		System.out.println("AlreadyExistsException: " + e.getMessage());
-    		throw new RuntimeException(e);
-		}
+        try {
+            return StagiaireDAO.Instance().insert(stagiaire);
+        } catch (AlreadyExistsException e) {
+            System.out.println("AlreadyExistsException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
+    // Ajouter une formation à la base de donnée
     public static Formation addToDB(Formation formation) {
-    	try {
+        try {
             return FormationDAO.Instance().insert(formation);
-    	} catch (AlreadyExistsException e) {
-    		System.out.println("AlreadyExistsException: " + e.getMessage());
-    		throw new RuntimeException(e);
-		}
+        } catch (AlreadyExistsException e) {
+            System.out.println("AlreadyExistsException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
-    
+
+    // Ajouter un stagiaire à une formation à la base de donnée
     public static boolean addToDB(Formation formation, Stagiaire stagiaire) {
-    	try {
+        try {
             return FormationDAO.Instance().insert(formation, stagiaire);
-    	} catch (AlreadyExistsException e) {
-    		System.out.println("AlreadyExistsException: " + e.getMessage());
-    		throw new RuntimeException(e);
-		}
+        } catch (AlreadyExistsException e) {
+            System.out.println("AlreadyExistsException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
+    // Ajouter un ecf à la base de donnée
     public static ECF addToDB(ECF ecf) {
-    	try {
+        try {
             return EcfDAO.Instance().insert(ecf);
-    	} catch (AlreadyExistsException e) {
-    		System.out.println("AlreadyExistsException: " + e.getMessage());
-    		throw new RuntimeException(e);
-		}
+        } catch (AlreadyExistsException e) {
+            System.out.println("AlreadyExistsException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
+    // Ajouter un résultat à la base de donnée
     public static Resultat addToDB(Resultat res) {
-    	try {
+        try {
             return ResultatDAO.Instance().insert(res);
-    	} catch (AlreadyExistsException e) {
-    		System.out.println("AlreadyExistsException: " + e.getMessage());
-    		throw new RuntimeException(e);
-		}
+        } catch (AlreadyExistsException e) {
+            System.out.println("AlreadyExistsException: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

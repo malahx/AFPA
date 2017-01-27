@@ -13,11 +13,13 @@ public class Apropos extends javax.swing.JDialog {
 
     /**
      * Creates new form Apropos
+     * @param parent fenètre parente
+     * @param modal active l'option en modal
      */
     public Apropos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(parent);
+        super.setLocationRelativeTo(parent);
     }
 
     /**

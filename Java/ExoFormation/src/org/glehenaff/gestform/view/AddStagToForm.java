@@ -18,13 +18,21 @@ import org.glehenaff.gestform.model.Stagiaire;
  */
 public class AddStagToForm extends javax.swing.JDialog {
 
+    // Modèle du tableau de stagiaire
     private final StagTableModel tblStagModel;
+    // Formation à modifier
     private final Formation formation;
+    // Modèle du tableau de stagiaire de la formation, pourrait être emplacé par un parent.getStableTableModel()
     private final StagTableModel formStagTableModel;
+    // Fenètre parente
     private final Form parent;
 
     /**
      * Creates new form AddStagToForm
+     * @param parent fenètre parente
+     * @param modal active l'option en modal
+     * @param formation la formation à modifier
+     * @param formStagTableModel Modèle du tableau de stagiaire de la formation, pourrait être emplacé par un parent.getStableTableModel()
      */
     public AddStagToForm(java.awt.Frame parent, boolean modal, Formation formation, StagTableModel formStagTableModel) {
         super(parent, modal);
@@ -34,7 +42,7 @@ public class AddStagToForm extends javax.swing.JDialog {
         List<Stagiaire> stagiaires = GestForm.getDispoStagiaires();
         tblStagModel = new StagTableModel(stagiaires);
         initComponents();
-        this.setLocationRelativeTo(parent);
+        super.setLocationRelativeTo(parent);
     }
 
     /**

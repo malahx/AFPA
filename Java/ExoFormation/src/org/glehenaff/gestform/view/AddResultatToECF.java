@@ -16,18 +16,25 @@ import org.glehenaff.gestform.model.Stagiaire;
  */
 public class AddResultatToECF extends javax.swing.JDialog {
 
+    // Model du tableau de résultat
     private final ResTableModel tblResModel;
+    
+    // Fenètre parente
     private final Form parent;
 
     /**
      * Creates new form AddResultatToECF
+     * @param parent fenètre parente
+     * @param modal active l'option en modal
+     * @param stagiaires liste de stagaire de la formation
+     * @param ecf des résultats à modifier
      */
     public AddResultatToECF(java.awt.Frame parent, boolean modal, List<Stagiaire> stagiaires, ECF ecf) {
         super(parent, modal);
         this.parent = (Form) parent;
         tblResModel = new ResTableModel(this, stagiaires, ecf);
         initComponents();
-        this.setLocationRelativeTo(parent);
+        super.setLocationRelativeTo(parent);
     }
 
     /**
