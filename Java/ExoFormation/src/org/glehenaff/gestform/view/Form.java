@@ -204,6 +204,7 @@ public class Form extends javax.swing.JFrame {
         mnuBar = new javax.swing.JMenuBar();
         mnuFichier = new javax.swing.JMenu();
         itmActualiser = new javax.swing.JMenuItem();
+        mnuCli = new javax.swing.JMenuItem();
         itmSep = new javax.swing.JPopupMenu.Separator();
         itmQuitter = new javax.swing.JMenuItem();
         mnuAide = new javax.swing.JMenu();
@@ -506,6 +507,14 @@ public class Form extends javax.swing.JFrame {
             }
         });
         mnuFichier.add(itmActualiser);
+
+        mnuCli.setText("Passer en mode console");
+        mnuCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCliActionPerformed(evt);
+            }
+        });
+        mnuFichier.add(mnuCli);
         mnuFichier.add(itmSep);
 
         itmQuitter.setText("Quitter");
@@ -841,6 +850,13 @@ public class Form extends javax.swing.JFrame {
         addRes.setVisible(true);
     }//GEN-LAST:event_btnEcfResFormActionPerformed
 
+    private void mnuCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCliActionPerformed
+        this.setVisible(false);
+        this.dispose();
+        GestForm.RefreshData();
+        GestForm.cli();
+    }//GEN-LAST:event_mnuCliActionPerformed
+
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();
         if (index > -1) {
@@ -914,6 +930,7 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JList<String> lstForm;
     private javax.swing.JMenu mnuAide;
     private javax.swing.JMenuBar mnuBar;
+    private javax.swing.JMenuItem mnuCli;
     private javax.swing.JMenu mnuFichier;
     private javax.swing.JPanel panBtnForm;
     private javax.swing.JPanel panBtnStag;
