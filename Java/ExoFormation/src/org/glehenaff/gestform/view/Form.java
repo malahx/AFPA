@@ -14,13 +14,14 @@ import org.glehenaff.gestform.GestForm;
 import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Formation;
+import org.glehenaff.gestform.model.Resultat;
 import org.glehenaff.gestform.model.Stagiaire;
 
 /**
  *
  * @author gwenole
  */
-public class Form extends javax.swing.JFrame implements AddStagToForm.Listener {
+public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, ResTableModel.Listener {
 
     // Modèle des listes et tableaux, pourrait être remplacé par lst.getModel()
     private final FormListModel lstFormModel;
@@ -863,6 +864,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener {
         Formation f = lstFormModel.getFormation(indexForm);
         List<Stagiaire> stagiaires = f.getStagiaires();
         AddResultatToECF addRes = new AddResultatToECF(this, true, stagiaires, ecf);
+        addRes.getTblResModel().addEventListener(this);
         addRes.setVisible(true);
     }//GEN-LAST:event_btnEcfResFormActionPerformed
 
@@ -931,6 +933,17 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener {
             Formation f = lstFormModel.getFormation(index);
             if (f.equals(formation)) {
                 tblStagFormModel.add(stagiaire);
+            }
+        }
+    }
+
+    @Override
+    public void onUpdatedResultat(ECF ecf, Resultat res) {
+        int index = lstForm.getSelectedIndex();
+        if (index > -1) {
+            Formation f = lstFormModel.getFormation(index);
+            if (ecf.getFormation().equals(f)) {
+                tblECFModel.fireTableDataChanged();
             }
         }
     }

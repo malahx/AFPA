@@ -5,6 +5,7 @@
  */
 package org.glehenaff.gestform.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import org.glehenaff.gestform.Utils;
@@ -21,12 +22,27 @@ public class ResTableModel extends AbstractTableModel {
     private final String[] entetes = {"Code", "Nom", "Prénom", "Passé", "Obtenu"};
     private final List<Stagiaire> stagiaires;
     private final ECF ecf;
-    private final AddResultatToECF parent;
 
-    public ResTableModel(AddResultatToECF parent, List<Stagiaire> stagiaires, ECF ecf) {
+    List<Listener> listeners = new ArrayList<>();
+
+    public interface Listener {
+
+        public void onUpdatedResultat(ECF ecf, Resultat res);
+    }
+
+    public ResTableModel(List<Stagiaire> stagiaires, ECF ecf) {
         this.stagiaires = stagiaires;
         this.ecf = ecf;
-        this.parent = parent;
+    }
+
+    public void addEventListener(Listener listener) {
+        this.listeners.add(listener);
+    }
+
+    private void fireUpdatedResultat(ECF ecf, Resultat res) {
+        for (Listener listener : this.listeners) {
+            listener.onUpdatedResultat(ecf, res);
+        }
     }
 
     public Stagiaire getStagiaire(int rowIndex) {
@@ -91,11 +107,11 @@ public class ResTableModel extends AbstractTableModel {
                 r = new Resultat(false, ecf, s);
                 r = Utils.addToDB(r);
                 ecf.addResultat(r);
-                parent.getParent().RefreshData();
+                fireUpdatedResultat(ecf, r);
             } else {
                 if (Utils.delToDB(r)) {
                     ecf.remResultat(r);
-                    parent.getParent().RefreshData();
+                    fireUpdatedResultat(ecf, r);
                 }
             }
         }
@@ -103,7 +119,7 @@ public class ResTableModel extends AbstractTableModel {
             if (r != null) {
                 r.setObtenu(((Boolean) aValue).booleanValue());
                 Utils.upToDB(r);
-                parent.getParent().RefreshData();
+                fireUpdatedResultat(ecf, r);
             }
         }
     }

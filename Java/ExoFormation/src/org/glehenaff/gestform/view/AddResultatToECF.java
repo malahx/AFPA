@@ -6,7 +6,6 @@
 package org.glehenaff.gestform.view;
 
 import java.util.List;
-import javax.swing.JTable;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Stagiaire;
 
@@ -19,9 +18,6 @@ public class AddResultatToECF extends javax.swing.JDialog {
     // Model du tableau de résultat
     private final ResTableModel tblResModel;
     
-    // Fenètre parente
-    private final Form parent;
-
     /**
      * Creates new form AddResultatToECF
      * @param parent fenètre parente
@@ -31,8 +27,7 @@ public class AddResultatToECF extends javax.swing.JDialog {
      */
     public AddResultatToECF(java.awt.Frame parent, boolean modal, List<Stagiaire> stagiaires, ECF ecf) {
         super(parent, modal);
-        this.parent = (Form) parent;
-        tblResModel = new ResTableModel(this, stagiaires, ecf);
+        tblResModel = new ResTableModel(stagiaires, ecf);
         initComponents();
         super.setLocationRelativeTo(parent);
     }
@@ -82,14 +77,10 @@ public class AddResultatToECF extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btnFermerActionPerformed
 
-    @Override
-    public Form getParent() {
-        return parent;
+    public ResTableModel getTblResModel() {
+        return tblResModel;
     }
     
-    public JTable getTblRes() {
-        return tblRes;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFermer;
