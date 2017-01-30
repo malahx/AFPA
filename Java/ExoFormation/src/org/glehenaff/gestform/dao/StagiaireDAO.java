@@ -122,7 +122,7 @@ public class StagiaireDAO extends DAO<Stagiaire> {
 
             conn.commit();
             conn.setAutoCommit(true);
-            
+
             stagiaire.setId(id);
 
         } catch (SQLException e) {
@@ -172,10 +172,56 @@ public class StagiaireDAO extends DAO<Stagiaire> {
             close(conn, prepare);
         }
         return true;
-    }   
+    }
 
     @Override
-    public boolean update(Stagiaire o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Stagiaire stagiaire) {
+        PreparedStatement prepareS = null;
+        PreparedStatement prepareP = null;
+        Connection conn = null;
+
+        String queryP = "UPDATE personne SET nom = ?, prenom = ? WHERE id = ?";
+        String queryS = "UPDATE stagiaire SET code = ? WHERE personne_id = ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+            conn.setAutoCommit(false);
+
+            prepareP = conn.prepareStatement(queryP, Statement.RETURN_GENERATED_KEYS);
+            prepareP.setString(1, stagiaire.getNom());
+            prepareP.setString(2, stagiaire.getPrenom());
+            prepareP.setInt(3, stagiaire.getId());
+
+            int row = prepareP.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à l'insertion du stagiaire.");
+            }
+
+            prepareS = conn.prepareStatement(queryS);
+            prepareS.setString(1, stagiaire.getCode());
+            prepareS.setInt(2, stagiaire.getId());
+            prepareS.executeUpdate();
+
+            conn.commit();
+            conn.setAutoCommit(true);
+
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            throw new RuntimeException(e);
+        } finally {
+            PreparedStatement[] prepares = {prepareP, prepareS};
+            close(conn, prepares, null);
+        }
+        return true;
     }
 }

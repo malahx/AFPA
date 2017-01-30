@@ -8,6 +8,7 @@ package org.glehenaff.gestform.view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.Stagiaire;
 
 /**
@@ -91,6 +92,34 @@ public class StagTableModel extends AbstractTableModel {
             default:
                 throw new IllegalArgumentException();
         }
+    }
 
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        String value = (String) aValue;
+        Stagiaire s = stagiaires.get(rowIndex);
+        if (columnIndex == 0) {
+            if (!value.isEmpty()) {
+                s.setCode(value);
+                Utils.upToDB(s);
+            }
+        }
+        if (columnIndex == 1) {
+            if (!value.isEmpty()) {
+                s.setNom(value);
+                Utils.upToDB(s);
+            }
+        }
+        if (columnIndex == 2) {
+            if (!value.isEmpty()) {
+                s.setPrenom(value);
+                Utils.upToDB(s);
+            }
+        }
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return true;
     }
 }
