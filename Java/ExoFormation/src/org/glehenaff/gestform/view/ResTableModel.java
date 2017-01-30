@@ -7,8 +7,7 @@ package org.glehenaff.gestform.view;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.glehenaff.gestform.dao.AlreadyExistsException;
-import org.glehenaff.gestform.dao.ResultatDAO;
+import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Resultat;
 import org.glehenaff.gestform.model.Stagiaire;
@@ -89,16 +88,12 @@ public class ResTableModel extends AbstractTableModel {
         Resultat r = getResultat(s);
         if (columnIndex == 3) {
             if (r == null) {
-                try {
-                    r = new Resultat(false, ecf, s);
-                    r = ResultatDAO.Instance().insert(r);
-                    ecf.addResultat(r);
-                    parent.getParent().RefreshData();
-                } catch (AlreadyExistsException e) {
-                    throw new RuntimeException(e);
-                }
+                r = new Resultat(false, ecf, s);
+                r = Utils.addToDB(r);
+                ecf.addResultat(r);
+                parent.getParent().RefreshData();
             } else {
-                if (ResultatDAO.Instance().delete(r)) {
+                if (Utils.delToDB(r)) {
                     ecf.remResultat(r);
                     parent.getParent().RefreshData();
                 }
@@ -107,7 +102,7 @@ public class ResTableModel extends AbstractTableModel {
         if (columnIndex == 4) {
             if (r != null) {
                 r.setObtenu(((Boolean) aValue).booleanValue());
-                ResultatDAO.Instance().update(r);
+                Utils.upToDB(r);
                 parent.getParent().RefreshData();
             }
         }

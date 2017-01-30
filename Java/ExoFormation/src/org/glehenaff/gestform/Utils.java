@@ -113,7 +113,12 @@ public class Utils {
     public static boolean delToDB(Resultat res) {
         return ResultatDAO.Instance().delete(res);
     }
-
+    
+   // Mettre à jour un résultat à la base de donnée
+    public static boolean upToDB(Resultat res) {
+        return ResultatDAO.Instance().update(res);
+    }
+    
     // Récupérer les stagiaires libres
     public static List<Stagiaire> getDispoStagiaires(List<Formation> formations, List<Stagiaire> stagiaires) {
         List<Stagiaire> dispoStagiaires = new ArrayList<>();
