@@ -8,6 +8,7 @@ package org.glehenaff.gestform.view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
+import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Resultat;
 
@@ -89,6 +90,22 @@ public class ECFTableModel extends AbstractTableModel {
             default:
                 throw new IllegalArgumentException();
         }
+    }
 
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        String value = (String) aValue;
+        ECF ecf = ecfs.get(rowIndex);
+        if (columnIndex == 0) {
+            if (!value.isEmpty()) {
+                ecf.setNom(value);
+                Utils.upToDB(ecf);
+            }
+        }
+    }
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return (columnIndex == 0);
     }
 }

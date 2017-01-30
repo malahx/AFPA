@@ -67,7 +67,7 @@ public class EcfDAO extends DAO<ECF> {
         PreparedStatement prepare = null;
         Connection conn = null;
         ResultSet generatedKeys = null;
-        
+
         String query = "INSERT INTO `ecf` (`id`, `nom`, `formation_id`) VALUES (0, ?, ?)";
 
         try {
@@ -136,8 +136,34 @@ public class EcfDAO extends DAO<ECF> {
     }
 
     @Override
-    public boolean update(ECF o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(ECF ecf) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "UPDATE ecf SET nom = ? WHERE id = ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setString(1, ecf.getNom());
+            prepare.setInt(2, ecf.getId());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à l'update de l'ecf.");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(conn, prepare);
+        }
+        return true;
     }
 
 }

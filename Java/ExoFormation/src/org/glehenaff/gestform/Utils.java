@@ -119,6 +119,11 @@ public class Utils {
         return ResultatDAO.Instance().update(res);
     }
     
+   // Mettre à jour un résultat à la base de donnée
+    public static boolean upToDB(ECF ecf) {
+        return EcfDAO.Instance().update(ecf);
+    }
+    
     // Récupérer les stagiaires libres
     public static List<Stagiaire> getDispoStagiaires(List<Formation> formations, List<Stagiaire> stagiaires) {
         List<Stagiaire> dispoStagiaires = new ArrayList<>();
