@@ -152,30 +152,9 @@ public class GestForm {
         stagiaires = (List<Stagiaire>) data[1];
     }
 
-    // Vérifier si un stagiaire est dans une formation
-    private static boolean isInForm(Stagiaire stg) {
-        for (Formation f : formations) {
-            if (f.getStagiaires().contains(stg)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // Récupérer les stagiaires libres
-    public static List<Stagiaire> getDispoStagiaires() {
-        List<Stagiaire> dispoStagiaires = new ArrayList<>();
-        for (Stagiaire s : stagiaires) {
-            if (!isInForm(s)) {
-                dispoStagiaires.add(s);
-            }
-        }
-        return dispoStagiaires;
-    }
-
     // Récupérer le nombre de stagiaires libres
     private static int stagiaireDispo() {
-        return getDispoStagiaires().size();
+        return Utils.getDispoStagiaires(formations, stagiaires).size();
     }
 
     // Ajouter un stagiaire
@@ -308,7 +287,7 @@ public class GestForm {
         List<Stagiaire> stgs = new ArrayList<>();
         int i = 1;
         for (Stagiaire s : stagiaires) {
-            if (isInForm(s)) {
+            if (Utils.isInForm(formations, s)) {
                 continue;
             }
             stgs.add(s);

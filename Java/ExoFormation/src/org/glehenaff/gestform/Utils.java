@@ -5,6 +5,7 @@
  */
 package org.glehenaff.gestform;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.glehenaff.gestform.dao.AlreadyExistsException;
@@ -111,5 +112,26 @@ public class Utils {
     // Supprimer un résultat à la base de donnée
     public static boolean delToDB(Resultat res) {
         return ResultatDAO.Instance().delete(res);
+    }
+
+    // Récupérer les stagiaires libres
+    public static List<Stagiaire> getDispoStagiaires(List<Formation> formations, List<Stagiaire> stagiaires) {
+        List<Stagiaire> dispoStagiaires = new ArrayList<>();
+        for (Stagiaire s : stagiaires) {
+            if (!isInForm(formations, s)) {
+                dispoStagiaires.add(s);
+            }
+        }
+        return dispoStagiaires;
+    }
+
+    // Vérifier si un stagiaire est dans une formation
+    public static boolean isInForm(List<Formation> formations, Stagiaire stagiaire) {
+        for (Formation f : formations) {
+            if (f.getStagiaires().contains(stagiaire)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
