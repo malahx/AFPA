@@ -569,7 +569,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             RefreshValues(f);
         }
     }
-
+    
     private void tblStagValueChanged(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) {
             return;
@@ -585,7 +585,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             disabledTextFields = false;
         }
     }
-
+    
     private void txtStagActionPerformed(java.awt.event.ActionEvent evt) {
         if (disabledTextFields) {
             return;
@@ -682,7 +682,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             tblECFModel.add(e);
         }
     }
-
+    
     private void tblFormECFValueChanged(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) {
             return;
@@ -696,7 +696,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             disabledTextFields = false;
         }
     }
-
+    
     private void txtNomEcfActionPerformed(java.awt.event.ActionEvent evt) {
         if (disabledTextFields) {
             return;
@@ -708,7 +708,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             ResetFormBtn();
         }
     }
-
+    
     private void tblFormStagValueChanged(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) {
             return;
@@ -781,6 +781,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         }
         ECF ecf = tblECFModel.getEcf(indexEcf);
         if (Utils.delToDB(ecf)) {
+            ecf.getFormation().remECF(ecf);
             tblECFModel.remove(ecf);
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé de la formation");
@@ -829,6 +830,11 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         if (Utils.delToDB(s)) {
             tblStagModel.remove(s);
             tblStag.clearSelection();
+            for (Formation f: lstFormModel.getFormations()) {
+                if (f.getStagiaires().contains(s)) {
+                    f.remStagiaire(s);
+                }
+            }
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé");
         }
@@ -915,17 +921,17 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             btnStagSupprForm.setEnabled(false);
         }
     }
-
+    
     private void itmAproposActionPerformed(java.awt.event.ActionEvent evt) {
         Apropos aPropos = new Apropos(this, true);
         aPropos.setVisible(true);
     }
-
+    
     private void itmQuitterActionPerformed(java.awt.event.ActionEvent evt) {
         setVisible(false);
         dispose();
     }
-
+    
     @Override
     public void onStagAddedToForm(Formation formation, Stagiaire stagiaire) {
         int index = lstForm.getSelectedIndex();
@@ -936,7 +942,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             }
         }
     }
-
+    
     @Override
     public void onUpdatedResultat(ECF ecf, Resultat res) {
         int index = lstForm.getSelectedIndex();

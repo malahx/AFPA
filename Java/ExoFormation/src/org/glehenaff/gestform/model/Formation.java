@@ -42,6 +42,13 @@ public class Formation implements Serializable {
 
     public void remStagiaire(Stagiaire stagiaire) {
         this.stagiaires.remove(stagiaire);
+        for (ECF e : ecfs) {
+            for (Resultat r: e.getResultats()) {
+                if (r.getStagiaire().equals(stagiaire)) {
+                    e.remResultat(r);
+                }
+            }
+        }
     }
 
     public void setStagiaires(List<Stagiaire> stagiaires) {
