@@ -1,0 +1,3 @@
+[submodule "ECF/MediaTeK"]
+	path = ECF/MediaTeK
+	url = https://github.com/malahx/AFPA-MediaTeK.git
