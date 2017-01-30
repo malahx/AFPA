@@ -5,8 +5,8 @@
  */
 package org.glehenaff.gestform.view;
 
+import java.util.ArrayList;
 import java.util.List;
-import org.glehenaff.gestform.GestForm;
 import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
@@ -21,10 +21,13 @@ public class AddStagToForm extends javax.swing.JDialog {
     private final StagTableModel tblStagModel;
     // Formation à modifier
     private final Formation formation;
-    // Modèle du tableau de stagiaire de la formation, pourrait être emplacé par un parent.getStableTableModel()
-    private final StagTableModel formStagTableModel;
-    // Fenètre parente
-    private final Form parent;
+
+    List<Listener> listeners = new ArrayList<>();
+
+    public interface Listener {
+
+        public void onStagAddedToForm(Formation f, Stagiaire s);
+    }
 
     /**
      * Creates new form AddStagToForm
@@ -32,18 +35,25 @@ public class AddStagToForm extends javax.swing.JDialog {
      * @param parent fenètre parente
      * @param modal active l'option en modal
      * @param formation la formation à modifier
-     * @param formStagTableModel Modèle du tableau de stagiaire de la formation,
+     * @param stagiaires liste de stagiaires à afficher
      * pourrait être emplacé par un parent.getStableTableModel()
      */
-    public AddStagToForm(java.awt.Frame parent, boolean modal, Formation formation, StagTableModel formStagTableModel) {
+    public AddStagToForm(java.awt.Frame parent, boolean modal, Formation formation, List<Stagiaire> stagiaires) {
         super(parent, modal);
-        this.parent = (Form) parent;
         this.formation = formation;
-        this.formStagTableModel = formStagTableModel;
-        List<Stagiaire> stagiaires = GestForm.getDispoStagiaires();
         tblStagModel = new StagTableModel(stagiaires);
         initComponents();
         super.setLocationRelativeTo(parent);
+    }
+
+    public void addEventListener(Listener listener) {
+        this.listeners.add(listener);
+    }
+
+    private void fireStagAddedToForm(Formation f, Stagiaire s) {
+        for (Listener listener : this.listeners) {
+            listener.onStagAddedToForm(f, s);
+        }
     }
 
     /**
@@ -104,14 +114,13 @@ public class AddStagToForm extends javax.swing.JDialog {
             Stagiaire s = tblStagModel.getStagiaire(i);
             if (Utils.addToDB(formation, s)) {
                 tblStagModel.remove(s);
-                formStagTableModel.add(s);
+                fireStagAddedToForm(formation, s);
             }
         }
 
     }//GEN-LAST:event_addStagActionPerformed
 
     private void fermerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fermerActionPerformed
-        parent.RefreshData();
         setVisible(false);
         dispose();
     }//GEN-LAST:event_fermerActionPerformed

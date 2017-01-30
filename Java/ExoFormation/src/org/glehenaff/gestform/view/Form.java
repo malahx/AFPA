@@ -20,7 +20,7 @@ import org.glehenaff.gestform.model.Stagiaire;
  *
  * @author gwenole
  */
-public class Form extends javax.swing.JFrame {
+public class Form extends javax.swing.JFrame implements AddStagToForm.Listener {
 
     // Modèle des listes et tableaux, pourrait être remplacé par lst.getModel()
     private final FormListModel lstFormModel;
@@ -766,6 +766,7 @@ public class Form extends javax.swing.JFrame {
         Stagiaire s = tblStagFormModel.getStagiaire(indexStag);
         if (Utils.delToDB(f, s)) {
             tblStagFormModel.remove(s);
+            f.remStagiaire(s);
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé de la formation");
         }
@@ -839,7 +840,11 @@ public class Form extends javax.swing.JFrame {
             return;
         }
         Formation f = lstFormModel.getFormation(indexForm);
-        AddStagToForm addStag = new AddStagToForm(this, true, f, tblStagFormModel);
+        List<Formation> formations = lstFormModel.getFormations();
+        List<Stagiaire> stagiaires = tblStagModel.getStagiaires();
+        List<Stagiaire> dispoStagiaires = Utils.getDispoStagiaires(formations, stagiaires);
+        AddStagToForm addStag = new AddStagToForm(this, true, f, dispoStagiaires);
+        addStag.addEventListener(this);
         addStag.setVisible(true);
     }//GEN-LAST:event_btnStagAddFormActionPerformed
 
@@ -917,6 +922,17 @@ public class Form extends javax.swing.JFrame {
     private void itmQuitterActionPerformed(java.awt.event.ActionEvent evt) {
         setVisible(false);
         dispose();
+    }
+
+    @Override
+    public void onStagAddedToForm(Formation formation, Stagiaire stagiaire) {
+        int index = lstForm.getSelectedIndex();
+        if (index > -1) {
+            Formation f = lstFormModel.getFormation(index);
+            if (f.equals(formation)) {
+                tblStagFormModel.add(stagiaire);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

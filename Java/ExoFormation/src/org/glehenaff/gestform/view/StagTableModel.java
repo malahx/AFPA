@@ -51,6 +51,10 @@ public class StagTableModel extends AbstractTableModel {
         return stagiaires.get(rowIndex);
     }
 
+    public List<Stagiaire> getStagiaires() {
+        return stagiaires;
+    }
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getValueAt(0, columnIndex).getClass();

@@ -21,6 +21,10 @@ public class FormListModel extends AbstractListModel {
         this.formations = formations;
     }
 
+    public List<Formation> getFormations() {
+        return formations;
+    }
+    
     public Formation getFormation(int index) {
         return formations.get(index);
     }
