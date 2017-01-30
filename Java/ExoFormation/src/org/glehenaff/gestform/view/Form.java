@@ -6,6 +6,7 @@
 package org.glehenaff.gestform.view;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -298,6 +299,11 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         lstForm.setModel(lstFormModel);
         lstForm.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstForm.setVisibleRowCount(20);
+        lstForm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstFormMouseClicked(evt);
+            }
+        });
         lstForm.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 lstFormValueChanged(evt);
@@ -569,7 +575,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             RefreshValues(f);
         }
     }
-    
+
     private void tblStagValueChanged(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) {
             return;
@@ -585,7 +591,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             disabledTextFields = false;
         }
     }
-    
+
     private void txtStagActionPerformed(java.awt.event.ActionEvent evt) {
         if (disabledTextFields) {
             return;
@@ -682,7 +688,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             tblECFModel.add(e);
         }
     }
-    
+
     private void tblFormECFValueChanged(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) {
             return;
@@ -696,7 +702,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             disabledTextFields = false;
         }
     }
-    
+
     private void txtNomEcfActionPerformed(java.awt.event.ActionEvent evt) {
         if (disabledTextFields) {
             return;
@@ -708,7 +714,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             ResetFormBtn();
         }
     }
-    
+
     private void tblFormStagValueChanged(javax.swing.event.ListSelectionEvent evt) {
         if (evt.getValueIsAdjusting()) {
             return;
@@ -830,7 +836,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         if (Utils.delToDB(s)) {
             tblStagModel.remove(s);
             tblStag.clearSelection();
-            for (Formation f: lstFormModel.getFormations()) {
+            for (Formation f : lstFormModel.getFormations()) {
                 if (f.getStagiaires().contains(s)) {
                     f.remStagiaire(s);
                 }
@@ -881,6 +887,19 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         GestForm.cli();
     }//GEN-LAST:event_mnuCliActionPerformed
 
+    private void lstFormMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstFormMouseClicked
+        if (evt.getClickCount() == 2) {
+            int index = lstForm.getSelectedIndex();
+            if (index > -1) {
+                Formation f = lstFormModel.getFormation(index);
+                String nom = (String)JOptionPane.showInputDialog(this,"Complete the sentence:\n", "Customized Dialog", JOptionPane.PLAIN_MESSAGE, null, null, f.getNom());
+                f.setNom(nom);
+                Utils.upToDB(f);
+                txtNomForm.setText(nom);
+            }
+        }
+    }//GEN-LAST:event_lstFormMouseClicked
+
     // Activer/désactiver les boutons du pannneau formation en fonctions de l'état actuel
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();
@@ -921,17 +940,17 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             btnStagSupprForm.setEnabled(false);
         }
     }
-    
+
     private void itmAproposActionPerformed(java.awt.event.ActionEvent evt) {
         Apropos aPropos = new Apropos(this, true);
         aPropos.setVisible(true);
     }
-    
+
     private void itmQuitterActionPerformed(java.awt.event.ActionEvent evt) {
         setVisible(false);
         dispose();
     }
-    
+
     @Override
     public void onStagAddedToForm(Formation formation, Stagiaire stagiaire) {
         int index = lstForm.getSelectedIndex();
@@ -942,7 +961,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             }
         }
     }
-    
+
     @Override
     public void onUpdatedResultat(ECF ecf, Resultat res) {
         int index = lstForm.getSelectedIndex();

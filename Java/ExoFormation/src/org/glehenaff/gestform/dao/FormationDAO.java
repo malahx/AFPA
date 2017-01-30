@@ -196,7 +196,33 @@ public class FormationDAO extends DAO<Formation> {
     }
 
     @Override
-    public boolean update(Formation o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Formation f) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "UPDATE formation SET nom = ? WHERE id = ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setString(1, f.getNom());
+            prepare.setInt(2, f.getId());
+
+            int row = prepare.executeUpdate();
+
+            if (row == 0) {
+                throw new SQLException("Erreur à l'update de la formation.");
+            }
+            
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(conn, prepare);
+        }
+        return true;
     }
 }

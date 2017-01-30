@@ -119,14 +119,19 @@ public class Utils {
         return ResultatDAO.Instance().update(res);
     }
     
-   // Mettre à jour un résultat à la base de donnée
+   // Mettre à jour un ecf à la base de donnée
     public static boolean upToDB(ECF ecf) {
         return EcfDAO.Instance().update(ecf);
     }
     
-   // Mettre à jour un résultat à la base de donnée
+   // Mettre à jour un stagiaire à la base de donnée
     public static boolean upToDB(Stagiaire s) {
         return StagiaireDAO.Instance().update(s);
+    }
+    
+   // Mettre à jour une formation à la base de donnée
+    public static boolean upToDB(Formation f) {
+        return FormationDAO.Instance().update(f);
     }
     
     // Récupérer les stagiaires libres
