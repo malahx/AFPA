@@ -18,6 +18,7 @@ import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Resultat;
 import org.glehenaff.gestform.model.Stagiaire;
+import org.glehenaff.gestform.report.Resultats;
 
 /**
  *
@@ -115,6 +116,8 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         mnuCli = new javax.swing.JMenuItem();
         itmSep = new javax.swing.JPopupMenu.Separator();
         itmQuitter = new javax.swing.JMenuItem();
+        mnuReports = new javax.swing.JMenu();
+        itmResultats = new javax.swing.JMenuItem();
         mnuAide = new javax.swing.JMenu();
         itmApropos = new javax.swing.JMenuItem();
 
@@ -545,6 +548,18 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
             }
         });
 
+        mnuReports.setText("Rapports");
+
+        itmResultats.setText("Résultats en PDF");
+        itmResultats.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmResultatsActionPerformed(evt);
+            }
+        });
+        mnuReports.add(itmResultats);
+
+        mnuBar.add(mnuReports);
+
         mnuAide.setText("?");
 
         itmApropos.setText("A propos");
@@ -907,6 +922,10 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         }
     }//GEN-LAST:event_lstFormMouseClicked
 
+    private void itmResultatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmResultatsActionPerformed
+        Resultats.generate();
+    }//GEN-LAST:event_itmResultatsActionPerformed
+
     // Activer/désactiver les boutons du pannneau formation en fonctions de l'état actuel
     private void ResetFormBtn() {
         int index = lstForm.getSelectedIndex();
@@ -1045,6 +1064,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
     private javax.swing.JMenuItem itmActualiser;
     private javax.swing.JMenuItem itmApropos;
     private javax.swing.JMenuItem itmQuitter;
+    private javax.swing.JMenuItem itmResultats;
     private javax.swing.JPopupMenu.Separator itmSep;
     private javax.swing.JLabel lblCodeStag;
     private javax.swing.JLabel lblEcfNomForm;
@@ -1056,6 +1076,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
     private javax.swing.JMenuBar mnuBar;
     private javax.swing.JMenuItem mnuCli;
     private javax.swing.JMenu mnuFichier;
+    private javax.swing.JMenu mnuReports;
     private javax.swing.JPanel panBtnForm;
     private javax.swing.JPanel panBtnStag;
     private javax.swing.JPanel panCodeNomStag;
