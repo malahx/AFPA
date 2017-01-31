@@ -217,7 +217,7 @@ public class FormationDAO extends DAO<Formation> {
             if (row == 0) {
                 throw new SQLException("Erreur à l'update de la formation.");
             }
-            
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

@@ -7,7 +7,6 @@ package org.glehenaff.gestform.view;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.Formation;
 import org.glehenaff.gestform.model.Stagiaire;
 
@@ -112,10 +111,8 @@ public class AddStagToForm extends javax.swing.JDialog {
     private void addStagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStagActionPerformed
         for (int i : tblStag.getSelectedRows()) {
             Stagiaire s = tblStagModel.getStagiaire(i);
-            if (Utils.addToDB(formation, s)) {
-                tblStagModel.remove(s);
-                fireStagAddedToForm(formation, s);
-            }
+            tblStagModel.remove(s);
+            fireStagAddedToForm(formation, s);
         }
 
     }//GEN-LAST:event_addStagActionPerformed

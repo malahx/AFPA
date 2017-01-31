@@ -8,7 +8,6 @@ package org.glehenaff.gestform.view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.Stagiaire;
 
 /**
@@ -20,12 +19,29 @@ public class StagTableModel extends AbstractTableModel {
     private final String[] entetes = {"Code", "Nom", "Prénom"};
     private List<Stagiaire> stagiaires;
 
+    List<Listener> listeners = new ArrayList<>();
+
+    public interface Listener {
+
+        public void onUpdatedStag(Stagiaire s);
+    }
+
     public StagTableModel() {
         this.stagiaires = new ArrayList<>();
     }
 
     public StagTableModel(List<Stagiaire> stagiaires) {
         this.stagiaires = stagiaires;
+    }
+
+    public void addEventListener(Listener listener) {
+        this.listeners.add(listener);
+    }
+
+    private void fireUpdatedStag(Stagiaire s) {
+        for (Listener listener : this.listeners) {
+            listener.onUpdatedStag(s);
+        }
     }
 
     public void set(List<Stagiaire> stagiaires) {
@@ -97,24 +113,21 @@ public class StagTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         String value = (String) aValue;
+        if (value.isEmpty()) {
+            return;
+        }
         Stagiaire s = stagiaires.get(rowIndex);
         if (columnIndex == 0) {
-            if (!value.isEmpty()) {
-                s.setCode(value);
-                Utils.upToDB(s);
-            }
+            s.setCode(value);
+            fireUpdatedStag(s);
         }
         if (columnIndex == 1) {
-            if (!value.isEmpty()) {
-                s.setNom(value);
-                Utils.upToDB(s);
-            }
+            s.setNom(value);
+            fireUpdatedStag(s);
         }
         if (columnIndex == 2) {
-            if (!value.isEmpty()) {
-                s.setPrenom(value);
-                Utils.upToDB(s);
-            }
+            s.setPrenom(value);
+            fireUpdatedStag(s);
         }
     }
 

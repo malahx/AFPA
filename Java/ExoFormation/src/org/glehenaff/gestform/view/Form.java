@@ -7,6 +7,7 @@ package org.glehenaff.gestform.view;
 
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -22,7 +23,7 @@ import org.glehenaff.gestform.model.Stagiaire;
  *
  * @author gwenole
  */
-public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, ResTableModel.Listener {
+public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, ResTableModel.Listener, StagTableModel.Listener, ECFTableModel.Listener {
 
     // Modèle des listes et tableaux, pourrait être remplacé par lst.getModel()
     private final FormListModel lstFormModel;
@@ -264,6 +265,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         sclStag.setMinimumSize(new java.awt.Dimension(0, 0));
         sclStag.setPreferredSize(new java.awt.Dimension(400, 200));
 
+        tblStagModel.addEventListener(this);
         tblStag.setModel(tblStagModel);
         tblStag.setPreferredSize(new java.awt.Dimension(580, 400));
         tblStag.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -404,6 +406,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         sclEcfForm.setMinimumSize(new java.awt.Dimension(500, 100));
         sclEcfForm.setPreferredSize(new java.awt.Dimension(500, 100));
 
+        tblECFModel.addEventListener(this);
         tblEcfForm.setModel(tblECFModel);
         tblEcfForm.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
@@ -564,6 +567,12 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         RefreshData();
     }//GEN-LAST:event_itmActualiserActionPerformed
 
+    private void txtEdit(JTextField t, String s) {
+        disabledTextFields = true;
+        t.setText(s);
+        disabledTextFields = false;
+    }
+
     // Rafraichir les données
     public void RefreshData() {
         GestForm.RefreshData();
@@ -584,11 +593,9 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         int index = tblStag.getSelectedRow();
         if (index > -1) {
             Stagiaire s = tblStagModel.getStagiaire(index);
-            disabledTextFields = true;
-            txtNomStag.setText(s.getNom());
-            txtPreStag.setText(s.getPrenom());
-            txtCodeStag.setText(s.getCode());
-            disabledTextFields = false;
+            txtEdit(txtNomStag, s.getNom());
+            txtEdit(txtPreStag, s.getPrenom());
+            txtEdit(txtCodeStag, s.getCode());
         }
     }
 
@@ -670,9 +677,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         tblECFModel.reset();
         if (index > -1) {
             Formation f = lstFormModel.getFormation(index);
-            disabledTextFields = true;
-            txtNomForm.setText(f.getNom());
-            disabledTextFields = false;
+            txtEdit(txtNomForm, f.getNom());
             RefreshValues(f);
         }
     }//GEN-LAST:event_lstFormValueChanged
@@ -697,9 +702,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         int index = tblEcfForm.getSelectedRow();
         if (index > -1) {
             ECF ecf = tblECFModel.getEcf(index);
-            disabledTextFields = true;
-            txtEcfNomForm.setText(ecf.getNom());
-            disabledTextFields = false;
+            txtEdit(txtEcfNomForm, ecf.getNom());
         }
     }
 
@@ -774,6 +777,7 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         if (Utils.delToDB(f, s)) {
             tblStagFormModel.remove(s);
             f.remStagiaire(s);
+            tblECFModel.fireTableDataChanged();
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé de la formation");
         }
@@ -888,14 +892,17 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
     }//GEN-LAST:event_mnuCliActionPerformed
 
     private void lstFormMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstFormMouseClicked
-        if (evt.getClickCount() == 2) {
+        if (evt.getClickCount() == 2) { // Double click
             int index = lstForm.getSelectedIndex();
             if (index > -1) {
                 Formation f = lstFormModel.getFormation(index);
-                String nom = (String)JOptionPane.showInputDialog(this,"Complete the sentence:\n", "Customized Dialog", JOptionPane.PLAIN_MESSAGE, null, null, f.getNom());
-                f.setNom(nom);
-                Utils.upToDB(f);
-                txtNomForm.setText(nom);
+                String nom = (String) JOptionPane.showInputDialog(this, "Entrer le nom de la formation :", "Editer la formation", JOptionPane.PLAIN_MESSAGE, null, null, f.getNom());
+                if (nom != null && !nom.isEmpty()) {
+                    f.setNom(nom);
+                    Utils.upToDB(f);
+                    txtNomForm.setText(nom);
+                    lstForm.setSelectedIndex(index);
+                }
             }
         }
     }//GEN-LAST:event_lstFormMouseClicked
@@ -960,10 +967,12 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
                 tblStagFormModel.add(stagiaire);
             }
         }
+        if (Utils.addToDB(formation, stagiaire)) {
+            formation.addStagiaire(stagiaire);
+        }
     }
 
-    @Override
-    public void onUpdatedResultat(ECF ecf, Resultat res) {
+    private void refreshEcf(ECF ecf) {
         int index = lstForm.getSelectedIndex();
         if (index > -1) {
             Formation f = lstFormModel.getFormation(index);
@@ -971,6 +980,55 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
                 tblECFModel.fireTableDataChanged();
             }
         }
+    }
+
+    @Override
+    public void onUpdatedResultat(ECF ecf, Resultat res) {
+        Utils.upToDB(res);
+        refreshEcf(ecf);
+    }
+
+    @Override
+    public void onAddResultat(ECF ecf, Resultat res) {
+        res = Utils.addToDB(res);
+        if (res != null) {
+            ecf.addResultat(res);
+            refreshEcf(ecf);
+        }
+    }
+
+    @Override
+    public void onRemResultat(ECF ecf, Resultat res) {
+        if (Utils.delToDB(res)) {
+            ecf.remResultat(res);
+            refreshEcf(ecf);
+        }
+    }
+
+    @Override
+    public void onUpdatedStag(Stagiaire s) {
+        int index = tblStag.getSelectedRow();
+        if (index > -1) {
+            Stagiaire stagiaire = tblStagModel.getStagiaire(index);
+            if (s.equals(stagiaire)) {
+                txtEdit(txtCodeStag, s.getCode());
+                txtEdit(txtNomStag, s.getNom());
+                txtEdit(txtPreStag, s.getPrenom());
+            }
+        }
+        Utils.upToDB(s);
+    }
+
+    @Override
+    public void onUpdatedEcf(ECF e) {
+        int index = tblEcfForm.getSelectedRow();
+        if (index > -1) {
+            ECF ecf = tblECFModel.getEcf(index);
+            if (e.equals(ecf)) {
+                txtEdit(txtEcfNomForm, e.getNom());
+            }
+        }
+        Utils.upToDB(e);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

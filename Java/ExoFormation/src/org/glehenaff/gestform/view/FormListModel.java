@@ -24,24 +24,24 @@ public class FormListModel extends AbstractListModel {
     public List<Formation> getFormations() {
         return formations;
     }
-    
+
     public Formation getFormation(int index) {
         return formations.get(index);
     }
 
     public void set(List<Formation> formations) {
         this.formations = formations;
-        this.fireContentsChanged(this, getSize() -1, getSize() -1);
+        this.fireContentsChanged(this, getSize() - 1, getSize() - 1);
     }
 
     public void add(Formation f) {
         formations.add(f);
-        this.fireContentsChanged(this, getSize() -1, getSize() -1);
+        this.fireContentsChanged(this, getSize() - 1, getSize() - 1);
     }
 
     public void remove(Formation f) {
         formations.remove(f);
-        this.fireContentsChanged(this, getSize() -1, getSize() -1);
+        this.fireContentsChanged(this, getSize() - 1, getSize() - 1);
     }
 
     @Override

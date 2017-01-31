@@ -137,6 +137,31 @@ public class ResultatDAO extends DAO<Resultat> {
         return true;
     }
 
+    public boolean delete(Formation f, Stagiaire s) {
+        PreparedStatement prepare = null;
+        Connection conn = null;
+
+        String query = "DELETE FROM resultat WHERE ecf_id IN (SELECT e.id FROM ecf e INNER JOIN formation f ON f.id = e.formation_id WHERE f.id = ?) AND stagiaire_code LIKE ?";
+
+        try {
+            conn = getConnection();
+            if (conn == null) {
+                return false;
+            }
+
+            prepare = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            prepare.setInt(1, f.getId());
+            prepare.setString(2, s.getCode());
+
+            int row = prepare.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            close(conn, prepare);
+        }
+        return true;
+    }
+
     @Override
     public boolean update(Resultat res) {
         PreparedStatement prepare = null;
@@ -160,7 +185,7 @@ public class ResultatDAO extends DAO<Resultat> {
             if (row == 0) {
                 throw new SQLException("Erreur à l'update du résultat.");
             }
-            
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

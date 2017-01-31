@@ -101,6 +101,7 @@ public class Utils {
 
     // Supprimer un stagiaire à une formation à la base de donnée
     public static boolean delToDB(Formation formation, Stagiaire stagiaire) {
+        ResultatDAO.Instance().delete(formation, stagiaire);
         return FormationDAO.Instance().delete(formation, stagiaire);
     }
 
@@ -113,27 +114,27 @@ public class Utils {
     public static boolean delToDB(Resultat res) {
         return ResultatDAO.Instance().delete(res);
     }
-    
-   // Mettre à jour un résultat à la base de donnée
+
+    // Mettre à jour un résultat à la base de donnée
     public static boolean upToDB(Resultat res) {
         return ResultatDAO.Instance().update(res);
     }
-    
-   // Mettre à jour un ecf à la base de donnée
+
+    // Mettre à jour un ecf à la base de donnée
     public static boolean upToDB(ECF ecf) {
         return EcfDAO.Instance().update(ecf);
     }
-    
-   // Mettre à jour un stagiaire à la base de donnée
+
+    // Mettre à jour un stagiaire à la base de donnée
     public static boolean upToDB(Stagiaire s) {
         return StagiaireDAO.Instance().update(s);
     }
-    
-   // Mettre à jour une formation à la base de donnée
+
+    // Mettre à jour une formation à la base de donnée
     public static boolean upToDB(Formation f) {
         return FormationDAO.Instance().update(f);
     }
-    
+
     // Récupérer les stagiaires libres
     public static List<Stagiaire> getDispoStagiaires(List<Formation> formations, List<Stagiaire> stagiaires) {
         List<Stagiaire> dispoStagiaires = new ArrayList<>();

@@ -17,9 +17,10 @@ public class AddResultatToECF extends javax.swing.JDialog {
 
     // Model du tableau de résultat
     private final ResTableModel tblResModel;
-    
+
     /**
      * Creates new form AddResultatToECF
+     *
      * @param parent fenètre parente
      * @param modal active l'option en modal
      * @param stagiaires liste de stagaire de la formation
@@ -80,7 +81,6 @@ public class AddResultatToECF extends javax.swing.JDialog {
     public ResTableModel getTblResModel() {
         return tblResModel;
     }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFermer;

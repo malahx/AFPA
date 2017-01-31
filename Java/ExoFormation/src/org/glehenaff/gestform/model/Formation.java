@@ -41,14 +41,13 @@ public class Formation implements Serializable {
     }
 
     public void remStagiaire(Stagiaire stagiaire) {
-        this.stagiaires.remove(stagiaire);
         for (ECF e : ecfs) {
-            for (Resultat r: e.getResultats()) {
-                if (r.getStagiaire().equals(stagiaire)) {
-                    e.remResultat(r);
-                }
+            for (int i = e.getResultats().size() -1; i >= 0; i--) {
+                Resultat r = e.getResultats().get(i);
+                e.remResultat(r);
             }
         }
+        this.stagiaires.remove(stagiaire);
     }
 
     public void setStagiaires(List<Stagiaire> stagiaires) {

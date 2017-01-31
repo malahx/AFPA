@@ -8,7 +8,6 @@ package org.glehenaff.gestform.view;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.glehenaff.gestform.Utils;
 import org.glehenaff.gestform.model.ECF;
 import org.glehenaff.gestform.model.Resultat;
 
@@ -21,12 +20,29 @@ public class ECFTableModel extends AbstractTableModel {
     private final String[] entetes = {"Nom", "N° Résultats", "N° Obtenu"};
     private List<ECF> ecfs;
 
+    List<Listener> listeners = new ArrayList<>();
+
+    public interface Listener {
+
+        public void onUpdatedEcf(ECF e);
+    }
+
     public ECFTableModel() {
         this.ecfs = new ArrayList<>();
     }
 
     public ECFTableModel(List<ECF> ecfs) {
         this.ecfs = ecfs;
+    }
+
+    public void addEventListener(Listener listener) {
+        this.listeners.add(listener);
+    }
+
+    private void fireUpdatedEcf(ECF e) {
+        for (Listener listener : this.listeners) {
+            listener.onUpdatedEcf(e);
+        }
     }
 
     public void add(ECF e) {
@@ -99,7 +115,7 @@ public class ECFTableModel extends AbstractTableModel {
         if (columnIndex == 0) {
             if (!value.isEmpty()) {
                 ecf.setNom(value);
-                Utils.upToDB(ecf);
+                fireUpdatedEcf(ecf);
             }
         }
     }

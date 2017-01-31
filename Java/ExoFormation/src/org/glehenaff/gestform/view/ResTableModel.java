@@ -28,6 +28,10 @@ public class ResTableModel extends AbstractTableModel {
     public interface Listener {
 
         public void onUpdatedResultat(ECF ecf, Resultat res);
+
+        public void onAddResultat(ECF ecf, Resultat res);
+
+        public void onRemResultat(ECF ecf, Resultat res);
     }
 
     public ResTableModel(List<Stagiaire> stagiaires, ECF ecf) {
@@ -42,6 +46,18 @@ public class ResTableModel extends AbstractTableModel {
     private void fireUpdatedResultat(ECF ecf, Resultat res) {
         for (Listener listener : this.listeners) {
             listener.onUpdatedResultat(ecf, res);
+        }
+    }
+
+    private void fireRemResultat(ECF ecf, Resultat res) {
+        for (Listener listener : this.listeners) {
+            listener.onRemResultat(ecf, res);
+        }
+    }
+
+    private void fireAddResultat(ECF ecf, Resultat res) {
+        for (Listener listener : this.listeners) {
+            listener.onAddResultat(ecf, res);
         }
     }
 
@@ -105,20 +121,15 @@ public class ResTableModel extends AbstractTableModel {
         if (columnIndex == 3) {
             if (r == null) {
                 r = new Resultat(false, ecf, s);
-                r = Utils.addToDB(r);
-                ecf.addResultat(r);
-                fireUpdatedResultat(ecf, r);
+                fireAddResultat(ecf, r);
             } else {
-                if (Utils.delToDB(r)) {
-                    ecf.remResultat(r);
-                    fireUpdatedResultat(ecf, r);
-                }
+                fireRemResultat(ecf, r);
             }
         }
         if (columnIndex == 4) {
             if (r != null) {
-                r.setObtenu(((Boolean) aValue).booleanValue());
-                Utils.upToDB(r);
+                boolean value = (Boolean) aValue;
+                r.setObtenu(value);
                 fireUpdatedResultat(ecf, r);
             }
         }
