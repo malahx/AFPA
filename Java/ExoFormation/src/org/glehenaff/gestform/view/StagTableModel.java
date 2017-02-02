@@ -72,6 +72,10 @@ public class StagTableModel extends AbstractTableModel {
         return stagiaires;
     }
 
+    public boolean contains(Stagiaire s) {
+        return stagiaires.contains(s);
+    }
+
     @Override
     public Class<?> getColumnClass(int columnIndex) {
         return getValueAt(0, columnIndex).getClass();

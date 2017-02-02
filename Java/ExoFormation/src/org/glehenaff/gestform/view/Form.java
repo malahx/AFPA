@@ -869,6 +869,9 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
                     f.remStagiaire(s);
                 }
             }
+            if (tblStagFormModel.contains(s)) {
+                tblStagFormModel.remove(s);
+            }
         } else {
             txtFooter.setText("Le stagiaire n'a pas pu être supprimé");
         }
