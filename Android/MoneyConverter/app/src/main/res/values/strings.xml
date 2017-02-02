@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MoneyConverter</string>
+    <string-array name="listeDevises">
+        <item>Selectionner</item>
+        <item>Euro €</item>
+        <item>Livre £</item>
+        <item>Dollar $</item>
+    </string-array>
+</resources>
