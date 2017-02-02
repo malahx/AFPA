@@ -42,9 +42,11 @@ public class Formation implements Serializable {
 
     public void remStagiaire(Stagiaire stagiaire) {
         for (ECF e : ecfs) {
-            for (int i = e.getResultats().size() -1; i >= 0; i--) {
+            for (int i = e.getResultats().size() - 1; i >= 0; i--) {
                 Resultat r = e.getResultats().get(i);
-                e.remResultat(r);
+                if (stagiaire.equals(r.getStagiaire())) {
+                    e.remResultat(r);
+                }
             }
         }
         this.stagiaires.remove(stagiaire);
