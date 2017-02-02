@@ -44,12 +44,20 @@
             <Property name="text" type="java.lang.String" value="Rapports"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="itmResultats">
+            <MenuItem class="javax.swing.JMenuItem" name="itmResultatsView">
               <Properties>
-                <Property name="text" type="java.lang.String" value="R&#xe9;sultats en PDF"/>
+                <Property name="text" type="java.lang.String" value="Visualiser les r&#xe9;sultats"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmResultatsActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmResultatsViewActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="itmResultatsSave">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Sauvegarder les r&#xe9;sultats"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="itmResultatsSaveActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

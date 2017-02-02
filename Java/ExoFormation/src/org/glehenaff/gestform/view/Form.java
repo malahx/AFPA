@@ -117,7 +117,8 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         itmSep = new javax.swing.JPopupMenu.Separator();
         itmQuitter = new javax.swing.JMenuItem();
         mnuReports = new javax.swing.JMenu();
-        itmResultats = new javax.swing.JMenuItem();
+        itmResultatsView = new javax.swing.JMenuItem();
+        itmResultatsSave = new javax.swing.JMenuItem();
         mnuAide = new javax.swing.JMenu();
         itmApropos = new javax.swing.JMenuItem();
 
@@ -550,13 +551,21 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
 
         mnuReports.setText("Rapports");
 
-        itmResultats.setText("Résultats en PDF");
-        itmResultats.addActionListener(new java.awt.event.ActionListener() {
+        itmResultatsView.setText("Visualiser les résultats");
+        itmResultatsView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itmResultatsActionPerformed(evt);
+                itmResultatsViewActionPerformed(evt);
             }
         });
-        mnuReports.add(itmResultats);
+        mnuReports.add(itmResultatsView);
+
+        itmResultatsSave.setText("Sauvegarder les résultats");
+        itmResultatsSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmResultatsSaveActionPerformed(evt);
+            }
+        });
+        mnuReports.add(itmResultatsSave);
 
         mnuBar.add(mnuReports);
 
@@ -922,9 +931,13 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
         }
     }//GEN-LAST:event_lstFormMouseClicked
 
-    private void itmResultatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmResultatsActionPerformed
-        Resultats.generate();
-    }//GEN-LAST:event_itmResultatsActionPerformed
+    private void itmResultatsViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmResultatsViewActionPerformed
+        Resultats.view();
+    }//GEN-LAST:event_itmResultatsViewActionPerformed
+
+    private void itmResultatsSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmResultatsSaveActionPerformed
+        Resultats.save(this);
+    }//GEN-LAST:event_itmResultatsSaveActionPerformed
 
     // Activer/désactiver les boutons du pannneau formation en fonctions de l'état actuel
     private void ResetFormBtn() {
@@ -1064,7 +1077,8 @@ public class Form extends javax.swing.JFrame implements AddStagToForm.Listener, 
     private javax.swing.JMenuItem itmActualiser;
     private javax.swing.JMenuItem itmApropos;
     private javax.swing.JMenuItem itmQuitter;
-    private javax.swing.JMenuItem itmResultats;
+    private javax.swing.JMenuItem itmResultatsSave;
+    private javax.swing.JMenuItem itmResultatsView;
     private javax.swing.JPopupMenu.Separator itmSep;
     private javax.swing.JLabel lblCodeStag;
     private javax.swing.JLabel lblEcfNomForm;
