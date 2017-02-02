@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost
--- Généré le :  Lun 30 Janvier 2017 à 13:36
+-- Généré le :  Jeu 02 Février 2017 à 09:11
 -- Version du serveur :  5.7.17-0ubuntu0.16.04.1
--- Version de PHP :  7.0.14-2+deb.sury.org~xenial+1
+-- Version de PHP :  7.0.15-1+deb.sury.org~xenial+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -220,7 +220,7 @@ ALTER TABLE `promo`
 --
 ALTER TABLE `resultat`
   ADD CONSTRAINT `resecf` FOREIGN KEY (`ecf_id`) REFERENCES `ecf` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `ressta` FOREIGN KEY (`stagiaire_code`) REFERENCES `stagiaire` (`code`);
+  ADD CONSTRAINT `ressta` FOREIGN KEY (`stagiaire_code`) REFERENCES `stagiaire` (`code`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `stagiaire`
