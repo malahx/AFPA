@@ -1,13 +1,20 @@
 package afpa.learning.moneyconverter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import metier.Convert;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
+import afpa.learning.moneyconverter.metier.Convert;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,11 +22,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Set<String> c = Convert.getConversionTable().keySet(); // Récupération de toutes les monnaies
+
+        List<String> money = new ArrayList<String>(c); // Passage en liste (possible de le faire en tableau, mais on ne peut rien lui ajouter)
+
+        money.add(0, "Sélectionner"); // Ajout d'une valeur par défaut
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, money); // Création de l'adapter
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Récupération des élements spinner
+        Spinner spnMoneyBegin = (Spinner) findViewById(R.id.spnMoneyBegin);
+        Spinner spnMoneyEnd = (Spinner) findViewById(R.id.spnMoneyEnd);
+
+        // Enregistrement des adapters
+        spnMoneyBegin.setAdapter(adapter);
+        spnMoneyEnd.setAdapter(adapter);
     }
 
     @Override
     protected void onDestroy() {
-        android.os.Process.killProcess(android.os.Process.myPid());
+        android.os.Process.killProcess(android.os.Process.myPid()); // Tuer le processus
         super.onDestroy();
     }
 
@@ -36,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
         }
         EditText txtAmount = (EditText) findViewById(R.id.txtAmount);
         String valueAmount = txtAmount.getText().toString();
-        float fltAmount = 0;
+        double fltAmount = 0;
         if (!valueAmount.isEmpty()) {
             try {
-                fltAmount = Integer.parseInt(valueAmount);
+                fltAmount = Double.parseDouble(valueAmount);
             } catch (Exception e) {
             }
         }
@@ -49,8 +73,11 @@ public class MainActivity extends AppCompatActivity {
         }
         String source = spnMoneyBegin.getSelectedItem().toString();
         String cible = spnMoneyEnd.getSelectedItem().toString();
-        double amount = Math.round(Convert.convertir(source, cible, fltAmount) * 100) / 100;
-        Toast.makeText(getBaseContext(), "Montant converti = " + amount, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, MainResult.class);
+        intent.putExtra("source", source);
+        intent.putExtra("cible", cible);
+        intent.putExtra("fltAmount", fltAmount);
+        startActivity(intent);
     }
 
     public void exitAction(View v) {

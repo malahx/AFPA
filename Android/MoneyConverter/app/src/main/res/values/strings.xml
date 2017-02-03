@@ -2,10 +2,5 @@
     <string name="app_name">MoneyConverter</string>
     <string-array name="listeDevises">
         <item>Selectionner</item>
-        <item>Livre</item>
-        <item>Euro</item>
-        <item>Yen</item>
-        <item>Francs CFA</item>
-        <item>Dollars US</item>
     </string-array>
 </resources>

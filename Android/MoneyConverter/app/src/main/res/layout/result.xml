@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <TextView
+        android:text="Le résultat est :"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblInfo"
+        android:textAlignment="center"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:text="result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lblResult"
+        android:layout_weight="0.05"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp"
+        android:textAlignment="center" />
+
+    <Button
+        android:text="Retour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnReturn"
+        android:onClick="returnAction" />
+
+</LinearLayout>

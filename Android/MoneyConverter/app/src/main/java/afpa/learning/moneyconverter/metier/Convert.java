@@ -1,4 +1,4 @@
-package metier;
+package afpa.learning.moneyconverter.metier;
 
 import java.util.*;
 
