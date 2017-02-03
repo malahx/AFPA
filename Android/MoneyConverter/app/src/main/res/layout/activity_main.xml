@@ -11,8 +11,8 @@
     tools:context="afpa.learning.moneyconverter.MainActivity">
 
     <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -22,7 +22,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Monnaie de départ"
+                android:text="@string/moneyBegin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -34,7 +34,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/spnMoneyBegin"
-                android:entries="@array/listeDevises"
                 android:minWidth="200dp" />
         </TableRow>
 
@@ -43,7 +42,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Monnaie d'arrivée"
+                android:text="@string/moneyEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblMoneyEnd" />
@@ -52,7 +51,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/spnMoneyEnd"
-                android:entries="@array/listeDevises"
                 android:minWidth="200dp" />
 
         </TableRow>
@@ -62,7 +60,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Montant"
+                android:text="@string/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/lblAmount" />
@@ -72,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:id="@+id/txtAmount"
-                android:hint="Entrez le montant"
+                android:hint="@string/amountHint"
                 android:singleLine="true" />
 
         </TableRow>
@@ -82,7 +80,7 @@
             android:layout_height="match_parent" >
 
             <Button
-                android:text="Convertir"
+                android:text="@string/convert"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnConvert"
@@ -91,7 +89,7 @@
                 android:onClick="convertAction" />
 
             <Button
-                android:text="Quitter"
+                android:text="@string/exit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnExit"

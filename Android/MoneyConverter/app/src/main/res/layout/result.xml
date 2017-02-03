@@ -5,7 +5,7 @@
     android:weightSum="1">
 
     <TextView
-        android:text="Le résultat est :"
+        android:text="@string/result"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lblInfo"
@@ -24,7 +24,7 @@
         android:textAlignment="center" />
 
     <Button
-        android:text="Retour"
+        android:text="@string/finish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnReturn"

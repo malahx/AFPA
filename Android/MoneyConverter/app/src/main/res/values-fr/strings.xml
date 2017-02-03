@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Convertisseur de monnaies</string>
+    <string name="select">Selectionnez</string>
+    <string name="moneyBeginInfo">Saisissez une monnaie de départ</string>
+    <string name="moneyEndInfo">Saisissez une monnaie d\'arrivée</string>
+    <string name="amountInfo">Saisissez un montant à convertir</string>
+    <string name="result">Le résultat est :</string>
+    <string name="moneyBegin">Monnaie de départ</string>
+    <string name="moneyEnd">Monnaie d\'arrivée</string>
+    <string name="amount">Montant</string>
+    <string name="amountHint">Entrez le montant</string>
+    <string name="convert">Convertir</string>
+    <string name="exit">Quitter</string>
+    <string name="finish">Returner</string>
+</resources>
