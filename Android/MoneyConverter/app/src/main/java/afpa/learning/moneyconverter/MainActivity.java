@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import metier.Convert;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -45,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Saisissez un montant à convertir", Toast.LENGTH_LONG).show();
             return;
         }
+        String source = spnMoneyBegin.getSelectedItem().toString();
+        String cible = spnMoneyEnd.getSelectedItem().toString();
+        double amount = Math.round(Convert.convertir(source, cible, fltAmount) * 100) / 100;
+        Toast.makeText(getBaseContext(), "Montant converti = " + amount, Toast.LENGTH_LONG).show();
     }
 
     public void exitAction(View v) {
