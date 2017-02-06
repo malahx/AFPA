@@ -15,4 +15,7 @@
     <string name="about">A propos</string>
     <string name="aboutTxt">Copyright 2017 par Malah</string>
     <string name="finish">Returner</string>
+    <string name="config">Configuration</string>
+    <string name="display">Affichage</string>
+    <string name="langage">Langue</string>
 </resources>

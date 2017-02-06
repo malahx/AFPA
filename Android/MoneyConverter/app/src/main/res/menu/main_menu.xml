@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/itmConfig"
+        android:title="@string/config">
+        <menu android:id="@+id/mnuConfig">
+            <item android:id="@+id/itmLang"
+                android:title="@string/langage" />
+            <item android:id="@+id/itmDisplay"
+                android:title="@string/display" />
+        </menu>
+    </item>
     <item android:id="@+id/itmAbout"
         android:title="@string/about" />
     <item android:id="@+id/itm"

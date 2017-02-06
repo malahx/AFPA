@@ -1,5 +1,7 @@
 package afpa.learning.moneyconverter;
 
+import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,7 +12,7 @@ import android.widget.Toast;
  * Created by Afpa on 06/02/2017.
  */
 
-public class defaultMenu extends AppCompatActivity {
+public class DefaultMenu extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -24,6 +26,14 @@ public class defaultMenu extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.itmAbout:
                 Toast.makeText(getBaseContext(), this.getString(R.string.aboutTxt), Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.itmLang:
+                Intent lang = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+                startActivity(lang);
+                return true;
+            case R.id.itmDisplay:
+                Intent display = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
+                startActivity(display);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

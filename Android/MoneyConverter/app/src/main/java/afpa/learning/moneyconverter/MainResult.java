@@ -2,10 +2,6 @@ package afpa.learning.moneyconverter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +11,7 @@ import afpa.learning.moneyconverter.metier.Convert;
  * Created by Afpa on 03/02/2017.
  */
 
-public class MainResult extends defaultMenu {
+public class MainResult extends DefaultMenu {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

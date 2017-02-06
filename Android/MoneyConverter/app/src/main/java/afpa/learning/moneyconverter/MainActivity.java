@@ -2,13 +2,14 @@ package afpa.learning.moneyconverter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.provider.Settings;
+import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -18,7 +19,7 @@ import java.util.Set;
 
 import afpa.learning.moneyconverter.metier.Convert;
 
-public class MainActivity extends defaultMenu {
+public class MainActivity extends DefaultMenu {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,30 @@ public class MainActivity extends defaultMenu {
         // Enregistrement des adapters
         spnMoneyBegin.setAdapter(adapter);
         spnMoneyEnd.setAdapter(adapter);
+
+        registerForContextMenu((ImageView)findViewById(R.id.imgSettings));
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_contextmenu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itmLang:
+                Intent lang = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+                startActivity(lang);
+                return true;
+            case R.id.itmDisplay:
+                Intent display = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
+                startActivity(display);
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override
