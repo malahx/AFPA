@@ -3,6 +3,9 @@ package afpa.learning.moneyconverter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -15,7 +18,7 @@ import java.util.Set;
 
 import afpa.learning.moneyconverter.metier.Convert;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends defaultMenu {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,4 +85,4 @@ public class MainActivity extends AppCompatActivity {
     public void exitAction(View v) {
         finish();
     }
-}
+ }

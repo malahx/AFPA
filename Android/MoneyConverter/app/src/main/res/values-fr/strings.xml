@@ -12,5 +12,7 @@
     <string name="amountHint">Entrez le montant</string>
     <string name="convert">Convertir</string>
     <string name="exit">Quitter</string>
+    <string name="about">A propos</string>
+    <string name="aboutTxt">Copyright 2017 par Malah</string>
     <string name="finish">Returner</string>
 </resources>
