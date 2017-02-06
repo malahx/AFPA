@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/Match"
     android:weightSum="1">
 
-    <TextView
-        android:text="@string/result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblInfo"
-        android:textAlignment="center"
-        android:textAllCaps="false" />
+    <TableLayout style="@style/Match" >
 
-    <TextView
-        android:text="result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lblResult"
-        android:layout_weight="0.05"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="18sp"
-        android:textAlignment="center" />
+        <TableRow style="@style/Match" >
 
-    <Button
-        android:text="@string/finish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnReturn"
-        android:onClick="exitAction (MainResult)" />
+            <TextView style="@style/Match"
+                android:text="@string/result"
+                android:id="@+id/lblInfo"
+                android:textAlignment="center"
+                android:textAllCaps="false" />
+        </TableRow>
+
+        <TableRow style="@style/Match" >
+
+            <TextView style="@style/Result"
+                android:text="result"
+                android:id="@+id/lblResult"
+                android:layout_weight="0.05"
+                android:textSize="18sp"
+                android:textAlignment="center" />
+        </TableRow>
+
+        <TableRow style="@style/Match" >
+
+            <Button style="@style/Match"
+                android:text="@string/finish"
+                android:id="@+id/btnReturn"
+                android:onClick="exitAction (MainResult)"
+                android:layout_weight="0.05" />
+        </TableRow>
+
+    </TableLayout>
 
 </LinearLayout>

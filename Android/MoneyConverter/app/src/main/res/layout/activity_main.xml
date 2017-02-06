@@ -1,113 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout style="@style/Match" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="afpa.learning.moneyconverter.MainActivity">
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TableLayout style="@style/Match"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <TableRow style="@style/Match" >
 
-            <ImageView
+            <ImageView style="@style/Match"
                 app:srcCompat="@drawable/settings"
                 android:id="@+id/imgSettings"
                 android:scaleType="centerInside"
                 android:maxHeight="50dp"
                 android:maxWidth="50dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:cropToPadding="true" />
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <TableRow style="@style/Match" >
 
-            <TextView
+            <TextView style="@style/Match"
                 android:text="@string/moneyBegin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:id="@+id/lblMoneyBegin" />
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <Spinner style="@style/Match"
                 android:id="@+id/spnMoneyBegin"
                 android:minWidth="200dp" />
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <TableRow style="@style/Match" >
 
-            <TextView
+            <TextView style="@style/Match"
                 android:text="@string/moneyEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/lblMoneyEnd" />
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <Spinner style="@style/Match"
                 android:id="@+id/spnMoneyEnd"
                 android:minWidth="200dp" />
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <TableRow style="@style/Match" >
 
-            <TextView
+            <TextView style="@style/Match"
                 android:text="@string/amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/lblAmount" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <EditText style="@style/Match"
                 android:ems="10"
                 android:id="@+id/txtAmount"
                 android:hint="@string/amountHint"
-                android:singleLine="true" />
+                android:maxLines="1" />
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+        <TableRow style="@style/Match" >
 
-            <Button
+            <Button style="@style/Match"
                 android:text="@string/convert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/btnConvert"
-                android:elevation="0dp"
                 android:clickable="true"
                 android:onClick="convertAction" />
 
-            <Button
+            <Button style="@style/Match"
                 android:text="@string/exit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/btnExit"
                 android:clickable="true"
                 android:onClick="exitAction" />

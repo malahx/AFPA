@@ -35,6 +35,18 @@ public class DefaultMenu extends AppCompatActivity {
                 Intent display = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
                 startActivity(display);
                 return true;
+            case R.id.itmClear:
+                finish();
+                Intent clear = new Intent(this, this.getClass());
+                clear.putExtra("theme", R.style.AppTheme);
+                startActivity(clear);
+                return true;
+            case R.id.itmDark:
+                finish();
+                Intent dark = new Intent(this, this.getClass());
+                dark.putExtra("theme", R.style.AppTheme2);
+                startActivity(dark);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

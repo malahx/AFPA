@@ -18,4 +18,6 @@
     <string name="config">Configuration</string>
     <string name="display">Affichage</string>
     <string name="langage">Langue</string>
+    <string name="clear">Theme Clair</string>
+    <string name="dark">Theme Sombre</string>
 </resources>

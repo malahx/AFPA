@@ -7,6 +7,10 @@
                 android:title="@string/langage" />
             <item android:id="@+id/itmDisplay"
                 android:title="@string/display" />
+            <item android:id="@+id/itmClear"
+                android:title="@string/clear" />
+            <item android:id="@+id/itmDark"
+                android:title="@string/dark" />
         </menu>
     </item>
     <item android:id="@+id/itmAbout"

@@ -24,6 +24,17 @@ public class MainActivity extends DefaultMenu {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent thisIntent = getIntent();
+        int theme = 0;
+        try {
+            theme = thisIntent.getExtras().getInt("theme");
+        } catch (Exception e) {
+            System.out.println("No theme found");
+        }
+        if (theme != R.style.AppTheme && theme != R.style.AppTheme2) {
+            theme = R.style.AppTheme;
+        }
+        setTheme(theme);
         setContentView(R.layout.activity_main);
 
         Set<String> c = Convert.getConversionTable().keySet(); // Récupération de toutes les monnaies
@@ -70,7 +81,6 @@ public class MainActivity extends DefaultMenu {
 
     @Override
     protected void onDestroy() {
-        android.os.Process.killProcess(android.os.Process.myPid()); // Tuer le processus
         super.onDestroy();
     }
 
