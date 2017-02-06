@@ -1,6 +1,8 @@
 package afpa.learning.moneyconverter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -23,6 +25,7 @@ public class DefaultMenu extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        SharedPreferences.Editor edit;
         switch (item.getItemId()) {
             case R.id.itmAbout:
                 Toast.makeText(getBaseContext(), this.getString(R.string.aboutTxt), Toast.LENGTH_LONG).show();
@@ -36,12 +39,18 @@ public class DefaultMenu extends AppCompatActivity {
                 startActivity(display);
                 return true;
             case R.id.itmClear:
+                edit = getSharedPreferences("moneyconverter", Context.MODE_PRIVATE).edit();
+                edit.putInt("theme", R.style.AppTheme);
+                edit.apply();
                 finish();
                 Intent clear = new Intent(this, this.getClass());
                 clear.putExtra("theme", R.style.AppTheme);
                 startActivity(clear);
                 return true;
             case R.id.itmDark:
+                edit = getSharedPreferences("moneyconverter", Context.MODE_PRIVATE).edit();
+                edit.putInt("theme", R.style.AppTheme2);
+                edit.apply();
                 finish();
                 Intent dark = new Intent(this, this.getClass());
                 dark.putExtra("theme", R.style.AppTheme2);

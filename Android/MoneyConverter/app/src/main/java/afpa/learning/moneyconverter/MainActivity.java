@@ -1,6 +1,8 @@
 package afpa.learning.moneyconverter;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.ContextMenu;
@@ -25,7 +27,10 @@ public class MainActivity extends DefaultMenu {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent thisIntent = getIntent();
-        int theme = 0;
+
+        SharedPreferences shared = getSharedPreferences("moneyconverter", Context.MODE_PRIVATE);
+
+        int theme = shared.getInt("theme", 0);
         try {
             theme = thisIntent.getExtras().getInt("theme");
         } catch (Exception e) {
@@ -35,6 +40,7 @@ public class MainActivity extends DefaultMenu {
             theme = R.style.AppTheme;
         }
         setTheme(theme);
+
         setContentView(R.layout.activity_main);
 
         Set<String> c = Convert.getConversionTable().keySet(); // Récupération de toutes les monnaies
@@ -53,6 +59,15 @@ public class MainActivity extends DefaultMenu {
         // Enregistrement des adapters
         spnMoneyBegin.setAdapter(adapter);
         spnMoneyEnd.setAdapter(adapter);
+
+        // Donné enregistré
+        int source = (int)shared.getLong("source", 0);
+        int cible = (int)shared.getLong("cible", 0);
+        String amount = shared.getString("amount", "");
+        spnMoneyBegin.setSelection(source);
+        spnMoneyEnd.setSelection(cible);
+        EditText txtAmount = (EditText) findViewById(R.id.txtAmount);
+        txtAmount.setText(amount);
 
         registerForContextMenu((ImageView)findViewById(R.id.imgSettings));
     }
@@ -102,12 +117,18 @@ public class MainActivity extends DefaultMenu {
             try {
                 fltAmount = Double.parseDouble(valueAmount);
             } catch (Exception e) {
+                System.out.println("Can't parse amount");
             }
         }
         if (valueAmount.isEmpty() || fltAmount == 0) {
             Toast.makeText(getBaseContext(), this.getString(R.string.amountInfo), Toast.LENGTH_LONG).show();
             return;
         }
+        SharedPreferences.Editor edit = getSharedPreferences("moneyconverter", Context.MODE_PRIVATE).edit();
+        edit.putLong("source", spnMoneyBegin.getSelectedItemId());
+        edit.putLong("cible", spnMoneyEnd.getSelectedItemId());
+        edit.putString("amount", valueAmount);
+        edit.apply();
         String source = spnMoneyBegin.getSelectedItem().toString();
         String cible = spnMoneyEnd.getSelectedItem().toString();
         Intent intent = new Intent(this, MainResult.class);
