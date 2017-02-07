@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import afpa.learning.moneyconverter.metier.Convert;
-
 /**
  * Created by Afpa on 03/02/2017.
  */
@@ -20,9 +18,9 @@ public class MainResult extends DefaultMenu {
         String source = thisIntent.getExtras().getString("source");
         String cible = thisIntent.getExtras().getString("cible");
         double fltAmount = thisIntent.getExtras().getDouble("fltAmount");
-        double amount = Math.round(Convert.convertir(source, cible, fltAmount) * 100) / 100;
+        double rate = Utils.getRate(this, cible)/Utils.getRate(this, source);
+        double amount = Math.round(rate * fltAmount * 100)/100d;
         String value = fltAmount + " " + source + " = " + amount + " " + cible;
-        //Toast.makeText(getBaseContext(), "Montant converti = " + amount, Toast.LENGTH_LONG).show();
         setContentView(R.layout.result);
         TextView lblResult = (TextView) findViewById(R.id.lblResult);
         lblResult.setText(value);

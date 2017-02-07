@@ -15,11 +15,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import afpa.learning.moneyconverter.metier.Convert;
 
 public class MainActivity extends DefaultMenu {
 
@@ -43,13 +39,11 @@ public class MainActivity extends DefaultMenu {
 
         setContentView(R.layout.activity_main);
 
-        Set<String> c = Convert.getConversionTable().keySet(); // Récupération de toutes les monnaies
+        List<String> monies = Utils.getMonies(this); // Récupération de toutes les monnaies
 
-        List<String> money = new ArrayList<String>(c); // Passage en liste (possible de le faire en tableau, mais on ne peut rien lui ajouter)
+        monies.add(0, this.getString(R.string.select)); // Ajout d'une valeur par défaut
 
-        money.add(0, this.getString(R.string.select)); // Ajout d'une valeur par défaut
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, money); // Création de l'adapter
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, monies); // Création de l'adapter
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Récupération des éléments spinner
@@ -141,4 +135,4 @@ public class MainActivity extends DefaultMenu {
     public void exitAction(View v) {
         finish();
     }
- }
+}

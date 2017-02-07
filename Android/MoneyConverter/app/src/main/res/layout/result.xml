@@ -30,8 +30,8 @@
             <Button style="@style/Match"
                 android:text="@string/finish"
                 android:id="@+id/btnReturn"
-                android:onClick="exitAction (MainResult)"
-                android:layout_weight="0.05" />
+                android:layout_weight="0.05"
+                android:onClick="exitAction" />
         </TableRow>
 
     </TableLayout>

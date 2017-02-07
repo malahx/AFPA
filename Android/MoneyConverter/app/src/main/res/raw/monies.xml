@@ -1,0 +1,50 @@
+<monies>
+    <money>
+        <name>Francs CFA</name>
+        <rate>614.753</rate>
+    </money>
+    <money>
+        <name>Bitcoin</name>
+        <rate>0.000960835</rate>
+    </money>
+    <money>
+        <name>Yen</name>
+        <rate>112.149</rate>
+    </money>
+    <money>
+        <name>Yuan</name>
+        <rate>6.87993</rate>
+    </money>
+    <money>
+        <name>Francs Suisse</name>
+        <rate>0.999306</rate>
+    </money>
+    <money>
+        <name>Dollars SIN</name>
+        <rate>1.41777</rate>
+    </money>
+    <money>
+        <name>Dollars CAN</name>
+        <rate>1.31871</rate>
+    </money>
+    <money>
+        <name>Dollars AUS</name>
+        <rate>1.31152</rate>
+    </money>
+    <money>
+        <name>Roupie</name>
+        <rate>67.4050</rate>
+    </money>
+    <money>
+        <name>Livre</name>
+        <rate>0.808132</rate>
+    </money>
+    <money>
+        <name>Euro</name>
+        <rate>0.937189</rate>
+    </money>
+    <money>
+        <name>Dollars US</name>
+        <rate>1.0</rate>
+    </money>
+</monies>
