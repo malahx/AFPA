@@ -39,7 +39,7 @@ public class MainActivity extends DefaultMenu {
 
         setContentView(R.layout.activity_main);
 
-        List<String> monies = Utils.getMonies(this); // Récupération de toutes les monnaies
+        List<String> monies = Convert.getInstance().getMonies(); // Récupération de toutes les monnaies
 
         monies.add(0, this.getString(R.string.select)); // Ajout d'une valeur par défaut
 
@@ -56,10 +56,10 @@ public class MainActivity extends DefaultMenu {
 
         // Donné enregistré
         int source = (int)shared.getLong("source", 0);
-        int cible = (int)shared.getLong("cible", 0);
+        int target = (int)shared.getLong("cible", 0);
         String amount = shared.getString("amount", "");
         spnMoneyBegin.setSelection(source);
-        spnMoneyEnd.setSelection(cible);
+        spnMoneyEnd.setSelection(target);
         EditText txtAmount = (EditText) findViewById(R.id.txtAmount);
         txtAmount.setText(amount);
 
@@ -120,14 +120,14 @@ public class MainActivity extends DefaultMenu {
         }
         SharedPreferences.Editor edit = getSharedPreferences("moneyconverter", Context.MODE_PRIVATE).edit();
         edit.putLong("source", spnMoneyBegin.getSelectedItemId());
-        edit.putLong("cible", spnMoneyEnd.getSelectedItemId());
+        edit.putLong("target", spnMoneyEnd.getSelectedItemId());
         edit.putString("amount", valueAmount);
         edit.apply();
         String source = spnMoneyBegin.getSelectedItem().toString();
-        String cible = spnMoneyEnd.getSelectedItem().toString();
+        String target = spnMoneyEnd.getSelectedItem().toString();
         Intent intent = new Intent(this, MainResult.class);
         intent.putExtra("source", source);
-        intent.putExtra("cible", cible);
+        intent.putExtra("target", target);
         intent.putExtra("fltAmount", fltAmount);
         startActivity(intent);
     }

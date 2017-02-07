@@ -16,11 +16,10 @@ public class MainResult extends DefaultMenu {
         super.onCreate(savedInstanceState);
         Intent thisIntent = getIntent();
         String source = thisIntent.getExtras().getString("source");
-        String cible = thisIntent.getExtras().getString("cible");
+        String target = thisIntent.getExtras().getString("target");
         double fltAmount = thisIntent.getExtras().getDouble("fltAmount");
-        double rate = Utils.getRate(this, cible)/Utils.getRate(this, source);
-        double amount = Math.round(rate * fltAmount * 100)/100d;
-        String value = fltAmount + " " + source + " = " + amount + " " + cible;
+        double amount = Convert.getInstance().calc(source, target, fltAmount);
+        String value = fltAmount + " " + source + " = " + amount + " " + target;
         setContentView(R.layout.result);
         TextView lblResult = (TextView) findViewById(R.id.lblResult);
         lblResult.setText(value);
