@@ -1,4 +1,7 @@
 *~
+Android/ToListenServer/bin
+Android/ToListenServer/obj
+Android/ToListenServer/packages
 Java/*/bin
 Java/*/build
 Java/*/build.xml
