@@ -81,7 +81,7 @@ namespace ToListenServer.DAO {
 					m.genre = reader.GetString(3);
 					m.author = reader.GetString(4);
 					m.title = reader.GetString(5);
-					m.isViewed = reader.GetBoolean(6);
+					m.isViewed = reader.GetInt16(6);
 					medias.Add(m);
 				}
 
@@ -122,7 +122,7 @@ namespace ToListenServer.DAO {
 					m.genre = reader.GetString(3);
 					m.author = reader.GetString(4);
 					m.title = reader.GetString(5);
-					m.isViewed = reader.GetBoolean(6);
+					m.isViewed = reader.GetInt16(6);
 				}
 
 				reader.Close();

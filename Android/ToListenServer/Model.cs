@@ -26,7 +26,7 @@ namespace ToListenServer.Model {
 		public string genre { get; set; }
 		public string author { get; set; }
 		public string title { get; set; }
-		public bool isViewed { get; set; }
+		public int isViewed { get; set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:ToListenServer.Model.Media"/> class.
@@ -38,7 +38,7 @@ namespace ToListenServer.Model {
 		/// <param name="author">Author.</param>
 		/// <param name="title">Title.</param>
 		/// <param name="isViewed">If set to <c>true</c> is viewed.</param>
-		public Media(long id, string url, string sender, string genre, string author, string title, bool isViewed) {
+		public Media(long id, string url, string sender, string genre, string author, string title, int isViewed) {
 			this.id = id;
 			this.url = url;
 			this.sender = sender;
@@ -63,7 +63,7 @@ namespace ToListenServer.Model {
 			this.genre = genre;
 			this.author = author;
 			this.title = title;
-			isViewed = false;
+			isViewed = 0;
 		}
 
 		/// <summary>
