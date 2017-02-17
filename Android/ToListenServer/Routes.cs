@@ -70,9 +70,7 @@ namespace ToListenServer.Routes {
 			/// </summary>
 			Put["/links/api/tolisten/updateViewState/"] = parameters => {
 				Media m = this.Bind<Media>();
-				Console.WriteLine(m);
 				m = MainClass.GetMedia(m.id);
-				Console.WriteLine(m);
 				m.isViewed = m.isViewed == 0 ? 1 : 0;
 				m = MainClass.UpMedia(m);
 				return m != null ? new JavaScriptSerializer().Serialize(m) : new Response { StatusCode = HttpStatusCode.BadRequest, ReasonPhrase = "Can't update view state" };
