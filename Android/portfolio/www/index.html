@@ -35,61 +35,9 @@
         <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
         <link rel="icon" type="image/ico" href="favicon.ico">
         <link rel="stylesheet" href="css/index.css">
-        <script type="text/javascript">
-            // Définition des variables de dom
-            var whoIamBtn,
-                projectBtn,
-                reseauxBtn,
-                whoIam,
-                project,
-                reseaux,
-                github_repos,
-                github_activeRepos,
-                github_followers;
-
-            // Fonction permettant d'afficher ou de cacher les différentes pages, ainsi que de conserver un bouton en noir
-            function show(pin, unPin, toShow, toHide) {
-                pin.classList.add("black");
-                for (var i = unPin.length - 1; i >= 0; i--) {
-                    if (unPin[i]) {
-                        unPin[i].classList.remove("black");
-                    }
-                }
-                toShow.classList.remove("hide");
-                for (var i = toHide.length - 1; i >= 0; i--) {
-                    if (toHide[i]) {
-                        toHide[i].classList.add("hide");
-                    }
-                }
-            }
-
-            // Initialisation des variables globales et des évenements
-            window.addEventListener("load", function() {
-                whoIamBtn = document.getElementById('whoIamBtn');
-                projectBtn = document.getElementById('projetsBtn');
-                reseauxBtn = document.getElementById('reseauxBtn');
-                whoIam = document.getElementById('whoIam');
-                project = document.getElementById('projets');
-                reseaux = document.getElementById('reseaux');
-                github_repos = document.getElementById('github-repos');
-                github_activeRepos = document.getElementById('github-activeRepos');
-                github_followers = document.getElementById('github-followers');
-
-                whoIamBtn.addEventListener("click", function() {
-                    show(this, [projectBtn, reseauxBtn], whoIam, [project, reseaux]);
-                });
-                projectBtn.addEventListener("click", function() {
-                    show(this, [whoIamBtn, reseauxBtn], project, [whoIam, reseaux]);
-                });
-                reseauxBtn.addEventListener("click", function() {
-                    show(this, [projectBtn, whoIamBtn], reseaux, [project, whoIam]);
-                });
-            });
-        </script>
-        <script type="text/javascript" src="js/ajax.js"></script>
-            <title>MVP Gwénolé LE HENAFF</title>
-        </head>
-        <body class="no-space">
+        <title>MVP Gwénolé LE HENAFF</title>
+    </head>
+    <body class="no-space">
         <header>
             <div id="over">
                 <h1 class="no-space">Gwénolé LE HENAFF</h1>
@@ -189,5 +137,8 @@
                 <a href="https://framagit.org/u/Malah"><i class="fa fa-gitlab fa-2x" aria-hidden="true"></i> FramaGit</a>
             </div>
         </main>
+        <script type="text/javascript" src="js/ajax.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
     </body>
 </html>
