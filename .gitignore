@@ -2,6 +2,9 @@
 Android/ToListenServer/bin
 Android/ToListenServer/obj
 Android/ToListenServer/packages
+Android/portfolio/www/node_modules
+Android/portfolio/platforms/*/
+Android/portfolio/plugins/*/
 Java/*/bin
 Java/*/build
 Java/*/build.xml

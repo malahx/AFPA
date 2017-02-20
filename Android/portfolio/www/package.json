@@ -1,0 +1,11 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "AFPA - Application Cordova",
+  "repository": "https://github.com/malahx/AFPA",
+  "license": "Unlicense",
+  "dependencies": {
+		"font-awesome" : "4.7.0"
+	}
+}

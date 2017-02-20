@@ -1,0 +1,200 @@
+.no-space {
+    margin: 0;
+    padding: 0;
+}
+.hide {
+    display: none;
+}
+.black {
+    color: black;
+}
+body {
+    font-family: 'Open Sans', sans-serif;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/background.jpg');
+    background-position: center;
+    background-size: auto;
+}
+header {
+    width: 100%;
+    color: white;
+    background-color: #fb9b41;
+}
+header #over {
+    position: fixed;
+    background-color: #fb9b41;
+    width: 100%;
+    height: 3.7em;
+    z-index: 10;
+    cursor: default;
+    border-bottom: 2px solid white;
+    padding-bottom: 0.3em;
+}
+header #over h1 {
+    float: left;
+    font-size: 2em;
+    text-align: center;
+}
+header #over .subtitle {
+    float: right;
+    width: 100%;
+    margin-right: 2%;
+    text-align: right;
+    font-weight: bold;
+}
+header nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px solid white;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+header nav #empty {
+    height: 3.7em;
+}
+header nav .nav {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    cursor: pointer;
+}
+header nav .nav i {
+    align-items: flex-start;
+    width: 40%;
+}
+header nav .nav span {
+    align-items: flex-end;
+    width: 60%;
+    text-align: right;
+    margin-right: 10%;
+    font-size: 30px;
+    font-weight: bold;
+}
+header nav .nav:hover {
+    color: #000;
+}
+main {
+    height: 100%;
+    padding: 10px;
+    color: white;
+    text-align: center;
+}
+main div {
+    height: 100%;
+    margin-bottom: -1px;
+}
+main #whoIam {
+    margin-left: 0;
+    margin-right: 0;
+}
+main #knowledge {
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+main #knowledge a {
+    filter: grayscale(1);
+}
+main #knowledge a:hover {
+    filter: grayscale(0);
+}
+main #projets ul {
+    padding: 0;
+}
+main #projets li {
+    text-align: left;
+    margin: 0;
+    margin: 0;
+    padding: 5px;
+    list-style-type: none;
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+    cursor: pointer;
+}
+main #projets li:nth-child(odd) {
+    background: rgba(175, 175, 175, 0.8);
+}
+main #projets li:hover {
+    background: none;
+    color: white;
+    text-decoration: underline;
+}
+main #game {
+    width: 100%;
+    margin-top: 20%;
+}
+main #game #rocketjs {
+    width: 100%;
+    font-weight: bold;
+    font-size: 40px;
+    cursor: pointer;
+}
+main #game #rocket {
+    position: absolute;
+    text-align: left;
+}
+main #game #new:hover {
+    color: red;
+}
+main #reseaux {
+    margin-top: 1%;
+}
+main #reseaux a {
+    display: block;
+    text-align: center;
+    color: white;
+    margin-left: 0;
+}
+
+main #reseaux a:hover {
+    color: #6772ff;
+}
+
+@media all and (min-width:768px) {
+    header {
+        display: flex;
+    }
+    header #over {
+        position: inherit;
+        width: 50%;
+    }
+    header #over .subtitle {
+        margin-left: 10em;
+    }
+    header nav {
+        flex-direction: row;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        width: 50%;
+        height: 3.40em;
+    }
+    header nav #empty {
+        display: none;
+    }
+    header nav .nav {
+        margin-right: 1em;
+        width: auto;
+    }
+    header nav .nav i {
+        width: auto;
+    }
+    header nav .nav span {
+        display: none;
+    }
+    main #whoIam {
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+    main #projets li {
+        margin-left: 30%;
+        margin-right: 30%;
+    }
+    main #reseaux {
+        margin-top: 0;
+    }
+    main #reseaux a {
+    }
+}
