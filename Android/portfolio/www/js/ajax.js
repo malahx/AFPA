@@ -91,20 +91,3 @@ var ajax = {
         xhr.send(null);
     }
 }
-// Initialisation des variables globales et des évenements
-window.addEventListener("load", function() {
-    projectBtn.addEventListener("click", function() {
-        // Récupération des données de session
-        var datas = sessionStorage.getItem("dataStored");
-        if (datas != null) {
-            ajax.dataStored = JSON.parse(datas);
-            var keys = Object.keys(ajax.dataStored);
-            for (var key of keys) {
-                document.getElementById(key).innerHTML = ajax.dataStored[key];
-            }
-            return;
-        }
-        // Lancement des divers connexion et mise à jour du dom
-        ajax.Update();
-    });
-});
