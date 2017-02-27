@@ -4,3 +4,6 @@
 [submodule "Android/ToListen"]
 	path = Android/ToListen
 	url = https://github.com/Valannos/ToListen-Android.git
+[submodule "ECF/PhysicalRegatta"]
+	path = ECF/PhysicalRegatta
+	url = https://github.com/malahx/AFPA-PhysicalRegatta.git
