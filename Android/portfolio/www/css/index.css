@@ -51,6 +51,7 @@ header nav {
     border-bottom: 2px solid white;
     padding-top: 0.3em;
     padding-bottom: 0.3em;
+    background-color: #fb9b41;
 }
 header nav #empty {
     height: 3.7em;

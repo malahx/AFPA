@@ -31,7 +31,7 @@
 function show(pin, unPin, toShow, toHide) {
     pin.classList.add("black");
     for (var i = unPin.length - 1; i >= 0; i--) {
-        if (unPin[i]) {
+        if (unPin[i] != null) {
             unPin[i].classList.remove("black");
         }
     }
